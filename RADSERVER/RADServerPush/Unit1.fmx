@@ -1,0 +1,62 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'RAD Server Push Client'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object CheckBox1: TCheckBox
+    Align = Top
+    Size.Width = 640.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Text = 'Active'
+  end
+  object Memo1: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 461.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Viewport.Width = 636.000000000000000000
+    Viewport.Height = 457.000000000000000000
+  end
+  object PushEvents1: TPushEvents
+    Provider = EMSProvider1
+    AutoActivate = False
+    OnDeviceTokenReceived = PushEvents1DeviceTokenReceived
+    OnDeviceTokenRequestFailed = PushEvents1DeviceTokenRequestFailed
+    OnPushReceived = PushEvents1PushReceived
+    OnDeviceRegistered = PushEvents1DeviceRegistered
+    Left = 72
+    Top = 40
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 260
+    Top = 37
+    object LinkControlToField1: TLinkControlToField
+      Category = 'Quick Bindings'
+      DataSource = PushEvents1
+      FieldName = 'Active'
+      Control = CheckBox1
+      Track = True
+    end
+  end
+  object EMSProvider1: TEMSProvider
+    AndroidPush.GCMAppID = '611434695742'
+    ApiVersion = '1'
+    ApplicationId = 'radserverpush'
+    URLHost = '192.168.0.19'
+    URLPort = 8080
+    Left = 168
+    Top = 40
+  end
+end

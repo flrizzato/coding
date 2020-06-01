@@ -1,0 +1,4 @@
+DelphiMeetingOrganizer
+Meeting Organizer
+CN=Fernando Rizzato
+fernando.rizzato

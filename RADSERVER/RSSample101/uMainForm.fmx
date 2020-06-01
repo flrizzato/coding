@@ -1,0 +1,171 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object butExecute: TButton
+    Position.X = 16.000000000000000000
+    Position.Y = 136.000000000000000000
+    Size.Width = 105.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Text = 'Execute '
+    OnClick = butExecuteClick
+  end
+  object Memo1: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Position.X = 160.000000000000000000
+    Position.Y = 16.000000000000000000
+    Size.Width = 465.000000000000000000
+    Size.Height = 217.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Viewport.Width = 461.000000000000000000
+    Viewport.Height = 213.000000000000000000
+  end
+  object edtUser: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 5
+    Position.X = 16.000000000000000000
+    Position.Y = 24.000000000000000000
+  end
+  object edtPass: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 6
+    Position.X = 16.000000000000000000
+    Position.Y = 64.000000000000000000
+  end
+  object butLogin: TButton
+    Position.X = 16.000000000000000000
+    Position.Y = 104.000000000000000000
+    Size.Width = 105.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 7
+    Text = 'Login'
+    OnClick = butLoginClick
+  end
+  object StringGrid1: TStringGrid
+    CanFocus = True
+    ClipChildren = True
+    Position.X = 160.000000000000000000
+    Position.Y = 248.000000000000000000
+    Size.Width = 465.000000000000000000
+    Size.Height = 209.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 9
+    Viewport.Width = 461.000000000000000000
+    Viewport.Height = 184.000000000000000000
+  end
+  object butCustomer: TButton
+    Position.X = 16.000000000000000000
+    Position.Y = 168.000000000000000000
+    Size.Width = 105.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 16
+    Text = 'Get Customers'
+    OnClick = butCustomerClick
+  end
+  object Button1: TButton
+    Position.X = 16.000000000000000000
+    Position.Y = 200.000000000000000000
+    Size.Width = 105.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 28
+    Text = 'Post Customers'
+    OnClick = Button1Click
+  end
+  object EMSProvider1: TEMSProvider
+    ApiVersion = '1'
+    URLHost = '127.0.0.1'
+    URLPort = 8080
+    Left = 464
+    Top = 16
+  end
+  object BackendEndpoint1: TBackendEndpoint
+    Provider = EMSProvider1
+    Auth = BackendAuth1
+    Params = <>
+    Resource = 'RSSample101'
+    Left = 560
+    Top = 16
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 500
+    Top = 69
+    object LinkControlToField1: TLinkControlToField
+      Category = 'Quick Bindings'
+      DataSource = BackendEndpoint1
+      FieldName = 'Response.JSONText'
+      Control = Memo1
+      Track = False
+    end
+    object LinkGridToDataSourceBindSourceDB1: TLinkGridToDataSource
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      GridControl = StringGrid1
+      Columns = <>
+    end
+  end
+  object BackendAuth1: TBackendAuth
+    Provider = EMSProvider1
+    LoginPrompt = False
+    UserDetails = <>
+    DefaultAuthentication = Application
+    Left = 500
+    Top = 128
+  end
+  object EMSFireDACClient1: TEMSFireDACClient
+    Resource = 'FDResource'
+    Provider = EMSProvider1
+    SchemaAdapter = FDSchemaAdapter1
+    Auth = BackendAuth1
+    Left = 496
+    Top = 184
+  end
+  object FDSchemaAdapter1: TFDSchemaAdapter
+    Left = 496
+    Top = 240
+  end
+  object FDTableAdapter1: TFDTableAdapter
+    SchemaAdapter = FDSchemaAdapter1
+    DatSTableName = 'CustomerTable'
+    Left = 448
+    Top = 296
+  end
+  object FDMemTable1: TFDMemTable
+    CachedUpdates = True
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Adapter = FDTableAdapter1
+    Left = 440
+    Top = 352
+  end
+  object BindSourceDB1: TBindSourceDB
+    DataSet = FDMemTable1
+    ScopeMappings = <>
+    Left = 536
+    Top = 336
+  end
+  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'FMX'
+    Left = 540
+    Top = 392
+  end
+end

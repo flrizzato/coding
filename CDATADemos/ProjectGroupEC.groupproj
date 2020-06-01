@@ -1,0 +1,120 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{074CFADF-4C9A-4CA5-B237-3978E6E59DBF}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="ExcelFile\ExcelFile.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="WebSearchBing\WebSearchBing.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="WebSearchGoogle\WebSearchGoogle.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="SalesForce101\SF101.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="SFCaseSrvr\SFCaseSrvr.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="SFCaseMgmt\SFCaseMgmt.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="AWSDynamoDB\AWSDynamoDB.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="GoogleCalendar\GoogleCalendar.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="ExcelFile">
+        <MSBuild Projects="ExcelFile\ExcelFile.dproj"/>
+    </Target>
+    <Target Name="ExcelFile:Clean">
+        <MSBuild Projects="ExcelFile\ExcelFile.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ExcelFile:Make">
+        <MSBuild Projects="ExcelFile\ExcelFile.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="WebSearchBing">
+        <MSBuild Projects="WebSearchBing\WebSearchBing.dproj"/>
+    </Target>
+    <Target Name="WebSearchBing:Clean">
+        <MSBuild Projects="WebSearchBing\WebSearchBing.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="WebSearchBing:Make">
+        <MSBuild Projects="WebSearchBing\WebSearchBing.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="WebSearchGoogle">
+        <MSBuild Projects="WebSearchGoogle\WebSearchGoogle.dproj"/>
+    </Target>
+    <Target Name="WebSearchGoogle:Clean">
+        <MSBuild Projects="WebSearchGoogle\WebSearchGoogle.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="WebSearchGoogle:Make">
+        <MSBuild Projects="WebSearchGoogle\WebSearchGoogle.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SF101">
+        <MSBuild Projects="SalesForce101\SF101.dproj"/>
+    </Target>
+    <Target Name="SF101:Clean">
+        <MSBuild Projects="SalesForce101\SF101.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SF101:Make">
+        <MSBuild Projects="SalesForce101\SF101.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SFCaseSrvr">
+        <MSBuild Projects="SFCaseSrvr\SFCaseSrvr.dproj"/>
+    </Target>
+    <Target Name="SFCaseSrvr:Clean">
+        <MSBuild Projects="SFCaseSrvr\SFCaseSrvr.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SFCaseSrvr:Make">
+        <MSBuild Projects="SFCaseSrvr\SFCaseSrvr.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SFCaseMgmt">
+        <MSBuild Projects="SFCaseMgmt\SFCaseMgmt.dproj"/>
+    </Target>
+    <Target Name="SFCaseMgmt:Clean">
+        <MSBuild Projects="SFCaseMgmt\SFCaseMgmt.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SFCaseMgmt:Make">
+        <MSBuild Projects="SFCaseMgmt\SFCaseMgmt.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="AWSDynamoDB">
+        <MSBuild Projects="AWSDynamoDB\AWSDynamoDB.dproj"/>
+    </Target>
+    <Target Name="AWSDynamoDB:Clean">
+        <MSBuild Projects="AWSDynamoDB\AWSDynamoDB.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="AWSDynamoDB:Make">
+        <MSBuild Projects="AWSDynamoDB\AWSDynamoDB.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="GoogleCalendar">
+        <MSBuild Projects="GoogleCalendar\GoogleCalendar.dproj"/>
+    </Target>
+    <Target Name="GoogleCalendar:Clean">
+        <MSBuild Projects="GoogleCalendar\GoogleCalendar.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GoogleCalendar:Make">
+        <MSBuild Projects="GoogleCalendar\GoogleCalendar.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="ExcelFile;WebSearchBing;WebSearchGoogle;SF101;SFCaseSrvr;SFCaseMgmt;AWSDynamoDB;GoogleCalendar"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="ExcelFile:Clean;WebSearchBing:Clean;WebSearchGoogle:Clean;SF101:Clean;SFCaseSrvr:Clean;SFCaseMgmt:Clean;AWSDynamoDB:Clean;GoogleCalendar:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="ExcelFile:Make;WebSearchBing:Make;WebSearchGoogle:Make;SF101:Make;SFCaseSrvr:Make;SFCaseMgmt:Make;AWSDynamoDB:Make;GoogleCalendar:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

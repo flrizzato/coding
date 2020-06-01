@@ -1,0 +1,172 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 567
+  ClientWidth = 384
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [dkDesktop]
+  DesignerMobile = True
+  DesignerWidth = 384
+  DesignerHeight = 592
+  DesignerDeviceName = 'Google Nexus 4'
+  DesignerOrientation = 0
+  DesignerOSVersion = ''
+  object ToolBar1: TToolBar
+    Height = 48.000000000000000000
+    TabOrder = 0
+    Width = 384.000000000000000000
+    object SpeedButton1: TSpeedButton
+      Align = alCenter
+      Height = 48.000000000000000000
+      Text = 'Open >>'
+      Trimming = ttCharacter
+      Width = 73.000000000000000000
+      OnClick = SpeedButton1Click
+    end
+  end
+  object ListBox1: TListBox
+    Align = alClient
+    Height = 519.000000000000000000
+    TabOrder = 1
+    Width = 384.000000000000000000
+    DefaultItemStyles.ItemStyle = 'listboxitemrightdetail'
+    DefaultItemStyles.GroupHeaderStyle = ''
+    DefaultItemStyles.GroupFooterStyle = ''
+  end
+  object Database: TFDConnection
+    ConnectionName = 'MASTMobile'
+    Params.Strings = (
+      'Database=C:\DB_INTERBASE\MASTSQL.GDB'
+      'User_Name=sysdba'
+      'Password=masterkey'
+      'CharacterSet=UTF8'
+      'DriverID=IB')
+    FormatOptions.AssignedValues = [fvMapRules]
+    FormatOptions.OwnMapRules = True
+    FormatOptions.MapRules = <
+      item
+        PrecMax = 10
+        PrecMin = 0
+        ScaleMax = 0
+        ScaleMin = 0
+        SourceDataType = dtFmtBCD
+        TargetDataType = dtInt32
+      end
+      item
+        SourceDataType = dtFmtBCD
+        TargetDataType = dtDouble
+      end
+      item
+        SourceDataType = dtDateTimeStamp
+        TargetDataType = dtDateTime
+      end>
+    TxOptions.Isolation = xiDirtyRead
+    LoginPrompt = False
+    BeforeConnect = DatabaseBeforeConnect
+    Left = 28
+    Top = 116
+  end
+  object Cust: TFDTable
+    CachedUpdates = True
+    IndexFieldNames = 'CUSTNO'
+    ConnectionName = 'MASTMobile'
+    UpdateOptions.UpdateTableName = 'CUSTOMER'
+    TableName = 'CUSTOMER'
+    Left = 28
+    Top = 173
+    object CustCustNo: TFloatField
+      Alignment = taLeftJustify
+      DisplayWidth = 6
+      FieldName = 'CustNo'
+    end
+    object CustCompany: TStringField
+      DisplayWidth = 26
+      FieldName = 'Company'
+      Required = True
+      Size = 30
+    end
+    object CustPhone: TStringField
+      DisplayWidth = 15
+      FieldName = 'Phone'
+      Size = 15
+    end
+    object CustLastInvoiceDate: TDateTimeField
+      DisplayLabel = 'LastInvoice'
+      DisplayWidth = 10
+      FieldName = 'LastInvoiceDate'
+      DisplayFormat = 'DDDDD'
+    end
+    object CustAddr1: TStringField
+      FieldName = 'Addr1'
+      Size = 30
+    end
+    object CustAddr2: TStringField
+      FieldName = 'Addr2'
+      Size = 30
+    end
+    object CustCity: TStringField
+      FieldName = 'City'
+      Size = 15
+    end
+    object CustState: TStringField
+      FieldName = 'State'
+    end
+    object CustZip: TStringField
+      FieldName = 'Zip'
+      Size = 10
+    end
+    object CustCountry: TStringField
+      FieldName = 'Country'
+    end
+    object CustFAX: TStringField
+      FieldName = 'FAX'
+      Size = 15
+    end
+    object CustTaxRate: TFloatField
+      FieldName = 'TaxRate'
+    end
+    object CustContact: TStringField
+      FieldName = 'Contact'
+    end
+  end
+  object BindSourceDB1: TBindSourceDB
+    DataSet = Cust
+    ScopeMappings = <>
+    Left = 104
+    Top = 64
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 28
+    Top = 61
+    object LinkFillControlToField1: TLinkFillControlToField
+      Category = 'Quick Bindings'
+      Control = ListBox1
+      Track = True
+      FillDataSource = BindSourceDB1
+      FillDisplayFieldName = 'Company'
+      AutoFill = True
+      BufferCount = -1
+      AutoBufferCount = False
+      FillExpressions = <
+        item
+          SourceMemberName = 'Phone'
+          ControlMemberName = 'Detail'
+        end>
+      FillHeaderExpressions = <>
+      FillBreakGroups = <>
+    end
+  end
+  object FDPhysIBDriverLink1: TFDPhysIBDriverLink
+    Left = 112
+    Top = 120
+  end
+  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'FMX'
+    Left = 112
+    Top = 176
+  end
+end

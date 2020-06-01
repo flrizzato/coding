@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{B9CD73C4-84E8-4E0F-A247-00507F281FDA}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="FMXSensors.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="VCLSensors.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="FMXSensors">
+        <MSBuild Projects="FMXSensors.dproj"/>
+    </Target>
+    <Target Name="FMXSensors:Clean">
+        <MSBuild Projects="FMXSensors.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FMXSensors:Make">
+        <MSBuild Projects="FMXSensors.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VCLSensors">
+        <MSBuild Projects="VCLSensors.dproj"/>
+    </Target>
+    <Target Name="VCLSensors:Clean">
+        <MSBuild Projects="VCLSensors.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VCLSensors:Make">
+        <MSBuild Projects="VCLSensors.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="FMXSensors;VCLSensors"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="FMXSensors:Clean;VCLSensors:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="FMXSensors:Make;VCLSensors:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

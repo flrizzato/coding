@@ -1,0 +1,20 @@
+
+**** ERROR file opened at 20171220 073847 E. South America Daylight Time, SAP-REL 749,0,214 RFC-VER 3  MT-SL
+T:6472 Error in program 'bds': ======> SAP_CMINIT3 : rc=20 > Connect to SAP gateway failed
+Connect_PM  GWHOST=10.4.0.27, GWSERV=sapgw00, SYSNR=00
+
+LOCATION    CPIC (TCP/IP) on local host RIZZATOWIN10
+ERROR       partner '10.4.0.27:3300' not reached
+TIME        Wed Dec 20 07:38:47 2017
+RELEASE     749
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/749_REL/src/base/ni/nixxi.cpp
+LINE        3429
+DETAIL      NiPConnect2: 10.4.0.27:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     1
+

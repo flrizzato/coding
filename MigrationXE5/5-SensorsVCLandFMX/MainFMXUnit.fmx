@@ -1,0 +1,39 @@
+object Form3: TForm3
+  Left = 0
+  Top = 0
+  Caption = 'List Sensors'
+  ClientHeight = 419
+  ClientWidth = 507
+  FormFactor.Width = 1024
+  FormFactor.Height = 768
+  FormFactor.Devices = [dkDesktop]
+  DesignerMobile = False
+  DesignerWidth = 0
+  DesignerHeight = 0
+  DesignerDeviceName = ''
+  DesignerOrientation = 0
+  DesignerOSVersion = ''
+  object Button2: TButton
+    Height = 22.000000000000000000
+    Position.X = 32.000000000000000000
+    Position.Y = 24.000000000000000000
+    TabOrder = 0
+    Text = 'Get Sensors'
+    Width = 97.000000000000000000
+    OnClick = Button2Click
+  end
+  object Label1: TLabel
+    Height = 23.000000000000000000
+    Position.X = 152.000000000000000000
+    Position.Y = 24.000000000000000000
+    Text = 'Sensors: 0'
+    Width = 120.000000000000000000
+  end
+  object Memo1: TMemo
+    Height = 337.000000000000000000
+    Position.X = 32.000000000000000000
+    Position.Y = 56.000000000000000000
+    TabOrder = 2
+    Width = 449.000000000000000000
+  end
+end

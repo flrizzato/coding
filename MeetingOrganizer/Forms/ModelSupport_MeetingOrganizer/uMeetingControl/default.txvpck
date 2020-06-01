@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="d6hl1bsukjqev573p_v">
+    <property name="$defaultDiagram" value="true" />
+    <property name="$metaclass" value="Package Diagram" />
+    <property name="$name" value="default" />
+    <reference referencedUin="delphi:e_class:src:MeetingOrganizer:uMeetingControl.@unitclass">
+      <property name="$shortcutReference" value="true" />
+    </reference>
+    <reference referencedUin="delphi:e_class:src:MeetingOrganizer:uMeetingControl.TMeetingControl">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="259,1,211,340" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.ValidateParticipants(System.Integer,System.Integer,System.TDateTime,Controls.TTime,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.SendMeetingNotification(System.Integer,System.TDateTime,Controls.TTime,System.Integer,System.string,System.string,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.LocateUser(System.string)" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.GetFreeRoomList(System.Integer,Controls.TDate,Controls.TTime,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.CreateDefaultForm()" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.Destroy()" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.CheckNumberOfParts()" />
+      <reference referencedUin="delphi:e_field:src:MeetingOrganizer:uMeetingControl.TMeetingControl.fMeetingDM" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.ValidateMeetingRoom(System.Integer,System.Integer,System.TDateTime,Controls.TTime,System.Integer)" />
+      <reference referencedUin="delphi:e_field:src:MeetingOrganizer:uMeetingControl.TMeetingControl.FInstance" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.GetInstance()" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.GetFreeTimeList(System.Integer,Controls.TDate,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.CreateTimeRoomForm(ref@Controls.TTime,ref@System.Integer,ref@System.string)" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.CheckMeetingOwner()" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.CheckMeetingDate()" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.Create(Classes.TComponent)" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.CreateDefaultDM()" />
+      <reference referencedUin="delphi:l_ast:src:MeetingOrganizer:uMeetingControl.TMeetingControl.FInstance">
+        <property name="sourceAnchor" value="470,333" />
+        <property name="targetAnchor" value="462,341" />
+        <property name="bendpoints" value="503,333,503,374,462,374" />
+        <property name="bounds_setted_by_user" value="True" />
+      </reference>
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.Create(System.Classes.TComponent)" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.CreateTimeRoomForm(ref@System.TTime,ref@System.Integer,ref@System.string)" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.GetFreeTimeList(System.Integer,System.TDate,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.GetFreeRoomList(System.Integer,System.TDate,System.TTime,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.SendMeetingNotification(System.Integer,System.TDateTime,System.TTime,System.Integer,System.string,System.string,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.ValidateMeetingRoom(System.Integer,System.Integer,System.TDateTime,System.TTime,System.Integer)" />
+      <reference referencedUin="delphi:e_method:src:MeetingOrganizer:uMeetingControl.TMeetingControl.ValidateParticipants(System.Integer,System.Integer,System.TDateTime,System.TTime,System.Integer)" />
+    </reference>
+    <reference referencedUin="design:node:::9nggq4phpauvb8o_n">
+      <property name="$shortcutReference" value="true" />
+      <property name="bounds" value="10,10,230,79" />
+      <reference referencedUin="design:link:::cngfv7shpy3d6sl_l:9nggq4phpauvb8o_n">
+        <property name="sourceAnchor" value="239,48" />
+        <property name="targetAnchor" value="259,48" />
+        <property name="bendpoints" value="" />
+        <reference referencedUin="label:@supplierRole:design:link:::cngfv7shpy3d6sl_l:9nggq4phpauvb8o_n">
+          <property name="bounds" value="231,29,56,16" />
+        </reference>
+      </reference>
+    </reference>
+  </view>
+</nodeSet>
