@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{AEC69604-D7BD-4495-9E7B-B74B1C152CF6}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="ScrollableFormv1\ScrollableFormDemo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ScrollableFormv2\MultiFormLayout.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="ScrollableFormDemo">
+        <MSBuild Projects="ScrollableFormv1\ScrollableFormDemo.dproj"/>
+    </Target>
+    <Target Name="ScrollableFormDemo:Clean">
+        <MSBuild Projects="ScrollableFormv1\ScrollableFormDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ScrollableFormDemo:Make">
+        <MSBuild Projects="ScrollableFormv1\ScrollableFormDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="MultiFormLayout">
+        <MSBuild Projects="ScrollableFormv2\MultiFormLayout.dproj"/>
+    </Target>
+    <Target Name="MultiFormLayout:Clean">
+        <MSBuild Projects="ScrollableFormv2\MultiFormLayout.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MultiFormLayout:Make">
+        <MSBuild Projects="ScrollableFormv2\MultiFormLayout.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="ScrollableFormDemo;MultiFormLayout"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="ScrollableFormDemo:Clean;MultiFormLayout:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="ScrollableFormDemo:Make;MultiFormLayout:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
