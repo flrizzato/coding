@@ -67,7 +67,6 @@ build/
 ext/
 metadata/
 packages/
-resources/
 sass/
 
 # Castalia statistics file (since XE7 Castalia is distributed with Delphi)
