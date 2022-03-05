@@ -1,29 +1,29 @@
 inherited MainForm_LgXhdpiPh: TMainForm_LgXhdpiPh
-  ClientHeight = 425
-  ClientWidth = 720
+  ClientHeight = 695
+  ClientWidth = 450
   StyleBook = StyleBook1
   DesignerMasterStyle = 0
   inherited ToolBar1: TToolBar
-    Size.Width = 720.000000000000000000
+    Size.Width = 450.000000000000000000
     inherited butShare: TButton
       Enabled = True
     end
     inherited lblScanStatus: TLabel
-      Position.X = 565.000000000000000000
+      Position.X = 295.000000000000000000
       TextSettings.Font.StyleExt = {00070000000000000004000000}
     end
   end
   inherited memLog: TMemo
     DataDetectorTypes = [PhoneNumber, Link, Address, CalendarEvent]
-    Position.Y = 320.000000000000000000
-    Size.Width = 710.000000000000000000
+    Position.Y = 590.000000000000000000
+    Size.Width = 440.000000000000000000
     Size.Height = 100.000000000000000000
-    Viewport.Width = 710.000000000000000000
+    Viewport.Width = 440.000000000000000000
     Viewport.Height = 100.000000000000000000
   end
   inherited imgCamera: TImage
-    Size.Width = 710.000000000000000000
-    Size.Height = 262.000000000000000000
+    Size.Width = 440.000000000000000000
+    Size.Height = 532.000000000000000000
   end
   inherited StyleBook1: TStyleBook
     Styles = <

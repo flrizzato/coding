@@ -6,7 +6,7 @@
     <PropertyGroup>
         <DeviceId Condition="'$(Platform)'=='Android'"/>
         <DeviceId Condition="'$(Platform)'=='Android64'">0069683395</DeviceId>
-        <DeviceId Condition="'$(Platform)'=='iOSDevice64'">9284619625de4393e1e49985eb14c3959ae89af9</DeviceId>
+        <DeviceId Condition="'$(Platform)'=='iOSDevice64'"/>
     </PropertyGroup>
     <ItemGroup Condition="'$(Platform)'=='OSX64'">
         <DeployFile Include="$(BDS)\Redist\osx64\libcgsqlite3.dylib">

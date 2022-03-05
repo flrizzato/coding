@@ -5,9 +5,11 @@ interface
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes,
   System.Variants, System.Messaging, System.Permissions,
-  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.StdCtrls,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
+  FMX.StdCtrls,
   FMX.Objects, FMX.Controls.Presentation, System.Actions, FMX.ActnList,
-  FMX.Edit, FMX.Media, ZXing.BarcodeFormat, ZXing.ReadResult, ZXing.ScanManager,
+  FMX.Edit, FMX.Media, ZXing.BarcodeFormat, ZXing.ReadResult,
+  ZXing.ScanManager,
   FMX.Platform, FMX.Layouts, FMX.StdActns, FMX.MediaLibrary.Actions,
   FMX.ScrollBox, FMX.Memo, System.IOUtils, FMX.Memo.Types,
   uAudioManager;
@@ -52,7 +54,8 @@ type
 
     // for new Android security model
     procedure DisplayRationale(Sender: TObject;
-      const APermissions: TClassicStringDynArray; const APostRationaleProc: TProc);
+      const APermissions: TClassicStringDynArray;
+      const APostRationaleProc: TProc);
     procedure TakePicturePermissionRequestResult(Sender: TObject;
       const APermissions: TClassicStringDynArray;
       const AGrantResults: TClassicPermissionStatusDynArray);
