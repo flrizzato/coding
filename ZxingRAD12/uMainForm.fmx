@@ -1,0 +1,182 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  Caption = 'Barcode Transfer'
+  ClientHeight = 564
+  ClientWidth = 504
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object ToolBar1: TToolBar
+    Size.Width = 504.000000000000000000
+    Size.Height = 48.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object butStart: TButton
+      Align = Left
+      Margins.Left = 5.000000000000000000
+      Position.X = 5.000000000000000000
+      Size.Width = 48.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'cameratoolbuttonbordered'
+      TabOrder = 2
+      Text = 'butStart'
+      TextSettings.Trimming = None
+      OnClick = butStartClick
+    end
+    object butStop: TButton
+      Align = Left
+      Margins.Left = 5.000000000000000000
+      Position.X = 58.000000000000000000
+      Size.Width = 48.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'stoptoolbuttonbordered'
+      TabOrder = 1
+      Text = 'butStart'
+      TextSettings.Trimming = None
+      OnClick = butStopClick
+    end
+    object butShare: TButton
+      Action = ShowShareSheetAction1
+      Align = Left
+      Enabled = False
+      ImageIndex = -1
+      Margins.Left = 5.000000000000000000
+      Position.X = 111.000000000000000000
+      Size.Width = 48.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'actiontoolbuttonbordered'
+      TabOrder = 0
+      TextSettings.Trimming = None
+    end
+  end
+  object memLog: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Align = Bottom
+    ControlType = Platform
+    Margins.Left = 5.000000000000000000
+    Margins.Right = 5.000000000000000000
+    Margins.Bottom = 5.000000000000000000
+    Position.X = 5.000000000000000000
+    Position.Y = 387.000000000000000000
+    Size.Width = 494.000000000000000000
+    Size.Height = 150.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 11
+    Viewport.Width = 490.000000000000000000
+    Viewport.Height = 146.000000000000000000
+  end
+  object Camera: TCameraComponent
+    Kind = BackCamera
+    OnSampleBufferReady = CameraSampleBufferReady
+    Left = 120
+    Top = 408
+  end
+  object StyleBook1: TStyleBook
+    Styles = <
+      item
+      end>
+    Left = 64
+    Top = 384
+  end
+  object ProgressBarStatus: TProgressBar
+    Align = Top
+    Orientation = Horizontal
+    Margins.Left = 5.000000000000000000
+    Margins.Right = 5.000000000000000000
+    Position.X = 5.000000000000000000
+    Position.Y = 48.000000000000000000
+    Size.Width = 494.000000000000000000
+    Size.Height = 10.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object StatusBarMessage: TStatusBar
+    Margins.Left = 5.000000000000000000
+    Margins.Right = 5.000000000000000000
+    Position.X = 5.000000000000000000
+    Position.Y = 542.000000000000000000
+    ShowSizeGrip = True
+    Size.Width = 494.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 16
+    object lblMessage: TLabel
+      Align = Client
+      StyledSettings = [Family, Size, FontColor]
+      Size.Width = 494.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.Trimming = None
+      TabOrder = 0
+    end
+  end
+  object LayCamera: TLayout
+    Align = Client
+    Margins.Left = 5.000000000000000000
+    Margins.Top = 5.000000000000000000
+    Margins.Right = 5.000000000000000000
+    Margins.Bottom = 5.000000000000000000
+    Size.Width = 494.000000000000000000
+    Size.Height = 319.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 20
+    object imgCamera: TImage
+      MultiResBitmap = <
+        item
+        end>
+      Align = Client
+      Size.Width = 494.000000000000000000
+      Size.Height = 319.000000000000000000
+      Size.PlatformDefault = False
+      object recImageBottom: TRectangle
+        Align = Bottom
+        CornerType = Bevel
+        Opacity = 0.600000023841857900
+        Position.Y = 219.000000000000000000
+        Sides = [Top]
+        Size.Width = 494.000000000000000000
+        Size.Height = 100.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Color = claRed
+        Stroke.Dash = Dash
+      end
+      object recImageTop: TRectangle
+        Align = Top
+        CornerType = Bevel
+        Opacity = 0.600000023841857900
+        Sides = [Bottom]
+        Size.Width = 494.000000000000000000
+        Size.Height = 100.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Color = claRed
+        Stroke.Dash = Dash
+      end
+      object layBitmap: TLayout
+        Align = Client
+        Size.Width = 494.000000000000000000
+        Size.Height = 119.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+      end
+    end
+  end
+  object ActionList1: TActionList
+    Left = 64
+    Top = 448
+    object ShowShareSheetAction1: TShowShareSheetAction
+      Category = 'Media Library'
+      CustomText = 'Share'
+      Enabled = False
+      OnBeforeExecute = ShowShareSheetAction1BeforeExecute
+    end
+  end
+end
