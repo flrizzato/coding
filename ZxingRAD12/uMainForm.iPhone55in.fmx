@@ -26111,7 +26111,8 @@ inherited MainForm_iPhone55in: TMainForm_iPhone55in
       TabOrder = 1
     end
   end
-  inherited LayCamera: TLayout
+  inherited layCamera: TLayout
+    Opacity = 0.000000000000000000
     Size.Width = 406.000000000000000000
     Size.Height = 463.000000000000000000
     inherited imgCamera: TImage
@@ -26128,7 +26129,7 @@ inherited MainForm_iPhone55in: TMainForm_iPhone55in
       inherited recImageTop: TRectangle
         Size.Width = 396.000000000000000000
       end
-      inherited layBitmap: TLayout
+      inherited layDrawFocus: TLayout
         Size.Width = 396.000000000000000000
         Size.Height = 253.000000000000000000
       end

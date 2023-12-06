@@ -31,8 +31,8 @@ type
     lblMessage: TLabel;
     recImageBottom: TRectangle;
     recImageTop: TRectangle;
-    LayCamera: TLayout;
-    layBitmap: TLayout;
+    layCamera: TLayout;
+    layDrawFocus: TLayout;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure butStartClick(Sender: TObject);
@@ -96,7 +96,7 @@ procedure TMainForm.FormCreate(Sender: TObject);
 var
   AppEventSvc: IFMXApplicationEventService;
 begin
-  LayCamera.Visible := False;
+  layCamera.Opacity := 0;
 
   if TPlatformServices.Current.SupportsPlatformService
     (IFMXApplicationEventService, IInterface(AppEventSvc)) then
@@ -126,8 +126,8 @@ end;
 
 procedure TMainForm.FormShow(Sender: TObject);
 begin
-  recImageBottom.Height := (LayCamera.Height - 150) / 2;
-  recImageTop.Height := (LayCamera.Height - 150) / 2;
+  recImageBottom.Height := (layCamera.Height - 150) / 2;
+  recImageTop.Height := (layCamera.Height - 150) / 2;
 end;
 
 procedure TMainForm.TakePicturePermissionRequestResult(Sender: TObject;
@@ -139,21 +139,15 @@ begin
   begin
     memLog.Lines.Clear;
 
-    // workaround for resolution changing when activating for second time
-    if Camera.Active then
-      Camera.Active := False;
-    Camera.Quality := FMX.Media.TVideoCaptureQuality.LowQuality;
-    Camera.Active := True;
-
-    // activating the camera using the correct settings
-    Camera.Active := False;
     Camera.Kind := FMX.Media.TCameraKind.BackCamera;
-    Camera.Quality := FMX.Media.TVideoCaptureQuality.MediumQuality;
     Camera.FocusMode := FMX.Media.TFocusMode.ContinuousAutoFocus;
-    Camera.TorchMode := TTorchMode.ModeOn;
+
+    if Camera.HasTorch then
+      Camera.TorchMode := TTorchMode.ModeOn;
+
     Camera.Active := True;
 
-    LayCamera.Visible := True;
+    layCamera.Opacity := 1;
   end
   else
   begin
@@ -187,7 +181,7 @@ end;
 
 procedure TMainForm.butStartClick(Sender: TObject);
 begin
-  if LayCamera.Visible then
+  if layCamera.Opacity = 1 then
     exit;
 
   PermissionsService.RequestPermissions([FPermissionCamera],
@@ -196,12 +190,15 @@ end;
 
 procedure TMainForm.butStopClick(Sender: TObject);
 begin
-  if not LayCamera.Visible then
+  if layCamera.Opacity = 0 then
     exit;
 
-  LayCamera.Visible := False;
+  layCamera.Opacity := 0;
+  ProgressBarStatus.Value := 0;
 
-  Camera.TorchMode := TTorchMode.ModeOff;
+  if Camera.TorchMode = TTorchMode.ModeOn then
+    Camera.TorchMode := TTorchMode.ModeOff;
+
   Camera.Active := False;
 end;
 
@@ -222,13 +219,13 @@ begin
   xScale := AImage.Bitmap.Width / AImage.Width;
   yScale := AImage.Bitmap.Height / AImage.Height;
 
-  LBitmap.Width := round(layBitmap.Width * xScale);
-  LBitmap.Height := round(layBitmap.Height * yScale);
+  LBitmap.Width := round(layDrawFocus.Width * xScale);
+  LBitmap.Height := round(layDrawFocus.Height * yScale);
 
-  iRect.Left := round(layBitmap.Position.X * xScale);
-  iRect.Top := round(layBitmap.Position.Y * yScale);
-  iRect.Width := round(layBitmap.Width * xScale);
-  iRect.Height := round(layBitmap.Height * yScale);
+  iRect.Left := round(layDrawFocus.Position.X * xScale);
+  iRect.Top := round(layDrawFocus.Position.Y * yScale);
+  iRect.Width := round(layDrawFocus.Width * xScale);
+  iRect.Height := round(layDrawFocus.Height * yScale);
 
   LBitmap.CopyFromBitmap(AImage.Bitmap, iRect, 0, 0);
 

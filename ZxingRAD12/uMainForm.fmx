@@ -119,7 +119,7 @@ object MainForm: TMainForm
       TabOrder = 0
     end
   end
-  object LayCamera: TLayout
+  object layCamera: TLayout
     Align = Client
     Margins.Left = 5.000000000000000000
     Margins.Top = 5.000000000000000000
@@ -160,7 +160,7 @@ object MainForm: TMainForm
         Stroke.Color = claRed
         Stroke.Dash = Dash
       end
-      object layBitmap: TLayout
+      object layDrawFocus: TLayout
         Align = Client
         Size.Width = 494.000000000000000000
         Size.Height = 119.000000000000000000
