@@ -7,13 +7,15 @@ inherited MainForm_iPhone55in: TMainForm_iPhone55in
     Size.Width = 416.000000000000000000
     Size.Height = 44.000000000000000000
     inherited butStart: TButton
+      Position.Y = 7.000000000000000000
       Size.Width = 40.000000000000000000
-      Size.Height = 44.000000000000000000
+      Size.Height = 30.000000000000000000
     end
     inherited butStop: TButton
       Position.X = 50.000000000000000000
+      Position.Y = 7.000000000000000000
       Size.Width = 33.000000000000000000
-      Size.Height = 44.000000000000000000
+      Size.Height = 30.000000000000000000
     end
     inherited butShare: TButton
       Enabled = True

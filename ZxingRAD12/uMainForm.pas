@@ -107,7 +107,8 @@ begin
   fLastScan := Now;
   fScanManager := TScanManager.Create(TBarcodeFormat.Auto, nil);
 
-  // comment the next block if you don't want/need the beep
+  // comment the next block if you don't want/need the beep,
+  // or create a configuration and let the user to decide
   fAudioM := TAudioManager.Create;
   fAudioF := TPath.Combine(TPath.GetDocumentsPath, 'Ok.wav');
   if FileExists(fAudioF) then
@@ -138,16 +139,13 @@ begin
     (AGrantResults[0] = TPermissionStatus.Granted) then
   begin
     memLog.Lines.Clear;
-
-    Camera.Kind := FMX.Media.TCameraKind.BackCamera;
-    Camera.FocusMode := FMX.Media.TFocusMode.ContinuousAutoFocus;
+    layCamera.Opacity := 1;
 
     if Camera.HasTorch then
       Camera.TorchMode := TTorchMode.ModeOn;
-
+    Camera.Kind := FMX.Media.TCameraKind.BackCamera;
+    Camera.FocusMode := FMX.Media.TFocusMode.ContinuousAutoFocus;
     Camera.Active := True;
-
-    layCamera.Opacity := 1;
   end
   else
   begin
@@ -170,8 +168,6 @@ begin
         SLineBreak;
   end;
 
-  // Show an explanation to the user *asynchronously* - don't block this thread waiting for the user's response!
-  // After the user sees the explanation, invoke the post-rationale routine to request the permissions
   TDialogService.ShowMessage(RationaleMsg,
     procedure(const AResult: TModalResult)
     begin
@@ -194,11 +190,9 @@ begin
     exit;
 
   layCamera.Opacity := 0;
-  ProgressBarStatus.Value := 0;
 
   if Camera.TorchMode = TTorchMode.ModeOn then
     Camera.TorchMode := TTorchMode.ModeOff;
-
   Camera.Active := False;
 end;
 
@@ -248,11 +242,32 @@ begin
         LReducedBuffer: TBitmap;
       begin
         try
-          fScanInProgress := True;
           try
             fLastScan := Now;
+            fScanInProgress := True;
             LReducedBuffer := CropBitmap(imgCamera);
             ReadResult := fScanManager.Scan(LReducedBuffer);
+
+            TThread.Synchronize(TThread.CurrentThread,
+              procedure
+              begin
+                if ProgressBarStatus.Value = 100 then
+                  ProgressBarStatus.Value := 0
+                else
+                  ProgressBarStatus.Value := ProgressBarStatus.Value + 10;
+
+                if (ReadResult <> nil) then
+                begin
+                  memLog.Lines.Add(FormatDateTime('hh:nn:ss', Now) + ' - ' +
+                    ReadResult.Text);
+                  memLog.GoToTextEnd;
+
+                  // comment the next block if you don't want/need the beep,
+                  // or create a configuration and let the user to decide
+                  fAudioM.PlaySound(0);
+                end;
+              end);
+
           except
             on E: Exception do
             begin
@@ -264,26 +279,6 @@ begin
               exit;
             end;
           end;
-
-          TThread.Synchronize(TThread.CurrentThread,
-            procedure
-            begin
-              if ProgressBarStatus.Value = 100 then
-                ProgressBarStatus.Value := 0
-              else
-                ProgressBarStatus.Value := ProgressBarStatus.Value + 10;
-
-              if (ReadResult <> nil) then
-              begin
-                memLog.Lines.Add(FormatDateTime('hh:nn:ss', Now) + ' - ' +
-                  ReadResult.Text);
-                memLog.GoToTextEnd;
-
-                // comment the next line if you don't want/need the beep
-                fAudioM.PlaySound(0);
-              end;
-            end);
-
         finally
           ReadResult.Free;
           fScanInProgress := False;
