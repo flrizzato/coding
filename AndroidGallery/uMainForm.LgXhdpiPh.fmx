@@ -1,0 +1,28 @@
+inherited Form1_LgXhdpiPh: TForm1_LgXhdpiPh
+  ClientHeight = 696
+  ClientWidth = 448
+  DesignerMasterStyle = 0
+  inherited ToolBar1: TToolBar
+    Size.Width = 438.000000000000000000
+    Size.Height = 48.000000000000000000
+    inherited Button1: TButton
+      Size.Height = 38.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+    end
+  end
+  inherited BindNavigator1: TBindNavigator
+    Position.Y = 63.000000000000000000
+    Size.Width = 438.000000000000000000
+  end
+  inherited Image1: TImage
+    MultiResBitmap = <
+      item
+        Scale = 1.250000000000000000
+      end
+      item
+      end>
+    MarginWrapMode = Fit
+    Size.Width = 438.000000000000000000
+    Size.Height = 598.000000000000000000
+  end
+end
