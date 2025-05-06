@@ -80,7 +80,7 @@ uses
 
 begin
   Application.Initialize;
-  TStyleManager.TrySetStyle('Windows10 SlateGray');
+  TStyleManager.TrySetStyle('Windows11 Polar Dark');
   Application.Title := 'Meeting Organizer';
   Application.MainFormOnTaskBar := True;
   Application.CreateForm(TMainForm, MainForm);

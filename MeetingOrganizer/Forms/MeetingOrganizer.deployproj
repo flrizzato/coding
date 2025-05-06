@@ -4,458 +4,38 @@
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>
     <PropertyGroup/>
-    <ItemGroup Condition="'$(Platform)'=='Win64'">
-        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\license.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
-            <RemoteName>license.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\intl\gdsintl.dll" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer\interbase\intl\</RemoteDir>
-            <RemoteName>gdsintl.dll</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_iblite.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer\interbase\license\</RemoteDir>
-            <RemoteName>reg_iblite.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="..\MeetingOrganizer.exe" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\</RemoteDir>
-            <RemoteName>MeetingOrganizer.exe</RemoteName>
-            <DeployClass>ProjectOutput</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-            <Required>True</Required>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\ADMIN.IB" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
-            <RemoteName>ADMIN.IB</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\oss_license_notice.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
-            <RemoteName>oss_license_notice.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="C:\Users\ferna\Pictures\Logos\UWP\Square44x44Logo.scale-100.png" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\Assets\</RemoteDir>
-            <RemoteName>Logo44x44.png</RemoteName>
-            <DeployClass>UWP_DelphiLogo44</DeployClass>
-            <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="..\MEETINGORGANIZER.IB" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\</RemoteDir>
-            <RemoteName>MEETINGORGANIZER.IB</RemoteName>
-            <DeployClass>ProjectFile</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\interbase.msg" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
-            <RemoteName>interbase.msg</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\win64_togo\ibtogo64.dll" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer\</RemoteDir>
-            <RemoteName>ibtogo64.dll</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\win64_togo\ibtogo64.dll" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\</RemoteDir>
-            <RemoteName>ibtogo64.dll</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\license.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
-            <RemoteName>license.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_iblite.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\interbase\license\</RemoteDir>
-            <RemoteName>reg_iblite.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\interbase.msg" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
-            <RemoteName>interbase.msg</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\intl\gdsintl.dll" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\interbase\intl\</RemoteDir>
-            <RemoteName>gdsintl.dll</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\ADMIN.IB" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
-            <RemoteName>ADMIN.IB</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="C:\Users\ferna\Pictures\Logos\UWP\Square150x150Logo.scale-100.png" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\Assets\</RemoteDir>
-            <RemoteName>Logo150x150.png</RemoteName>
-            <DeployClass>UWP_DelphiLogo150</DeployClass>
-            <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\oss_license_notice.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
-            <RemoteName>oss_license_notice.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="..\AppxManifest.xml" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\</RemoteDir>
-            <RemoteName>AppxManifest.xml</RemoteName>
-            <DeployClass>ProjectUWPManifest</DeployClass>
-            <Operation>1</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer\interbase\license\</RemoteDir>
-            <RemoteName>reg_ibtogo.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\interbase\license\</RemoteDir>
-            <RemoteName>reg_ibtogo.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-    </ItemGroup>
-    <ItemGroup Condition="'$(Platform)'=='iOSDevice64'">
-        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\license\</RemoteDir>
-            <RemoteName>reg_ibtogo.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\license.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>license.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\oss_license_notice.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>oss_license_notice.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\interbase.msg" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>interbase.msg</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\license\</RemoteDir>
-            <RemoteName>reg_ibtogo.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\ibconfig" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>ibconfig</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\interbase.msg" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>interbase.msg</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_iblite.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\license\</RemoteDir>
-            <RemoteName>reg_iblite.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\license.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>license.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_iblite.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\license\</RemoteDir>
-            <RemoteName>reg_iblite.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\admin.ib" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>admin.ib</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\ibconfig" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>ibconfig</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\admin.ib" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>admin.ib</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\oss_license_notice.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>oss_license_notice.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-    </ItemGroup>
-    <ItemGroup Condition="'$(Platform)'=='iOSDevice32'">
-        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\license\</RemoteDir>
-            <RemoteName>reg_ibtogo.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_device\interbase\interbase.msg" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>interbase.msg</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_device\interbase\admin.ib" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>admin.ib</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_iblite.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\license\</RemoteDir>
-            <RemoteName>reg_iblite.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_device\interbase\license.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>license.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_iblite.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\license\</RemoteDir>
-            <RemoteName>reg_iblite.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_device\interbase\admin.ib" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>admin.ib</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_device\interbase\oss_license_notice.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>oss_license_notice.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_device\interbase\license.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>license.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_device\interbase\ibconfig" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>ibconfig</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_device\interbase\interbase.msg" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>interbase.msg</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_device\interbase\oss_license_notice.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>oss_license_notice.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\license\</RemoteDir>
-            <RemoteName>reg_ibtogo.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_device\interbase\ibconfig" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>ibconfig</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-    </ItemGroup>
+    <ItemGroup Condition="'$(Platform)'=='OSX64'"/>
     <ItemGroup Condition="'$(Platform)'=='Win32'">
-        <DeployFile Include="$(IBREDISTDIR)\win32_togo\interbase\oss_license_notice.txt" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="$(IBREDISTDIR)\win32_togo\interbase\license.txt" Condition="'$(Config)'=='Debug'">
             <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
-            <RemoteName>oss_license_notice.txt</RemoteName>
+            <RemoteName>license.txt</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win32_togo\interbase\license.txt" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
+            <RemoteName>license.txt</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win32_togo\interbase\interbase.msg" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
+            <RemoteName>interbase.msg</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win32_togo\interbase\interbase.msg" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
+            <RemoteName>interbase.msg</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -471,9 +51,36 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win32_togo\interbase\intl\gdsintl.dll" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer\interbase\intl\</RemoteDir>
+            <RemoteName>gdsintl.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="$(IBREDISTDIR)\win32_togo\interbase\ADMIN.IB" Condition="'$(Config)'=='Debug'">
             <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
             <RemoteName>ADMIN.IB</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win32_togo\interbase\ADMIN.IB" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
+            <RemoteName>ADMIN.IB</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win32_togo\interbase\oss_license_notice.txt" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
+            <RemoteName>oss_license_notice.txt</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -498,16 +105,25 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\win32_togo\interbase\interbase.msg" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
-            <RemoteName>interbase.msg</RemoteName>
+        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\interbase\license\</RemoteDir>
+            <RemoteName>reg_ibtogo.txt</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="$(IBREDISTDIR)\reg_iblite.txt" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\interbase\license\</RemoteDir>
+            <RemoteName>reg_iblite.txt</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Debug'">
             <RemoteDir>MeetingOrganizer\interbase\license\</RemoteDir>
             <RemoteName>reg_ibtogo.txt</RemoteName>
             <DeployClass>File</DeployClass>
@@ -534,281 +150,19 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_iblite.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\interbase\license\</RemoteDir>
-            <RemoteName>reg_iblite.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\win32_togo\interbase\license.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
-            <RemoteName>license.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\win32_togo\interbase\interbase.msg" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
-            <RemoteName>interbase.msg</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\win32_togo\interbase\ADMIN.IB" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
-            <RemoteName>ADMIN.IB</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\win32_togo\interbase\intl\gdsintl.dll" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer\interbase\intl\</RemoteDir>
-            <RemoteName>gdsintl.dll</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer\interbase\license\</RemoteDir>
-            <RemoteName>reg_ibtogo.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\win32_togo\interbase\license.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
-            <RemoteName>license.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
     </ItemGroup>
-    <ItemGroup Condition="'$(Platform)'=='OSX32'">
-        <DeployFile Include="$(IBREDISTDIR)\reg_iblite.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\Contents\Resources\StartUp\interbase\license\</RemoteDir>
-            <RemoteName>reg_iblite.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\osx32_togo\interbase\license.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\Contents\Resources\StartUp\interbase\</RemoteDir>
-            <RemoteName>license.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\osx32_togo\interbase\license.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\Contents\Resources\StartUp\interbase\</RemoteDir>
-            <RemoteName>license.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_iblite.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\Contents\Resources\StartUp\interbase\license\</RemoteDir>
-            <RemoteName>reg_iblite.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\osx32_togo\interbase\interbase.msg" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\Contents\Resources\StartUp\interbase\</RemoteDir>
-            <RemoteName>interbase.msg</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\Contents\Resources\StartUp\interbase\license\</RemoteDir>
-            <RemoteName>reg_ibtogo.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\osx32_togo\libibtogo.dylib" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\Contents\MacOS\</RemoteDir>
-            <RemoteName>libibtogo.dylib</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\osx32_togo\interbase\ibconfig" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\Contents\Resources\StartUp\interbase\</RemoteDir>
-            <RemoteName>ibconfig</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\osx32_togo\interbase\ibconfig" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\Contents\Resources\StartUp\interbase\</RemoteDir>
-            <RemoteName>ibconfig</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\osx32_togo\interbase\admin.ib" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\Contents\Resources\StartUp\interbase\</RemoteDir>
-            <RemoteName>admin.ib</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\osx32_togo\interbase\intl\gdsintl" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\Contents\Resources\StartUp\interbase\intl\</RemoteDir>
-            <RemoteName>gdsintl</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\Contents\Resources\StartUp\interbase\license\</RemoteDir>
-            <RemoteName>reg_ibtogo.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\osx32_togo\interbase\admin.ib" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\Contents\Resources\StartUp\interbase\</RemoteDir>
-            <RemoteName>admin.ib</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\osx32_togo\libibtogo.dylib" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\Contents\MacOS\</RemoteDir>
-            <RemoteName>libibtogo.dylib</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\osx32_togo\interbase\interbase.msg" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\Contents\Resources\StartUp\interbase\</RemoteDir>
-            <RemoteName>interbase.msg</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\osx32_togo\interbase\oss_license_notice.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\Contents\Resources\StartUp\interbase\</RemoteDir>
-            <RemoteName>oss_license_notice.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\osx32_togo\interbase\oss_license_notice.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\Contents\Resources\StartUp\interbase\</RemoteDir>
-            <RemoteName>oss_license_notice.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\osx32_togo\interbase\intl\gdsintl" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\Contents\Resources\StartUp\interbase\intl\</RemoteDir>
-            <RemoteName>gdsintl</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-    </ItemGroup>
+    <ItemGroup Condition="'$(Platform)'=='Android64'"/>
     <ItemGroup Condition="'$(Platform)'=='Android'">
-        <DeployFile Include="$(IBREDISTDIR)\android\interbase\ibconfig" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer\assets\internal\interbase\</RemoteDir>
-            <RemoteName>ibconfig</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\android\interbase\interbase.msg" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\assets\internal\interbase\</RemoteDir>
-            <RemoteName>interbase.msg</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\android\interbase\ibconfig" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\assets\internal\interbase\</RemoteDir>
-            <RemoteName>ibconfig</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\android\interbase\admin.ib" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\assets\internal\interbase\</RemoteDir>
-            <RemoteName>admin.ib</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\android\interbase\interbase.msg" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer\assets\internal\interbase\</RemoteDir>
-            <RemoteName>interbase.msg</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
         <DeployFile Include="$(IBREDISTDIR)\reg_iblite.txt" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\assets\internal\interbase\license\</RemoteDir>
+            <RemoteName>reg_iblite.txt</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\reg_iblite.txt" Condition="'$(Config)'=='Debug'">
             <RemoteDir>MeetingOrganizer\assets\internal\interbase\license\</RemoteDir>
             <RemoteName>reg_iblite.txt</RemoteName>
             <DeployClass>File</DeployClass>
@@ -835,6 +189,24 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\assets\internal\interbase\license\</RemoteDir>
+            <RemoteName>reg_ibtogo.txt</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer\assets\internal\interbase\license\</RemoteDir>
+            <RemoteName>reg_ibtogo.txt</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
         <DeployFile Include="$(IBREDISTDIR)\android\interbase\license.txt" Condition="'$(Config)'=='Debug'">
             <RemoteDir>MeetingOrganizer\assets\internal\interbase\</RemoteDir>
             <RemoteName>license.txt</RemoteName>
@@ -853,27 +225,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer\assets\internal\interbase\license\</RemoteDir>
-            <RemoteName>reg_ibtogo.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer\assets\internal\interbase\license\</RemoteDir>
-            <RemoteName>reg_ibtogo.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_iblite.txt" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer\assets\internal\interbase\license\</RemoteDir>
-            <RemoteName>reg_iblite.txt</RemoteName>
+        <DeployFile Include="$(IBREDISTDIR)\android\interbase\admin.ib" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\assets\internal\interbase\</RemoteDir>
+            <RemoteName>admin.ib</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -889,10 +243,290 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\android\interbase\ibconfig" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer\assets\internal\interbase\</RemoteDir>
+            <RemoteName>ibconfig</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\android\interbase\ibconfig" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\assets\internal\interbase\</RemoteDir>
+            <RemoteName>ibconfig</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\android\interbase\interbase.msg" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\assets\internal\interbase\</RemoteDir>
+            <RemoteName>interbase.msg</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\android\interbase\interbase.msg" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer\assets\internal\interbase\</RemoteDir>
+            <RemoteName>interbase.msg</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
     </ItemGroup>
-    <ItemGroup Condition="'$(Platform)'=='iOSSimulator'">
-        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\license\</RemoteDir>
+    <ItemGroup Condition="'$(Platform)'=='Win64'">
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uMeetingDM\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uUserDM\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uAbstractControl\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uAbstractForm\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uAbstractDataModule\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\intl\gdsintl.dll" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer\interbase\intl\</RemoteDir>
+            <RemoteName>gdsintl.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\intl\gdsintl.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\interbase\intl\</RemoteDir>
+            <RemoteName>gdsintl.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="..\MeetingOrganizer.exe" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>MeetingOrganizer.exe</RemoteName>
+            <DeployClass>ProjectOutput</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+            <Required>True</Required>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uMeetingControl\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(ProjectName).Artwork\Windows\Uwp_44.png" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\Assets\</RemoteDir>
+            <RemoteName>Logo44x44.png</RemoteName>
+            <DeployClass>UWP_DelphiLogo44</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\Assest\</RemoteDir>
+            <RemoteName>delphi_UwpDefault_44.png</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer\Assest\</RemoteDir>
+            <RemoteName>delphi_UwpDefault_44.png</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uRoomForm\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uUserControl\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\MeetingOrganizer\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win64_togo\ibtogo64.dll" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>ibtogo64.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win64_togo\ibtogo64.dll" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>ibtogo64.dll</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uAbstractDataForm\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uRoomControl\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\ADMIN.IB" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
+            <RemoteName>ADMIN.IB</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\ADMIN.IB" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
+            <RemoteName>ADMIN.IB</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uMsgControl\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uMeetingForm\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uUserLoginForm\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uMainDM\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uMeetingParticipantForm\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer\interbase\license\</RemoteDir>
             <RemoteName>reg_ibtogo.txt</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
@@ -900,15 +534,189 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_sim\interbase\admin.ib" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>admin.ib</RemoteName>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uMeetingAddForm\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uUserForm\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uMainForm\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uRecError\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="..\MEETINGORGANIZER.IB" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>MEETINGORGANIZER.IB</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\Assest\</RemoteDir>
+            <RemoteName>delphi_UwpDefault_150.png</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\license.txt" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
+            <RemoteName>license.txt</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\license.txt" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
+            <RemoteName>license.txt</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\interbase.msg" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
+            <RemoteName>interbase.msg</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\reg_iblite.txt" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer\interbase\license\</RemoteDir>
+            <RemoteName>reg_iblite.txt</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\reg_iblite.txt" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\interbase\license\</RemoteDir>
+            <RemoteName>reg_iblite.txt</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\interbase.msg" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
+            <RemoteName>interbase.msg</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uAbstractDataTabForm\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer\Assest\</RemoteDir>
+            <RemoteName>delphi_UwpDefault_150.png</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uRoomDM\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\oss_license_notice.txt" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
+            <RemoteName>oss_license_notice.txt</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\win64_togo\interbase\oss_license_notice.txt" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\interbase\</RemoteDir>
+            <RemoteName>oss_license_notice.txt</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="ModelSupport_MeetingOrganizer\uMeetingTimeRoomForm\default.txaPackage" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>default.txaPackage</RemoteName>
+            <DeployClass>ProjectFile</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(ProjectName).Artwork\Windows\Uwp_150.png" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\Assets\</RemoteDir>
+            <RemoteName>Logo150x150.png</RemoteName>
+            <DeployClass>UWP_DelphiLogo150</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="..\AppxManifest.xml" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer\</RemoteDir>
+            <RemoteName>AppxManifest.xml</RemoteName>
+            <DeployClass>ProjectUWPManifest</DeployClass>
+            <Operation>1</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+    </ItemGroup>
+    <ItemGroup Condition="'$(Platform)'=='OSXARM64'"/>
+    <ItemGroup Condition="'$(Platform)'=='iOSDevice64'">
         <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Debug'">
             <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\license\</RemoteDir>
             <RemoteName>reg_ibtogo.txt</RemoteName>
@@ -918,43 +726,61 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\reg_iblite.txt" Condition="'$(Config)'=='Debug'">
+        <DeployFile Include="$(IBREDISTDIR)\reg_ibtogo.txt" Condition="'$(Config)'=='Release'">
             <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\license\</RemoteDir>
-            <RemoteName>reg_iblite.txt</RemoteName>
+            <RemoteName>reg_ibtogo.txt</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_sim\libibtogo.dylib" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\</RemoteDir>
-            <RemoteName>libibtogo.dylib</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_sim\libibtogo.dylib" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\</RemoteDir>
-            <RemoteName>libibtogo.dylib</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_sim\interbase\ibconfig" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\oss_license_notice.txt" Condition="'$(Config)'=='Release'">
             <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>ibconfig</RemoteName>
+            <RemoteName>oss_license_notice.txt</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_sim\interbase\license.txt" Condition="'$(Config)'=='Debug'">
+        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\oss_license_notice.txt" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
+            <RemoteName>oss_license_notice.txt</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\admin.ib" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
+            <RemoteName>admin.ib</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\admin.ib" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
+            <RemoteName>admin.ib</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\interbase.msg" Condition="'$(Config)'=='Release'">
+            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
+            <RemoteName>interbase.msg</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\license.txt" Condition="'$(Config)'=='Debug'">
             <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
             <RemoteName>license.txt</RemoteName>
             <DeployClass>File</DeployClass>
@@ -963,16 +789,7 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_sim\interbase\oss_license_notice.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>oss_license_notice.txt</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_sim\interbase\interbase.msg" Condition="'$(Config)'=='Release'">
+        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\interbase.msg" Condition="'$(Config)'=='Debug'">
             <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
             <RemoteName>interbase.msg</RemoteName>
             <DeployClass>File</DeployClass>
@@ -981,18 +798,27 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_sim\interbase\interbase.msg" Condition="'$(Config)'=='Debug'">
+        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\license.txt" Condition="'$(Config)'=='Release'">
             <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>interbase.msg</RemoteName>
+            <RemoteName>license.txt</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_sim\interbase\oss_license_notice.txt" Condition="'$(Config)'=='Debug'">
+        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\ibconfig" Condition="'$(Config)'=='Release'">
             <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>oss_license_notice.txt</RemoteName>
+            <RemoteName>ibconfig</RemoteName>
+            <DeployClass>File</DeployClass>
+            <Operation>0</Operation>
+            <LocalCommand/>
+            <RemoteCommand/>
+            <Overwrite>True</Overwrite>
+        </DeployFile>
+        <DeployFile Include="$(IBREDISTDIR)\ios64_device\interbase\ibconfig" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
+            <RemoteName>ibconfig</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1008,27 +834,9 @@
             <RemoteCommand/>
             <Overwrite>True</Overwrite>
         </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_sim\interbase\ibconfig" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>ibconfig</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_sim\interbase\admin.ib" Condition="'$(Config)'=='Debug'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>admin.ib</RemoteName>
-            <DeployClass>File</DeployClass>
-            <Operation>0</Operation>
-            <LocalCommand/>
-            <RemoteCommand/>
-            <Overwrite>True</Overwrite>
-        </DeployFile>
-        <DeployFile Include="$(IBREDISTDIR)\ios_sim\interbase\license.txt" Condition="'$(Config)'=='Release'">
-            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\</RemoteDir>
-            <RemoteName>license.txt</RemoteName>
+        <DeployFile Include="$(IBREDISTDIR)\reg_iblite.txt" Condition="'$(Config)'=='Debug'">
+            <RemoteDir>MeetingOrganizer.app\StartUp\Documents\interbase\license\</RemoteDir>
+            <RemoteName>reg_iblite.txt</RemoteName>
             <DeployClass>File</DeployClass>
             <Operation>0</Operation>
             <LocalCommand/>
@@ -1036,4 +844,7 @@
             <Overwrite>True</Overwrite>
         </DeployFile>
     </ItemGroup>
+    <ItemGroup Condition="'$(Platform)'=='iOSSimARM64'"/>
+    <ItemGroup Condition="'$(Platform)'=='Win64x'"/>
+    <ItemGroup Condition="'$(Platform)'=='Linux64'"/>
 </Project>

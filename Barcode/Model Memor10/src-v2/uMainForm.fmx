@@ -1,0 +1,92 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  ActiveControl = memLog
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 3
+  object ToolBar1: TToolBar
+    Size.Width = 640.000000000000000000
+    Size.Height = 48.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object lblTitle: TLabel
+      Align = Center
+      AutoSize = True
+      StyledSettings = [Family, Size, FontColor]
+      Size.Width = 165.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.WordWrap = False
+      Text = 'DataLogic Memor10'
+    end
+    object butStart: TButton
+      Align = Left
+      StyledSettings = [Family, Size, FontColor]
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Position.X = 5.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 80.000000000000000000
+      Size.Height = 38.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'cornerbuttonstyle'
+      TabOrder = 0
+      Text = 'Start'
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TintColor = claLightskyblue
+      OnClick = butStartClick
+    end
+    object butClear: TButton
+      Align = Right
+      StyledSettings = [Family, Size, FontColor]
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Position.X = 555.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 80.000000000000000000
+      Size.Height = 38.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Clear'
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TintColor = claLightcoral
+      OnClick = butClearClick
+    end
+  end
+  object Layout1: TLayout
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 432.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object memLog: TMemo
+      Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+      DataDetectorTypes = []
+      StyledSettings = [Size, Style, FontColor]
+      TextSettings.Font.Family = 'Courier'
+      Align = Client
+      ControlType = Platform
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Size.Width = 630.000000000000000000
+      Size.Height = 422.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Viewport.Width = 622.000000000000000000
+      Viewport.Height = 414.000000000000000000
+    end
+  end
+end
