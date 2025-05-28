@@ -88,7 +88,7 @@ type
     procedure acTestSQLExecute(Sender: TObject);
   private
     { Private declarations }
-    aSysJobs: TDictionary<string, TList<TThread>>;
+    aSysJobs: TOrderedDictionary<string, TList<TThread>>;
     procedure LogThis(fMessage: string);
   public
     { Public declarations }
@@ -126,7 +126,8 @@ begin
   begin
     aTaskList := aSysJobs.ExtractPair('job#' + nItemIndex.ToString).Value;
     for fThread in aTaskList do
-      fThread.Terminate;
+      if not fThread.Finished then
+        fThread.Terminate;
   end;
 end;
 
@@ -161,8 +162,7 @@ begin
 
     for var i := 1 to nConcurrentSessions do
     begin
-      var
-      fThread := TThread.CreateAnonymousThread(
+      var fThread := TThread.CreateAnonymousThread(
         procedure()
         var
           fMainDM: TMainDM;
@@ -213,11 +213,11 @@ begin
               fMainDM.FDCnn.Open;
               while True do
               begin
-                if TThread.CurrentThread.CheckTerminated then
-                  Exit;
                 fMainDM.FDQry.Close;
                 if System.DebugHook > 0 then
                   LogThis(sCommandText);
+                if TThread.CurrentThread.CheckTerminated then
+                  Exit;
                 fMainDM.FDQry.Open(sCommandText);
                 Sleep(nExecutionInterval);
               end;
@@ -231,6 +231,7 @@ begin
             fMainDM.Free;
           end;
         end);
+      fThread.FreeOnTerminate := False;
       fThread.Start;
       aTaskList.Add(fThread);
     end;
@@ -383,7 +384,7 @@ end;
 
 procedure TMainForm.FormShow(Sender: TObject);
 begin
-  aSysJobs := TDictionary < string, TList < TThread >>.Create;
+  aSysJobs := TOrderedDictionary < string, TList < TThread > >.Create;
 
   FDManager.GetConnectionNames(cmbConnections.Items);
 

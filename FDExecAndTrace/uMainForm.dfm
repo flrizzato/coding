@@ -84,7 +84,7 @@ object MainForm: TMainForm
         object Label1: TLabel
           AlignWithMargins = True
           Left = 13
-          Top = 50
+          Top = 40
           Width = 648
           Height = 130
           Margins.Left = 13
