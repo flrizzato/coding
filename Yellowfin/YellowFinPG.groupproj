@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{3DDBAEE9-8968-4115-8D40-7FA495ECE9FD}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="FMX\YellowFinFMX.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="VCL\YellowFinVCL.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="YFMobile\YFMobile101.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="YellowFinFMX">
+        <MSBuild Projects="FMX\YellowFinFMX.dproj"/>
+    </Target>
+    <Target Name="YellowFinFMX:Clean">
+        <MSBuild Projects="FMX\YellowFinFMX.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="YellowFinFMX:Make">
+        <MSBuild Projects="FMX\YellowFinFMX.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="YellowFinVCL">
+        <MSBuild Projects="VCL\YellowFinVCL.dproj"/>
+    </Target>
+    <Target Name="YellowFinVCL:Clean">
+        <MSBuild Projects="VCL\YellowFinVCL.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="YellowFinVCL:Make">
+        <MSBuild Projects="VCL\YellowFinVCL.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="YFMobile101">
+        <MSBuild Projects="YFMobile\YFMobile101.dproj"/>
+    </Target>
+    <Target Name="YFMobile101:Clean">
+        <MSBuild Projects="YFMobile\YFMobile101.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="YFMobile101:Make">
+        <MSBuild Projects="YFMobile\YFMobile101.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="YellowFinFMX;YellowFinVCL;YFMobile101"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="YellowFinFMX:Clean;YellowFinVCL:Clean;YFMobile101:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="YellowFinFMX:Make;YellowFinVCL:Make;YFMobile101:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

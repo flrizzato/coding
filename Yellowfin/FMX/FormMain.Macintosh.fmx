@@ -1,0 +1,40 @@
+inherited MainForm_Macintosh: TMainForm_Macintosh
+  DesignerMasterStyle = 0
+  inherited MultiView1: TMultiView
+    inherited background: TRectangle
+      inherited imgYellowFinLogo: TImage
+        MultiResBitmap.Height = 48
+        MultiResBitmap.Width = 181
+      end
+    end
+  end
+  inherited loMain: TLayout
+    inherited tcMain: TTabControl
+      Sizes = (
+        1072s
+        534s
+        1072s
+        534s
+        1072s
+        534s
+        1072s
+        534s)
+      inherited tabSettings: TTabItem
+        ExplicitSize.cx = 63.000000000000000000
+        ExplicitSize.cy = 26.000000000000000000
+      end
+      inherited tabReports: TTabItem
+        ExplicitSize.cx = 61.000000000000000000
+        ExplicitSize.cy = 26.000000000000000000
+      end
+      inherited tabUsers: TTabItem
+        ExplicitSize.cx = 49.000000000000000000
+        ExplicitSize.cy = 26.000000000000000000
+      end
+      inherited tabSingleSignon: TTabItem
+        ExplicitSize.cx = 98.000000000000000000
+        ExplicitSize.cy = 26.000000000000000000
+      end
+    end
+  end
+end

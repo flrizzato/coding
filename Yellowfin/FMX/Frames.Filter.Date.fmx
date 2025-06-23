@@ -1,0 +1,18 @@
+inherited FrameFilterDate: TFrameFilterDate
+  inherited loFilter: TLayout
+    inherited loFilterValue: TLayout
+      object DateEdit: TDateEdit
+        Date = 44763.000000000000000000
+        OnChange = DateEditChange
+        Align = Left
+        Padding.Top = 4.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 129.000000000000000000
+        Size.Height = 34.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+      end
+    end
+  end
+end

@@ -1,0 +1,35 @@
+inherited FrameFilterComboBox: TFrameFilterComboBox
+  inherited loFilter: TLayout
+    inherited loFilterValue: TLayout
+      object cbValues: TComboBox
+        Align = Client
+        Size.Width = 246.000000000000000000
+        Size.Height = 34.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        OnChange = cbValuesChange
+      end
+    end
+  end
+  object BindSourceDB1: TBindSourceDB
+    DataSet = mtFilterValues
+    ScopeMappings = <>
+    Left = 184
+    Top = 8
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 244
+    Top = 5
+    object LinkListControlToField1: TLinkListControlToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      FieldName = 'FilterText'
+      Control = cbValues
+      FillExpressions = <>
+      FillHeaderExpressions = <>
+      FillBreakGroups = <>
+    end
+  end
+end

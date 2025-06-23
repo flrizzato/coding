@@ -1,0 +1,78 @@
+object FrameYellowfinBrowser: TFrameYellowfinBrowser
+  Size.Width = 895.000000000000000000
+  Size.Height = 514.000000000000000000
+  Size.PlatformDefault = False
+  object WebBrowser: TWebBrowser
+    Align = Client
+    Size.Width = 895.000000000000000000
+    Size.Height = 474.000000000000000000
+    Size.PlatformDefault = False
+    WindowsEngine = EdgeIfAvailable
+  end
+  object ToolBar1: TToolBar
+    Size.Width = 895.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object Label1: TLabel
+      Align = Contents
+      Size.Width = 895.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.HorzAlign = Center
+      Text = 'Yellowfin Web Embedded'
+      TabOrder = 0
+      object btnRefresh: TButton
+        Action = actHome
+        Align = Right
+        Enabled = True
+        ImageIndex = -1
+        Position.X = 827.000000000000000000
+        Size.Width = 68.000000000000000000
+        Size.Height = 40.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'refreshtoolbutton'
+        TabOrder = 4
+      end
+      object cbEntryPoint: TComboBox
+        Items.Strings = (
+          'Dasboard'
+          'Browse'
+          'BrowseTab'
+          'CreateReport'
+          'Administration'
+          'Timeline'
+          'Signal')
+        ItemIndex = 0
+        Margins.Top = 10.000000000000000000
+        Margins.Bottom = 10.000000000000000000
+        Position.X = 73.000000000000000000
+        Position.Y = 10.000000000000000000
+        Size.Width = 140.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 5
+        OnChange = actHomeExecute
+      end
+      object LblEntryPoint: TLabel
+        Align = Left
+        AutoSize = True
+        Margins.Left = 10.000000000000000000
+        Position.X = 10.000000000000000000
+        Size.Width = 63.000000000000000000
+        Size.Height = 40.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Access to:'
+        TabOrder = 6
+      end
+    end
+  end
+  object ActionList1: TActionList
+    Left = 456
+    Top = 96
+    object actHome: TAction
+      Text = 'Home'
+      OnExecute = actHomeExecute
+    end
+  end
+end

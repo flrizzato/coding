@@ -1,0 +1,49 @@
+inherited FrameFilterNumber: TFrameFilterNumber
+  inherited loFilter: TLayout
+    inherited loFilterValue: TLayout
+      object sbValue: TSpinBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Client
+        TabOrder = 0
+        Cursor = crIBeam
+        Size.Width = 246.000000000000000000
+        Size.Height = 34.000000000000000000
+        Size.PlatformDefault = False
+        OnChange = sbValueChange
+      end
+    end
+  end
+  object BindSourceDB1: TBindSourceDB
+    DataSet = mtReportSchema
+    ScopeMappings = <>
+    Left = 160
+    Top = 16
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 20
+    Top = 5
+    object LinkPropertyToFieldDecimalDigits: TLinkPropertyToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      FieldName = 'NumberOfDecimals'
+      Component = sbValue
+      ComponentProperty = 'DecimalDigits'
+    end
+    object LinkPropertyToFieldMin: TLinkPropertyToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      FieldName = 'MinimumValue'
+      Component = sbValue
+      ComponentProperty = 'Min'
+    end
+    object LinkPropertyToFieldMax: TLinkPropertyToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB1
+      FieldName = 'MaximumValue'
+      Component = sbValue
+      ComponentProperty = 'Max'
+    end
+  end
+end

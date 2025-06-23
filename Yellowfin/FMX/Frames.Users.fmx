@@ -1,0 +1,207 @@
+object FrameUsers: TFrameUsers
+  Size.Width = 673.000000000000000000
+  Size.Height = 427.000000000000000000
+  Size.PlatformDefault = False
+  object tcUsers: TTabControl
+    Align = Client
+    Size.Width = 673.000000000000000000
+    Size.Height = 427.000000000000000000
+    Size.PlatformDefault = False
+    TabIndex = 0
+    TabOrder = 0
+    TabPosition = PlatformDefault
+    Sizes = (
+      673s
+      401s
+      673s
+      401s)
+    object tabValidateUser: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 63.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Validate'
+      ExplicitSize.cx = 69.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object Layout1: TLayout
+        Align = Top
+        Margins.Top = 10.000000000000000000
+        Position.Y = 10.000000000000000000
+        Size.Width = 673.000000000000000000
+        Size.Height = 391.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        object edtUserID: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Top
+          TabOrder = 1
+          Position.X = 10.000000000000000000
+          Position.Y = 17.000000000000000000
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Size.Width = 653.000000000000000000
+          Size.Height = 34.000000000000000000
+          Size.PlatformDefault = False
+          OnEnter = UpdateValidateUser
+        end
+        object edtUserPassword: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Top
+          TabOrder = 2
+          Password = True
+          Position.X = 10.000000000000000000
+          Position.Y = 68.000000000000000000
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Size.Width = 653.000000000000000000
+          Size.Height = 34.000000000000000000
+          Size.PlatformDefault = False
+          OnEnter = UpdateValidateUser
+        end
+        object Label4: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Size.Width = 653.000000000000000000
+          Size.Height = 17.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'System User Name'
+          TabOrder = 33
+        end
+        object Label5: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Position.Y = 51.000000000000000000
+          Size.Width = 653.000000000000000000
+          Size.Height = 17.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'System Password'
+          TabOrder = 37
+        end
+        object btnValidateUser: TButton
+          Align = Top
+          Margins.Left = 30.000000000000000000
+          Margins.Top = 10.000000000000000000
+          Margins.Right = 30.000000000000000000
+          Margins.Bottom = 20.000000000000000000
+          Position.X = 30.000000000000000000
+          Position.Y = 112.000000000000000000
+          Size.Width = 613.000000000000000000
+          Size.Height = 33.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Text = 'Validate User'
+          OnClick = btnValidateUserClick
+          object igeValidUser: TInnerGlowEffect
+            Softness = 0.400000005960464500
+            GlowColor = claRed
+            Opacity = 0.899999976158142100
+            Enabled = False
+          end
+        end
+      end
+    end
+    object tabUpdatePassword: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 59.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Update'
+      ExplicitSize.cx = 69.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object Layout2: TLayout
+        Align = Top
+        Margins.Top = 10.000000000000000000
+        Position.Y = 10.000000000000000000
+        Size.Width = 673.000000000000000000
+        Size.Height = 391.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        object edtUpdatePasswordUserID: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Top
+          TabOrder = 1
+          Position.X = 10.000000000000000000
+          Position.Y = 17.000000000000000000
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Size.Width = 653.000000000000000000
+          Size.Height = 34.000000000000000000
+          Size.PlatformDefault = False
+          OnEnter = UpdateChangePassword
+        end
+        object edtUpdatePasswordNewPassword: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Top
+          TabOrder = 2
+          Password = True
+          Position.X = 10.000000000000000000
+          Position.Y = 68.000000000000000000
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Size.Width = 653.000000000000000000
+          Size.Height = 34.000000000000000000
+          Size.PlatformDefault = False
+          OnEnter = UpdateChangePassword
+        end
+        object Label1: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Size.Width = 653.000000000000000000
+          Size.Height = 17.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'System User Name'
+          TabOrder = 33
+        end
+        object Label2: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Position.Y = 51.000000000000000000
+          Size.Width = 653.000000000000000000
+          Size.Height = 17.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'New Password'
+          TabOrder = 37
+        end
+        object btnUpdatePassword: TButton
+          Align = Top
+          Margins.Left = 30.000000000000000000
+          Margins.Top = 10.000000000000000000
+          Margins.Right = 30.000000000000000000
+          Margins.Bottom = 20.000000000000000000
+          Position.X = 30.000000000000000000
+          Position.Y = 112.000000000000000000
+          Size.Width = 613.000000000000000000
+          Size.Height = 33.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Text = 'Update Password'
+          OnClick = btnUpdatePasswordClick
+          object igeUpdatePassword: TInnerGlowEffect
+            Softness = 0.400000005960464500
+            GlowColor = claRed
+            Opacity = 0.899999976158142100
+            Enabled = False
+          end
+        end
+      end
+    end
+  end
+end

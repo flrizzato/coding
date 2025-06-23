@@ -1,0 +1,151 @@
+object FrameFilterBase: TFrameFilterBase
+  Size.Width = 343.000000000000000000
+  Size.Height = 59.000000000000000000
+  Size.PlatformDefault = False
+  object loFilter: TLayout
+    Align = Client
+    Size.Width = 343.000000000000000000
+    Size.Height = 42.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object loSwitch: TLayout
+      Align = Left
+      Size.Width = 89.000000000000000000
+      Size.Height = 42.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object swEnabled: TSwitch
+        Align = Center
+        IsChecked = False
+        Size.Width = 65.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+      end
+    end
+    object loFilterValue: TLayout
+      Align = Client
+      Padding.Left = 4.000000000000000000
+      Padding.Top = 4.000000000000000000
+      Padding.Right = 4.000000000000000000
+      Padding.Bottom = 4.000000000000000000
+      Size.Width = 254.000000000000000000
+      Size.Height = 42.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+    end
+  end
+  object lblTitle: TLabel
+    Align = Top
+    Size.Width = 343.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Filter Name'
+    TabOrder = 1
+  end
+  object mtFilterValues: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 200
+    Top = 67
+    object mtFilterValuesFilterID: TIntegerField
+      FieldName = 'FilterID'
+    end
+    object mtFilterValuesFilterText: TStringField
+      FieldName = 'FilterText'
+      Size = 255
+    end
+    object mtFilterValuesFilterValue: TStringField
+      FieldName = 'FilterValue'
+    end
+  end
+  object mtReportSchema: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 120
+    Top = 67
+    object mtReportSchemaFieldID: TIntegerField
+      FieldName = 'FieldID'
+    end
+    object mtReportSchemacolumnName: TStringField
+      FieldName = 'columnName'
+      Size = 255
+    end
+    object mtReportSchemadataType: TStringField
+      FieldName = 'dataType'
+      Size = 50
+    end
+    object mtReportSchemadisplayName: TStringField
+      FieldName = 'displayName'
+      Size = 255
+    end
+    object mtReportSchemadefaultValue1: TStringField
+      FieldName = 'defaultValue1'
+      Size = 255
+    end
+    object mtReportSchemadefaultValue2: TStringField
+      FieldName = 'defaultValue2'
+      Size = 255
+    end
+    object mtReportSchemafilterID: TIntegerField
+      FieldName = 'filterID'
+    end
+    object mtReportSchemaAllowPrompt: TBooleanField
+      FieldName = 'AllowPrompt'
+    end
+    object mtReportSchemaCachedValues: TBooleanField
+      FieldName = 'CachedValues'
+    end
+    object mtReportSchemaFilterDisplayType: TStringField
+      FieldName = 'FilterDisplayType'
+      Size = 100
+    end
+    object mtReportSchemareportid: TIntegerField
+      FieldName = 'reportid'
+    end
+    object mtReportSchemaNumberOfDecimals: TIntegerField
+      FieldName = 'NumberOfDecimals'
+    end
+    object mtReportSchemaMinimumValue: TFloatField
+      FieldName = 'MinimumValue'
+    end
+    object mtReportSchemaMaximumValue: TFloatField
+      FieldName = 'MaximumValue'
+    end
+  end
+  object BindSourceDB2: TBindSourceDB
+    DataSet = mtReportSchema
+    ScopeMappings = <>
+    Left = 160
+    Top = 16
+  end
+  object BindingsList2: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 20
+    Top = 5
+    object LinkPropertyToFieldText: TLinkPropertyToField
+      Category = 'Quick Bindings'
+      DataSource = BindSourceDB2
+      FieldName = 'displayName'
+      Component = lblTitle
+      ComponentProperty = 'Text'
+    end
+  end
+end

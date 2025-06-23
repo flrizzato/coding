@@ -1,0 +1,390 @@
+object FrameSettings: TFrameSettings
+  Align = Client
+  Size.Width = 556.000000000000000000
+  Size.Height = 548.000000000000000000
+  Size.PlatformDefault = False
+  object ToolBar2: TToolBar
+    Size.Width = 556.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object Label1: TLabel
+      Align = Contents
+      Size.Width = 556.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'toollabel'
+      TextSettings.HorzAlign = Center
+      TextSettings.Trimming = None
+      Text = 'Settings'
+      TabOrder = 0
+    end
+    object btnTest: TButton
+      Align = Right
+      Margins.Left = 10.000000000000000000
+      Margins.Top = 2.000000000000000000
+      Margins.Right = 2.000000000000000000
+      Margins.Bottom = 2.000000000000000000
+      Position.X = 468.000000000000000000
+      Position.Y = 2.000000000000000000
+      Size.Width = 86.000000000000000000
+      Size.Height = 36.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Test'
+      TextSettings.Trimming = None
+      OnClick = btnTestClick
+      object InnerGlowEffectTest: TInnerGlowEffect
+        Softness = 0.400000005960464500
+        GlowColor = claGreen
+        Opacity = 0.899999976158142100
+        Enabled = False
+      end
+    end
+  end
+  object VertScrollBox1: TVertScrollBox
+    Align = Client
+    Size.Width = 556.000000000000000000
+    Size.Height = 468.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Viewport.Width = 556.000000000000000000
+    Viewport.Height = 468.000000000000000000
+    object ListBox1: TListBox
+      Align = Client
+      Size.Width = 556.000000000000000000
+      Size.Height = 468.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      DisableFocusEffect = True
+      DefaultItemStyles.ItemStyle = ''
+      DefaultItemStyles.GroupHeaderStyle = ''
+      DefaultItemStyles.GroupFooterStyle = ''
+      Viewport.Width = 552.000000000000000000
+      Viewport.Height = 464.000000000000000000
+      object ListBoxGroupHeader3: TListBoxGroupHeader
+        TabOrder = 2
+        Text = 'Site'
+      end
+      object ListBoxItem5: TListBoxItem
+        Position.Y = 19.000000000000000000
+        Size.Width = 552.000000000000000000
+        Size.Height = 54.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 5
+        object Label6: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Size.Width = 532.000000000000000000
+          Size.Height = 17.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Trimming = None
+          Text = 'Site Number'
+          TabOrder = 29
+        end
+        object edtOrgID: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Top
+          TabOrder = 0
+          Text = '755384'
+          Position.X = 10.000000000000000000
+          Position.Y = 17.000000000000000000
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Size.Width = 532.000000000000000000
+          Size.Height = 34.000000000000000000
+          Size.PlatformDefault = False
+          OnEnter = DisableTestResult
+        end
+      end
+      object ListBoxItem7: TListBoxItem
+        Position.Y = 73.000000000000000000
+        Size.Width = 552.000000000000000000
+        Size.Height = 54.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 4
+        object Label7: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Size.Width = 532.000000000000000000
+          Size.Height = 17.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Trimming = None
+          Text = 'Base URL'
+          TabOrder = 29
+        end
+        object edtBaseURL: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Top
+          TabOrder = 1
+          Text = 'Software Engineer'
+          Position.X = 10.000000000000000000
+          Position.Y = 17.000000000000000000
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Size.Width = 532.000000000000000000
+          Size.Height = 34.000000000000000000
+          Size.PlatformDefault = False
+          OnEnter = DisableTestResult
+        end
+      end
+      object ListBoxGroupHeader1: TListBoxGroupHeader
+        Position.Y = 127.000000000000000000
+        TabOrder = 3
+        Text = 'Admin'
+      end
+      object ListBoxItem1: TListBoxItem
+        Position.Y = 146.000000000000000000
+        Size.Width = 552.000000000000000000
+        Size.Height = 54.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 8
+        object edtUserID: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Top
+          TabOrder = 2
+          Text = 'Mark Anderson'
+          Position.X = 10.000000000000000000
+          Position.Y = 17.000000000000000000
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Size.Width = 532.000000000000000000
+          Size.Height = 34.000000000000000000
+          Size.PlatformDefault = False
+          OnEnter = DisableTestResult
+        end
+        object Label2: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Size.Width = 532.000000000000000000
+          Size.Height = 17.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Trimming = None
+          Text = 'Admin User Name'
+          TabOrder = 40
+        end
+      end
+      object ListBoxItem2: TListBoxItem
+        Position.Y = 200.000000000000000000
+        Size.Width = 552.000000000000000000
+        Size.Height = 54.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 7
+        object edtLoginPassword: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Top
+          TabOrder = 3
+          Password = True
+          Text = 'Darkgoldenrod'
+          Position.X = 10.000000000000000000
+          Position.Y = 17.000000000000000000
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Size.Width = 532.000000000000000000
+          Size.Height = 34.000000000000000000
+          Size.PlatformDefault = False
+          OnEnter = DisableTestResult
+        end
+        object Label3: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Size.Width = 532.000000000000000000
+          Size.Height = 17.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Trimming = None
+          Text = 'Admin Password'
+          TabOrder = 40
+        end
+      end
+      object ListBoxGroupHeader2: TListBoxGroupHeader
+        Position.Y = 254.000000000000000000
+        TabOrder = 0
+        Text = 'Default Admin'
+      end
+      object ListBoxItem3: TListBoxItem
+        Position.Y = 273.000000000000000000
+        Size.Width = 552.000000000000000000
+        Size.Height = 54.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 6
+        object Label4: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Size.Width = 532.000000000000000000
+          Size.Height = 17.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Trimming = None
+          Text = 'System User Name'
+          TabOrder = 29
+        end
+        object edtPersonUserID: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Top
+          TabOrder = 4
+          Text = 'Bitmap28'
+          Position.X = 10.000000000000000000
+          Position.Y = 17.000000000000000000
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Size.Width = 532.000000000000000000
+          Size.Height = 34.000000000000000000
+          Size.PlatformDefault = False
+          OnEnter = DisableTestResult
+        end
+      end
+      object ListBoxItem4: TListBoxItem
+        Position.Y = 327.000000000000000000
+        Size.Width = 552.000000000000000000
+        Size.Height = 54.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        object edtUserPassword: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = Top
+          TabOrder = 5
+          Password = True
+          Text = 'Darkgoldenrod'
+          Position.X = 10.000000000000000000
+          Position.Y = 17.000000000000000000
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Size.Width = 532.000000000000000000
+          Size.Height = 34.000000000000000000
+          Size.PlatformDefault = False
+          OnEnter = DisableTestResult
+        end
+        object Label5: TLabel
+          Align = Top
+          Margins.Left = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Position.X = 10.000000000000000000
+          Size.Width = 532.000000000000000000
+          Size.Height = 17.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Trimming = None
+          Text = 'System Password'
+          TabOrder = 40
+        end
+      end
+    end
+  end
+  object ToolBar1: TToolBar
+    Align = Bottom
+    Position.Y = 508.000000000000000000
+    Size.Width = 556.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    object Button1: TButton
+      Action = LiveBindingsBindNavigatePost1
+      Align = Center
+      ImageIndex = -1
+      Size.Width = 80.000000000000000000
+      Size.Height = 33.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      TextSettings.Trimming = None
+    end
+  end
+  object pbsDefaults: TPrototypeBindSource
+    AutoActivate = True
+    AutoPost = False
+    FieldDefs = <
+      item
+        Name = 'loginId'
+        Generator = 'ContactNames'
+      end
+      item
+        Name = 'Loginpassword'
+        Generator = 'ColorsNames'
+      end
+      item
+        Name = 'orgID'
+        FieldType = ftUInteger
+        Generator = 'Colors'
+      end
+      item
+        Name = 'person_userId'
+        Generator = 'BitmapNames'
+      end
+      item
+        Name = 'person_password'
+        Generator = 'ColorsNames'
+      end
+      item
+        Name = 'BaseURL'
+        Generator = 'ContactTitles'
+      end>
+    ScopeMappings = <>
+    OnCreateAdapter = pbsDefaultsCreateAdapter
+    Left = 276
+    Top = 102
+  end
+  object BindingsList1: TBindingsList
+    Methods = <>
+    OutputConverters = <>
+    Left = 20
+    Top = 5
+    object LinkControlToField1: TLinkControlToField
+      Category = 'Quick Bindings'
+      DataSource = pbsDefaults
+      FieldName = 'loginId'
+      Control = edtUserID
+      Track = False
+    end
+    object LinkControlToField2: TLinkControlToField
+      Category = 'Quick Bindings'
+      DataSource = pbsDefaults
+      FieldName = 'Loginpassword'
+      Control = edtLoginPassword
+      Track = False
+    end
+    object LinkControlToField3: TLinkControlToField
+      Category = 'Quick Bindings'
+      DataSource = pbsDefaults
+      FieldName = 'person_userId'
+      Control = edtPersonUserID
+      Track = False
+    end
+    object LinkControlToField4: TLinkControlToField
+      Category = 'Quick Bindings'
+      DataSource = pbsDefaults
+      FieldName = 'person_password'
+      Control = edtUserPassword
+      Track = False
+    end
+    object LinkControlToField5: TLinkControlToField
+      Category = 'Quick Bindings'
+      DataSource = pbsDefaults
+      FieldName = 'orgID'
+      Control = edtOrgID
+      Track = False
+    end
+    object LinkControlToField6: TLinkControlToField
+      Category = 'Quick Bindings'
+      DataSource = pbsDefaults
+      FieldName = 'BaseURL'
+      Control = edtBaseURL
+      Track = False
+    end
+  end
+  object ActionList1: TActionList
+    Left = 276
+    Top = 164
+    object LiveBindingsBindNavigatePost1: TFMXBindNavigatePost
+      Category = 'LiveBindings'
+      Text = 'Save'
+      DataSource = pbsDefaults
+    end
+  end
+end

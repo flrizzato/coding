@@ -1,0 +1,16 @@
+inherited FrameFilterText: TFrameFilterText
+  inherited loFilter: TLayout
+    inherited loFilterValue: TLayout
+      object edtValue: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Client
+        TabOrder = 0
+        Size.Width = 246.000000000000000000
+        Size.Height = 34.000000000000000000
+        Size.PlatformDefault = False
+        TextPrompt = 'Enter Value'
+        OnChange = edtValueChange
+      end
+    end
+  end
+end
