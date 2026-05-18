@@ -1,0 +1,1613 @@
+﻿<!--
+===============================================================================================
+
+  CodeGear.Common.Targets
+
+  WARNING
+
+  DO NOT MODIFY unless you have made a backup of these files.  Modifying
+  this file unless you have knowledge about MSBuild you could cause problems
+  when loading or building projects in the IDE or building from the
+  command-line.
+
+===============================================================================================
+-->
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+
+  <UsingTask TaskName="DependencyCheck" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+  <UsingTask TaskName="GenTLB" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+  <UsingTask TaskName="BRCC32" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+  <UsingTask TaskName="BDSCallback" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+  <UsingTask TaskName="ResourceItemDependencyCheck" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+  <UsingTask TaskName="UserTask" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+  <UsingTask TaskName="TDUMP" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+  <UsingTask TaskName="FindItems" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+  <UsingTask TaskName="CreateRcFile" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+  <UsingTask TaskName="EvaluateProperties" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+  <UsingTask TaskName="CreateAndroidManifestFile" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+  <UsingTask TaskName="IncrementBuildNumber" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+  <UsingTask TaskName="Split" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+  <UsingTask TaskName="CheckBDSHost" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+  <UsingTask TaskName="CheckPlatformEnabled" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+  <UsingTask TaskName="GenJavaSourceFiles" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+  <UsingTask TaskName="StringReplace" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+  <UsingTask TaskName="GetItCmd" AssemblyFile="$(BDS)\bin\Borland.Build.Tasks.Shared.dll"/>
+
+  <PropertyGroup>
+    <BDSAppDataBaseDir Condition=" '$(BDSAppDataBaseDir)'=='' ">BDS</BDSAppDataBaseDir>
+    <ProductVersion>20.0</ProductVersion>
+    <AppDataDir>$(APPDATA)\Embarcadero\$(BDSAppDataBaseDir)\$(ProductVersion)\</AppDataDir>
+    <EnvironmentSettings>$(APPDATA)\Embarcadero\$(BDSAppDataBaseDir)\$(ProductVersion)\environment.proj</EnvironmentSettings>
+    <EnvOptions>$(APPDATA)\Embarcadero\$(BDSAppDataBaseDir)\$(ProductVersion)\EnvOptions.proj</EnvOptions>
+    <Profiles>$(BDS)\bin\CodeGear.Profiles.Targets</Profiles>
+  </PropertyGroup>
+
+  <Import Project="$(EnvironmentSettings)" Condition="Exists('$(EnvironmentSettings)')"/>
+  <Import Project="$(EnvOptions)" Condition="Exists('$(EnvOptions)') and ('$(ImportEnvOptions)'!='false')"/>
+  <Import Project="$(Profiles)" Condition="Exists('$(Profiles)')"/>
+
+  <!--
+  ========================================================================
+               Static Properties
+    Override missing properties from user msbuild file with standard
+    build logic.
+  ========================================================================
+  -->
+
+  <PropertyGroup>
+    <ResourceOutput Condition=" '$(ResourceOutput)'=='' ">$(OutputDir)</ResourceOutput>
+    <ExeOutput Condition=" '$(ExeOutput)'=='' ">$(OutputDir)</ExeOutput>
+    <DllOutput Condition=" '$(DllOutput)'=='' ">$(ExeOutput)</DllOutput>
+    <BplOutput Condition=" '$(BplOutput)'=='' ">$(ExeOutput)</BplOutput>
+    <DcuOutput Condition=" '$(DcuOutput)'=='' ">$(OutputDir)</DcuOutput>
+    <DcpOutput Condition=" '$(DcpOutput)'=='' ">$(DcuOutput)</DcpOutput>
+    <HppOutput Condition=" '$(HppOutput)'=='' ">$(DcuOutput)</HppOutput>
+    <ObjOutput Condition=" '$(ObjOutput)'=='' ">$(DcuOutput)</ObjOutput>
+    <BpiOutput Condition=" '$(BpiOutput)'=='' ">$(DcuOutput)</BpiOutput>
+
+    <ProjectOutputExtension Condition=" '$(ProjectOutputExtension)'=='' ">.exe</ProjectOutputExtension>
+
+    <_OutputDRCFiles Condition=" '$(_Locals)'!='' ">true</_OutputDRCFiles>
+    <_OutputDRCFiles Condition=" '$(_OutputDRCFiles)'=='' ">$(OutputDRCFiles)</_OutputDRCFiles>
+    <_OutputDRCFiles Condition=" '$(_OutputDRCFiles)'=='' ">false</_OutputDRCFiles>
+
+    <ProducedFileList>$(OutputDir)$(MsBuildProjectFile).filelist.txt</ProducedFileList>
+
+    <NameSpace>$(DCC_Namespace)</NameSpace>
+
+    <UnitAliases>Generics.Collections=System.Generics.Collections;Generics.Defaults=System.Generics.Defaults;WinTypes=Winapi.Windows;WinProcs=Winapi.Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE</UnitAliases>
+    <UnitAliases Condition="'$(DCC_UnitAlias)'!=''">$(DCC_UnitAlias)$(UnitAliases)</UnitAliases>
+
+    <!-- common file extensions -->
+  </PropertyGroup>
+
+  <!-- These 'constants' should be kept in sync with app\design\PlatformAPI.pas -->
+  <PropertyGroup>
+    <cWin32Platform>Win32</cWin32Platform>
+    <cWinNX32Platform>WinNX32</cWinNX32Platform>
+    <cWinIoT32Platform>WinIoT32</cWinIoT32Platform>
+    <cWinARMPlatform>WinARM</cWinARMPlatform>
+    <cWin64Platform>Win64</cWin64Platform>
+    <cOSX32Platform>OSX32</cOSX32Platform>
+    <cOSX64Platform>OSX64</cOSX64Platform>
+    <cAndroid32ArmPlatform>Android</cAndroid32ArmPlatform>
+    <ciOSDevice32Platform>iOSDevice32</ciOSDevice32Platform>
+    <ciOSDevice64Platform>iOSDevice64</ciOSDevice64Platform>
+    <ciOSSimulator32Platform>iOSSimulator</ciOSSimulator32Platform>
+    <cLinux64Platform>Linux64</cLinux64Platform>
+  </PropertyGroup>
+
+
+  <!-- Platform-specific extensions -->
+  <PropertyGroup Condition="'$(Platform)'=='$(ciOSSimulator32Platform)'">
+      <ExeExt></ExeExt>
+      <ObjExt>o</ObjExt>
+      <LibExt>a</LibExt>
+      <DllExt>dylib</DllExt>
+      <BpiExt>bpi</BpiExt>
+      <BplExt>a</BplExt>
+      <BplPlatformPrefix>lib</BplPlatformPrefix>
+      <DllPlatformPrefix>lib</DllPlatformPrefix>
+      <StaticLibPrefix></StaticLibPrefix>
+  </PropertyGroup>
+
+  <!-- Platform-specific extensions -->
+  <PropertyGroup Condition="'$(Platform)'=='$(ciOSDevice32Platform)' Or '$(Platform)'=='$(ciOSDevice64Platform)'">
+      <ExeExt></ExeExt>
+      <ObjExt>o</ObjExt>
+      <LibExt>a</LibExt>
+      <DllExt>dylib</DllExt>
+      <BpiExt>bpi</BpiExt>
+      <BplExt>a</BplExt>
+      <BplPlatformPrefix>lib</BplPlatformPrefix>
+      <DllPlatformPrefix>lib</DllPlatformPrefix>
+      <StaticLibPrefix>lib</StaticLibPrefix>
+  </PropertyGroup>
+
+
+  <!-- Platform-specific extensions -->
+  <PropertyGroup Condition="'$(Platform)'=='$(cOSX32Platform)' Or '$(Platform)'=='$(cOSX64Platform)'">
+      <ExeExt></ExeExt>
+      <ObjExt>o</ObjExt>
+      <LibExt>a</LibExt>
+      <DllExt>dylib</DllExt>
+      <BpiExt>bpi</BpiExt>
+      <BplExt>dylib</BplExt>
+      <BplPlatformPrefix>bpl</BplPlatformPrefix>
+      <DllPlatformPrefix>lib</DllPlatformPrefix>
+      <StaticLibPrefix></StaticLibPrefix>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Platform)'=='$(cWin32Platform)'">
+      <ExeExt>exe</ExeExt>
+      <ObjExt>obj</ObjExt>
+      <LibExt>lib</LibExt>
+      <DllExt>dll</DllExt>
+      <BpiExt>bpi</BpiExt>
+      <BplExt>bpl</BplExt>
+      <BplPlatformPrefix></BplPlatformPrefix>
+      <DllPlatformPrefix></DllPlatformPrefix>
+      <StaticLibPrefix></StaticLibPrefix>
+      <Gen64BitTypeLib>false</Gen64BitTypeLib>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Platform)'=='$(cWinNX32Platform)'">
+      <ExeExt>exe</ExeExt>
+      <ObjExt>obj</ObjExt>
+      <LibExt>lib</LibExt>
+      <DllExt>dll</DllExt>
+      <BpiExt>bpi</BpiExt>
+      <BplExt>bpl</BplExt>
+      <BplPlatformPrefix></BplPlatformPrefix>
+      <DllPlatformPrefix></DllPlatformPrefix>
+      <StaticLibPrefix></StaticLibPrefix>
+      <Gen64BitTypeLib>false</Gen64BitTypeLib>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Platform)'=='$(cWin64Platform)'">
+      <ExeExt>exe</ExeExt>
+      <ObjExt>o</ObjExt>
+      <LibExt>a</LibExt>
+      <DllExt>dll</DllExt>
+      <BpiExt>bpi</BpiExt>
+      <BplExt>bpl</BplExt>
+      <BplPlatformPrefix></BplPlatformPrefix>
+      <DllPlatformPrefix></DllPlatformPrefix>
+      <StaticLibPrefix></StaticLibPrefix>
+      <Gen64BitTypeLib>true</Gen64BitTypeLib>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Platform)'=='$(cAndroid32ArmPlatform)'">
+      <ExeExt>so</ExeExt>
+      <ObjExt>o</ObjExt>
+      <LibExt>a</LibExt>
+      <DllExt>so</DllExt>
+      <BpiExt>bpi</BpiExt>
+      <BplExt>a</BplExt>
+      <BplPlatformPrefix>lib</BplPlatformPrefix>
+      <DllPlatformPrefix>lib</DllPlatformPrefix>
+      <StaticLibPrefix>lib</StaticLibPrefix>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Platform)'=='$(cLinux64Platform)'">
+      <ExeExt></ExeExt>
+      <ObjExt>o</ObjExt>
+      <LibExt>a</LibExt>
+      <DllExt>so</DllExt>
+      <BpiExt>bpi</BpiExt>
+      <BplExt>so</BplExt>
+      <BplPlatformPrefix>bpl</BplPlatformPrefix>
+      <DllPlatformPrefix>lib</DllPlatformPrefix>
+      <StaticLibPrefix>lib</StaticLibPrefix>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <UnitPath Include="$(DcuOutput);$(SearchPath)"/>
+    <ResourcePath Include="$(ResourceOutput);$(SearchPath)"/>
+  </ItemGroup>
+
+  <!--
+  ========================================================================
+               Load Options File
+    Load a standard options file the user can define.  This allows
+    users to store common paths and compiler options in a single
+    msbuild project to simplify the building of large projects with
+    many msbuild files.
+  ========================================================================
+  -->
+
+  <Import Project="$(GlobalOptionFile)" Condition=" Exists('$(GlobalOptionFile)') "/>
+
+  <!-- Ensure that all output paths have a trailing slash -->
+
+  <PropertyGroup>
+    <ResourceOutput Condition=" '$(ResourceOutput)'!='' and !HasTrailingSlash('$(ResourceOutput)') ">$(ResourceOutput)\</ResourceOutput>
+    <ExeOutput Condition=" '$(ExeOutput)'!='' and !HasTrailingSlash('$(ExeOutput)') ">$(ExeOutput)\</ExeOutput>
+    <BplOutput Condition=" '$(BplOutput)'!='' and !HasTrailingSlash('$(BplOutput)') ">$(BplOutput)\</BplOutput>
+    <DllOutput Condition=" '$(DllOutput)'!='' and !HasTrailingSlash('$(DllOutput)') ">$(DllOutput)\</DllOutput>
+    <DcuOutput Condition=" '$(DcuOutput)'!='' and !HasTrailingSlash('$(DcuOutput)') ">$(DcuOutput)\</DcuOutput>
+    <DcpOutput Condition=" '$(DcpOutput)'!='' and !HasTrailingSlash('$(DcpOutput)') ">$(DcpOutput)\</DcpOutput>
+    <HppOutput Condition=" '$(HppOutput)'!='' and !HasTrailingSlash('$(HppOutput)') ">$(HppOutput)\</HppOutput>
+    <ObjOutput Condition=" '$(ObjOutput)'!='' and !HasTrailingSlash('$(ObjOutput)') ">$(ObjOutput)\</ObjOutput>
+    <BpiOutput Condition=" '$(BpiOutput)'!='' and !HasTrailingSlash('$(CpiOutput)') ">$(BpiOutput)\</BpiOutput>
+  </PropertyGroup>
+
+  <!--
+  ========================================================================
+               CoreBuild
+    Calls build events in order to prepare and clean up after each
+    build.
+  ========================================================================
+  -->
+
+  <PropertyGroup>
+    <BuildDependsOn>
+      BeforeBuild;
+      CoreBuild;
+      AfterBuild
+    </BuildDependsOn>
+
+    <CoreBuildDependsOn>
+      CreateDirectories;
+      ValidateOptions;
+      PreBuildEvent;
+      ResolveFiles;
+      ResourceBuild;
+      $(_PreCompileTargets);
+      CoreCompile;
+      $(_PostCompileTargets);
+      IntermediateClean;
+      PostBuildEvent
+    </CoreBuildDependsOn>
+  </PropertyGroup>
+
+  <Target Name="default" DependsOnTargets="Build"/>
+
+  <Target Name="Build" DependsOnTargets="$(BuildDependsOn)"/>
+
+  <Target Name="CoreBuild" DependsOnTargets="$(CoreBuildDependsOn)"/>
+
+  <Target Name="_CheckPlatformVariable">
+    <Error
+      Condition="!( ('$(Platform)'=='$(cWin32Platform)')
+        Or ('$(Platform)'=='$(cWinNX32Platform)')
+        Or ('$(Platform)'=='$(cWinIoT32Platform)')
+        Or ('$(Platform)'=='$(cWinARMPlatform)')
+        Or ('$(Platform)'=='$(cWin64Platform)')
+        Or ('$(Platform)'=='$(cOSX32Platform)')
+        Or ('$(Platform)'=='$(cOSX64Platform)')
+        Or ('$(Platform)'=='$(cAndroid32ArmPlatform)')
+        Or ('$(Platform)'=='$(ciOSSimulator32Platform)')
+        Or ('$(Platform)'=='$(ciOSDevice32Platform)')
+        Or ('$(Platform)'=='$(ciOSDevice64Platform)')
+        Or ('$(Platform)'=='$(cLinux64Platform)') )"
+      Text="Invalid PLATFORM variable &quot;$(Platform)&quot;. PLATFORM must be one of the following: &quot;Win32&quot;, &quot;Win64&quot;, &quot;Android32Arm&quot;, &quot;iOSSimulator32&quot;, &quot;iOSDevice32&quot; &quot;iOSDevice64&quot;, or &quot;OSX32&quot;, or &quot;OSX64&quot;, or &quot;Linux64&quot;. If PLATFORM is defined by your system&apos;s environment, it must be overridden in the RAD Studio IDE or passed explicitly on the command line to MSBuild; e.g., /p:Platform=Win32."
+    />
+  </Target>
+
+  <!-- Ensure the build environment is setup as expected.
+       This is a sanity check for command line building. -->
+  <Target Name="_CheckBuildEnvironment">
+    <Warning
+      Condition="!Exists('$(EnvOptions)') and ('$(EnvOptionsWarn)'!='false')"
+      Text="Expected configuration file missing - $(EnvOptions)"/>
+  </Target>
+
+  <!-- Since there's an IDE limitation about handling more than one compilation,
+  GetItCmd should be called only when compiling from command line -->
+  <Target Name="_CheckGetItPackageDependencies" DependsOnTargets="_CheckBDSHostObject"
+    Condition="('$(GetItPackages)'!='') And '$(BDSHost)'!='true'">
+    <CallTarget Targets="_ExecGetItCmd"/>
+  </Target>
+
+  <Target Name="_ExecGetItCmd">
+    <Warning Text="Checking GetIt package dependencies"/>
+    <GetItCmd
+        ProjectFileName="$(MSBuildProjectFullPath)"
+        Accept_eulas="true"
+        InstallPackages="$(GetItPackages)"
+        DoNotSetEnvFile="true"
+        Verbosity="Normal"
+    />
+  </Target>
+
+
+
+  <!--
+  ==============================================================================
+               __GeniOSDevice32Outputs
+
+   Generates iOSDevice32 output files when user compiles from the command line
+  ==============================================================================
+  -->
+  <Target Name="_CheckBDSHostObject">
+    <CheckBDSHost>
+      <Output
+        TaskParameter="Result"
+        PropertyName="BDSHost"
+      />
+    </CheckBDSHost>
+  </Target>
+
+  <Target Name="_CheckPlatformEnabled">
+    <CheckPlatformEnabled
+        TargetedPlatforms="$(TargetedPlatforms)"
+        PlatformName="$(ciOSDevice32Platform)">
+      <Output
+        TaskParameter="Result"
+        PropertyName="PlatformExists"
+      />
+    </CheckPlatformEnabled>
+  </Target>
+
+  <Target Name="GeniOSDevice32Outputs" DependsOnTargets="_CheckBDSHostObject;_CheckPlatformEnabled"
+    Condition="'$(Platform)'=='$(ciOSDevice64Platform)' And ('$(DCC_GenerateUniversalBinaryFile)'=='true' Or '$(BCC_GenerateUniversalBinaryFile)'=='true')">
+
+    <MSBuild Condition="'$(BDSHost)'!='true' and '$(PlatformExists)'=='true'"
+      Projects="$(MSBuildProjectFullPath)"
+      Targets="Make"
+      Properties="Config=$(Config);Platform=$(ciOSDevice32Platform);DCC_ForceExecute=$(DCC_ForceExecute)"
+    />
+
+    <Error Text="Missing $(ciOSDevice32Platform) platform in the project. The platform is required to generate both &quot;armv7&quot; and &quot;arm64&quot; binary files."
+        Condition="'$(PlatformExists)'=='false'"/>
+  </Target>
+
+  <!--
+  ==============================================================================
+               __CleaniOSDevice32Outputs
+    Cleans iOSDevice32 output files when user cleans his project from the command line
+  ==============================================================================
+  -->
+
+  <Target Name="CleaniOSDevice32Outputs" DependsOnTargets="_CheckBDSHostObject"
+    Condition="'$(Platform)'=='$(ciOSDevice64Platform)' And ('$(DCC_GenerateUniversalBinaryFile)'=='true' Or '$(BCC_GenerateUniversalBinaryFile)'=='true')">
+
+    <MSBuild Condition="'$(BDSHost)'!='true'"
+      Projects="$(MSBuildProjectFullPath)"
+      Targets="Clean"
+      Properties="Config=$(Config);Platform=$(ciOSDevice32Platform)"
+    />
+  </Target>
+
+
+  <!--
+  ========================================================================
+               ReBuild
+    Cleans intermediates and final outputs then rebuilds project.
+  ========================================================================
+  -->
+
+  <PropertyGroup>
+    <ReBuildDependsOn>
+      ResolveFiles;
+      Clean;
+      Build
+    </ReBuildDependsOn>
+  </PropertyGroup>
+
+  <Target Name="ReBuild" DependsOnTargets="$(ReBuildDependsOn)"/>
+
+  <!--
+  ========================================================================
+               PreBuildEvent
+    Execute command line prebuild event if specified by the user.
+  ========================================================================
+  -->
+
+  <Target Name="PreBuildEvent"
+    Condition=" '$(PreBuildEvent)'!='' And '$(KibitzCompile)'==''"
+    DependsOnTargets="$(PreBuildEventDependsOn)">
+    <Exec Command="$(PreBuildEvent)" IgnoreExitCode="$(PreBuildEventIgnoreExitCode)" WorkingDirectory="$(OutDir)"/>
+  </Target>
+
+  <!--
+  ========================================================================
+               PostBuildEvent
+      Execute command line postbuild event if specified by the user.
+  ========================================================================
+  -->
+
+  <Target Name="_PreOutputTimeStamp">
+    <CreateItem Include="%(OutputFile.ModifiedTime)">
+      <Output TaskParameter="Include" PropertyName="PreOutputTimeStamp"/>
+    </CreateItem>
+  </Target>
+
+  <Target Name="_PostOutputTimeStamp">
+    <CreateItem Include="%(OutputFile.ModifiedTime)">
+      <Output TaskParameter="Include" PropertyName="PostOutputTimeStamp"/>
+    </CreateItem>
+  </Target>
+
+  <Target Name="PostBuildEvent"
+    Condition=" '$(PostBuildEvent)'!=''  And '$(KibitzCompile)'==''
+      and ( '$(PostBuildEventExecuteWhen)'=='Always' or '$(PostBuildEventExecuteWhen)'=='' or '$(PreOutputTimeStamp)'!='$(PostOutputTimeStamp)' )"
+    DependsOnTargets="$(PostBuildEventDependsOn)">
+    <Exec Command="$(PostBuildEvent)"  IgnoreExitCode="$(PostBuildEventIgnoreExitCode)" WorkingDirectory="$(OutDir)"/>
+  </Target>
+
+   <!--
+  ========================================================================
+               RunUserTools
+    Run user defined tools before the build
+
+  ========================================================================
+  -->
+
+  <Target Name="_DependencyCheckUserTool">
+    <DependencyCheck
+      Condition="'$(_OutputFilename)'!=''"
+      InputFiles="$(FileToCompile)"
+      OutputFile="$(_OutputFilename)"
+      ProjectFileName="$(MSBuildProjectFullPath)"
+      Build="$(ForceRebuild)"
+      KibitzTask=""
+    >
+      <Output
+        TaskParameter="OutOfDate"
+        ItemName="OutOfDate"
+      />
+      <Output
+        TaskParameter="Skipped"
+        ItemName="Skipped"
+      />
+    </DependencyCheck>
+  </Target>
+
+  <Target Name="__RunUserTool"
+    DependsOnTargets="ResolveFiles;_DependencyCheckUserTool">
+    <UserTask
+      Condition="'@(Skipped)'=='' And '$(CustomToolCommand)'!=''"
+      Command="$(CustomToolCommand)"
+      Name="$(_ToolName)"
+      Filename="$(FileToCompile)"
+      ContinueOnError="false"
+    />
+    <Warning
+      Condition="'$(CustomToolCommand)'==''"
+      Text="Command for custom build tool '$(_ToolName)' not found. '$(FileToCompile)' ignored."
+    />
+  </Target>
+
+  <Target Name="_RunUserTool" DependsOnTargets="ResolveFiles">
+    <MSBuild
+      Condition="'$(_ToolName)'!='' And '$(FileToCompile)'!=''"
+      Projects="$(MSBuildProjectFullPath)"
+      Targets="__RunUserTool"
+      Properties="FileToCompile=$(FileToCompile);_ToolName=$(_ToolName);_OutputFilename=$(CustomToolOutput);Config=$(Config);ForceRebuild=$(ForceRebuild)"
+    />
+  </Target>
+
+  <Target Name="_RunUserTools" Outputs="%(UserTool.Identity)">
+    <MSBuild
+      Condition="'%(UserTool.ToolName)'!='' And '$(FileToCompile)'==''"
+      Projects="$(MSBuildProjectFullPath)"
+      Targets="_RunUserTool"
+      Properties="FileToCompile=%(UserTool.Identity);_ToolName=%(UserTool.ToolName);Config=$(Config);ForceRebuild=$(ForceRebuild)"
+    />
+    <MSBuild
+      Condition="'@(InputFile)'!='' And '%(InputFile.ToolName)'!=''"
+      Projects="$(MSBuildProjectFullPath)"
+      Targets="_RunUserTool"
+      Properties="FileToCompile=%(InputFile.Identity);_ToolName=%(InputFile.ToolName);Config=$(Config);ForceRebuild=$(ForceRebuild)"
+    />
+
+  </Target>
+  <!--
+  ========================================================================
+               BeforeBuild
+    Perform user tasks before the build when BeforeBuild is overridden
+    by the user.
+  ========================================================================
+  -->
+
+  <Target Name="BeforeBuild"/>
+
+  <!--
+  ========================================================================
+               AfterBuild
+    Perform user tasks after the build when BeforeBuild is overridden
+    by the user.
+  ========================================================================
+  -->
+
+  <Target Name="AfterBuild"/>
+
+  <!--
+  ========================================================================
+               CreateDirectories
+    Create directories required to build the projects.
+  ========================================================================
+  -->
+
+  <PropertyGroup>
+    <CreateDirectoriesDependsOn>
+      CreateProjectDirectories;
+      CreateLocalDirectories
+    </CreateDirectoriesDependsOn>
+  </PropertyGroup>
+
+  <Target Name="CreateDirectories" DependsOnTargets="$(CreateDirectoriesDependsOn)"/>
+
+  <Target Name="CreateProjectDirectories">
+    <MakeDir Directories="
+          @(_DirectoryList)
+    "/>
+  </Target>
+
+  <Target Name="CreateLocalDirectories"/>
+
+  <!--
+  ========================================================================
+               ResolveFiles
+    Resolve source files passed in both the compile itemgroup and
+    reference itemgroup to allow the targets to determine what to
+    do with them.
+  ========================================================================
+  -->
+
+  <PropertyGroup>
+    <ResolveFilesDependsOn>
+      _ResolveConfiguration;
+      ResolveSources;
+      ResolveResources;
+      ResolveLocalResources;
+      ResolvePaths;
+      ResolveOutputs
+    </ResolveFilesDependsOn>
+  </PropertyGroup>
+
+  <Target Name="ResolveFiles" DependsOnTargets="$(ResolveFilesDependsOn)"/>
+
+  <Target Name="_ResolveUserTool">
+    <FindItems
+      Condition="'$(FileToCompile)'!=''"
+      Inputs="@(UserTool)"
+      Filenames="$(FileToCompile)">
+      <Output
+        TaskParameter="Outputs"
+        ItemName="InputFile"
+      />
+    </FindItems>
+  </Target>
+
+  <Target Name="_ResolveInput" DependsOnTargets="_ResolveUserTool">
+    <CreateItem
+      Condition="'$(FileToCompile)'==''"
+      Include="$(MSBuildProjectFullPath)">
+      <Output
+        TaskParameter="Include"
+        ItemName="InputFile"
+      />
+    </CreateItem>
+    <CreateItem
+      Condition="'$(FileToCompile)'!='' And '@(InputFile)'==''"
+      Include="$(FileToCompile)">
+      <Output
+        TaskParameter="Include"
+        ItemName="InputFile"
+      />
+    </CreateItem>
+  </Target>
+
+  <Target Name="_ResolveConfiguration">
+    <CreateItem Include="@(BuildConfiguration)"
+          Condition="'%(BuildConfiguration.Identity)'=='$(Config)'"
+          AdditionalMetadata="OptionSets=%(BuildConfiguration.OptionSets)">
+      <Output TaskParameter="Include" ItemName="CurrentConfiguration"/>
+    </CreateItem>
+  </Target>
+
+  <!-- Add Paths to searchpath for resources and units not in the project directory -->
+  <Target Name="ResolvePaths">
+    <RemoveDuplicates Inputs="@(Compile->'%(RelativeDir)')"
+          Condition="( ( '%(EXTENSION)'=='.dfm' or '%(EXTENSION)'=='.nfm' ) And '%(RelativeDir)'!='' ) ">
+      <Output TaskParameter="Filtered" ItemName="ResourcePath"/>
+    </RemoveDuplicates>
+
+    <RemoveDuplicates Inputs="@(Compile->'%(RelativeDir)')"
+          Condition="( '%(EXTENSION)'=='.pas' And '%(RelativeDir)'!='' ) ">
+      <Output TaskParameter="Filtered" ItemName="UnitPath"/>
+    </RemoveDuplicates>
+  </Target>
+
+  <Target Name="_ResolveIcons">
+
+    <CreateItem Include="$(Icon_MainIcon)"
+      Condition="'$(Platform)'!='$(cOSX32Platform)' and '$(Platform)'!='$(cOSX64Platform)'">
+      <Output TaskParameter="Include" ItemName="__Icon_MainIcon"/>
+    </CreateItem>
+
+    <CreateItem Include="true"
+      Condition="Exists('$(MSBuildProjectName).res')">
+      <Output TaskParameter="Include" ItemName="__ShouldLinkVersion"/>
+    </CreateItem>
+
+  </Target>
+
+  <Target Name="_ResolveResources" DependsOnTargets="_ResolveIcons">
+    <!-- Source File Resolution -->
+    <CreateItem Include="@(EmbeddedResource)"
+          Condition="( '%(EXTENSION)'=='.rc' ) "
+          AdditionalMetadata="TargetExtension=%(EmbeddedResource.TargetExtension)">
+      <Output TaskParameter="Include" ItemName="_RCFiles"/>
+    </CreateItem>
+
+    <CreateItem Include="@(EmbeddedResource)"
+          Condition=" '%(EXTENSION)'=='.dfm' or '%(EXTENSION)'=='.nfm' ">
+      <Output TaskParameter="Include" ItemName="_Forms"/>
+    </CreateItem>
+
+    <!-- Output Resolution -->
+    <CreateItem Include="@(EmbeddedResource->'$(ResourceOutput)\%(Filename)%(TargetExtension)')"
+          Condition="( '%(EXTENSION)'=='.rc' ) "
+          AdditionalMetadata="TargetExtension=%(EmbeddedResource.TargetExtension)">
+      <Output TaskParameter="Include" ItemName="_ResourceFiles"/>
+    </CreateItem>
+
+    <CreateItem Include="@(EmbeddedResource)"
+          Condition="( '%(EXTENSION)'=='.res' ) ">
+      <Output TaskParameter="Include" ItemName="_ResourceFiles"/>
+    </CreateItem>
+  </Target>
+
+  <Target Name="ResolveResources" DependsOnTargets="_ResolveResources"/>
+
+  <Target Name="ResolveSources">
+    <!-- Source File Resolution -->
+    <CreateItem Include="@(Reference)"
+          Condition="( '%(EXTENSION)'=='.pas' ) ">
+      <Output TaskParameter="Include" ItemName="_PasFiles"/>
+    </CreateItem>
+
+    <CreateItem Include="@(DelphiCompile->'$(MSBuildProjectDirectory)\%(Filename)%(Extension)')">
+      <Output TaskParameter="Include" ItemName="_ProjectFiles"/>
+    </CreateItem>
+
+    <CreateProperty Value="%(_ProjectFiles.Filename)">
+      <Output TaskParameter="Value" PropertyName="_ProjectName"/>
+    </CreateProperty>
+  </Target>
+
+  <Target Name="ResolveLocalResources"/>
+
+  <Target Name="ResolveOutputs">
+    <CreateItem Include="@(_ProjectFiles->'$(BplOutput)%(Filename)$(LibSuffix).bpl')"
+          Condition="( '%(EXTENSION)'=='.dpk' Or
+                 '%(EXTENSION)'=='.dpkw' ) ">
+      <Output TaskParameter="Include" ItemName="_OutputFiles"/>
+    </CreateItem>
+
+    <CreateItem Include="@(_ProjectFiles->'$(ExeOutput)%(Filename)$(ProjectOutputExtension)')"
+          Condition="( '%(EXTENSION)'=='.dpr' ) ">
+      <Output TaskParameter="Include" ItemName="_OutputFiles"/>
+    </CreateItem>
+
+    <CreateItem Include="@(_PasFiles->'$(DcuOutput)%(Filename).dcu')"
+          Condition=" '$(DependencyCheckUnits)'!='' ">
+      <Output TaskParameter="Include" ItemName="_OutputFiles"/>
+    </CreateItem>
+
+    <CreateItem Include="@(_PasFiles->'$(DcuOutput)%(Filename).dcu')"
+          Condition=" '$(DependencyCheckUnits)'=='' ">
+      <Output TaskParameter="Include" ItemName="__OutputFiles"/>
+    </CreateItem>
+
+    <CreateItem Include="@(_ProjectFiles->'$(DcuOutput)%(Filename).dcu')">
+      <Output TaskParameter="Include" ItemName="__OutputFiles"/>
+    </CreateItem>
+
+    <CreateItem Include="@(_ResourceFiles)"
+          Condition=" '$(DependencyCheckUnits)'=='' ">
+      <Output TaskParameter="Include" ItemName="__OutputFiles"/>
+    </CreateItem>
+  </Target>
+
+  <!--
+  ========================================================================
+               ValidateOptions
+    Validate the options and paths passed in from the user msbuild
+    file.  Throws appropriate warnings and errors to indicate
+    options which are invalid or may potentially cause the project
+    to fail, such as missing paths.
+  ========================================================================
+  -->
+
+  <PropertyGroup>
+    <ValidateOptionsDependsOn>
+      ValidateGlobalOptions;
+      ValidateSources;
+      ValidateLocalResources;
+      ValidatePaths
+    </ValidateOptionsDependsOn>
+  </PropertyGroup>
+
+  <Target Name="ValidateOptions"
+    DependsOnTargets="$(ValidateOptionsDependsOn)"
+    Condition=" '$(SkipValidateOptions)'=='' "/>
+
+  <Target Name="ValidatePaths"
+    Condition=" '@(UnitPath)'!='' or '@(ResourcePath)'!='' or '@(IncludePath)'!='' or '@(ObjPath)'!='' ">
+    <Warning Condition=" '@(UnitPath)'!='' and !Exists('%(UnitPath.Identity)') "
+      Text="Path '%(UnitPath.Identity)' in the UnitPath ItemGroup does not exist, you could be missing referenced pas or dcu files."/>
+    <Warning Condition=" '@(ResourcePath)'!='' and !Exists('%(ResourcePath.Identity)') "
+      Text="Path '%(ResourcePath.Identity)' in the ResourcePath ItemGroup does not exist, you could be missing referenced resource files."/>
+    <Warning Condition=" '@(IncludePath)'!='' and !Exists('%(IncludePath.Identity)') "
+      Text="Path '%(IncludePath.Identity)' in the IncludePath ItemGroup does not exist."/>
+    <Warning Condition=" '@(ObjPath)'!='' and !Exists('%(ObjPath.Identity)') "
+      Text="Path '%(ObjPath.Identity)' in the ObjPath ItemGroup does not exist, you could be missing referenced object files."/>
+  </Target>
+
+  <Target Name="ValidateGlobalOptions" Condition=" '$(GlobalOptionFile)'!='' ">
+    <Warning Condition=" !Exists('$(GlobalOptionFile)') "
+      Text="Globals options file cannot be found.  Build may fail or results may be incorrect."/>
+  </Target>
+
+  <Target Name="ValidateSources" Condition=" '$(ValidateSource)'!='' ">
+    <Warning Condition=" !Exists('%(Reference.Identity)') "
+      Text="Referenced file %(Reference.Identity) cannot be found."/>
+    <Error Condition=" '%(EmbeddedResource.Extension)'=='.rc' And '%(EmbeddedResource.TargetExtension)'=='' "
+      Text="Win32 resource file requires TargetExtension metadata for file %(EmbeddedResource.Identity)"/>
+    <Error Condition=" !Exists('%(Compile.Identity)') "
+      Text="Source file %(Compile.Identity) cannot be found."/>
+    <Error Condition=" !Exists('%(EmbeddedResource.Identity)') "
+      Text="Embedded resource file %(EmbeddedResource.Identity) cannot be found."/>
+  </Target>
+
+  <Target Name="ValidateLocalResources" Condition=" '$(_Locals)'!='' "/>
+
+
+  <!--
+  ========================================================================
+               BuildAndroidServiceJarFile
+    Generates ProjectName.jar file that contains java classes information.
+  ========================================================================
+  -->
+  <PropertyGroup Condition="$(Platform)=='$(cAndroid32ArmPlatform)'">
+    <JarFilesOutputDir>@(OutputFile->'%(RelativeDir)')</JarFilesOutputDir>
+    <JavaClassesDir>$(MSBuildProjectDirectory)\JavaClasses\$(MSBuildProjectName)</JavaClassesDir>
+    <AndroidSupportJarFile>$(BDS)\lib\$(Platform)\$(Config)\android-support-v4.jar</AndroidSupportJarFile>
+    <FMXJarFile>$(BDS)\lib\$(Platform)\$(Config)\fmx.jar</FMXJarFile>
+    <JavaCCommand>"$(JDKPath)\bin\javac" -d "$(JavaClassesDir)" -Xlint:deprecation -classpath "$(SDKApiLevelPath)";"$(AndroidSupportJarFile)";"$(FMXJarFile)" -bootclasspath "$(SDKApiLevelPath)" -encoding UTF-8 -target 1.6 -g -source 1.6 </JavaCCommand>
+    <JavaJarCommand>"$(JDKPath)\bin\jar" cf "$(JarFilesOutputDir)$(MSBuildProjectName).jar" -C "$(JavaClassesDir)" .</JavaJarCommand>
+    <ServiceJavaFile>@(OutputFile->'%(RelativeDir)$(MSBuildProjectName).java')</ServiceJavaFile>
+    <ServiceProxyIntfJavaFile>@(OutputFile->'%(RelativeDir)$(MSBuildProjectName)ProxyInterface.java')</ServiceProxyIntfJavaFile>
+    <ServiceIncludeFile>$(MSBuildProjectDirectory)\ServiceConst.inc</ServiceIncludeFile>
+  </PropertyGroup>
+
+  <Target Name="CleanJavaClassesOutputDir">
+    <ItemGroup>
+      <JavaClassFiles Include="$(JavaClassesDir)\com\embarcadero\services\$(MSBuildProjectName)*.class"/>
+    </ItemGroup>
+    <Delete Files="@(JavaClassFiles)"/>
+  </Target>
+
+  <Target Name="_GenerateJavaSourceFiles">
+    <ItemGroup>
+        <JavaFiles Include="$(ServiceJavaFile);$(ServiceProxyIntfJavaFile)"/>
+    </ItemGroup>
+
+    <GenJavaSourceFiles
+        OutputFile1="$(ServiceJavaFile)"
+        OutputFile2="$(ServiceProxyIntfJavaFile)"
+        AppDataDir="$(AppDataDir)"
+        ProjectDir="$(MSBuildProjectDirectory)"
+        ProjectName="$(MSBuildProjectName)"
+        ServiceName="$(MSBuildProjectName)"
+        ServiceType="$(AndroidServiceType)"
+    />
+  </Target>
+
+  <Target Name="BuildAndroidServiceJarFile" DependsOnTargets="_GenerateJavaSourceFiles"
+    Condition="('$(Platform)'=='$(cAndroid32ArmPlatform)' And '$(AndroidServiceType)'!='')">
+
+    <MakeDir Directories="$(JavaClassesDir)" Condition="!Exists($(JavaClassesDir))"/>
+
+    <StringReplace Input="@(JavaFiles)" Replace=";" With="%20">
+      <Output ItemName="JavaSourceFiles" TaskParameter="Output" />
+    </StringReplace>
+
+    <!-- Creates JavaClasses -->
+    <Exec Command='$(JavaCCommand) @(JavaSourceFiles)'/>
+    <!-- Creates the final .jar file -->
+    <Exec Command='$(JavaJarCommand)'/>
+  </Target>
+
+
+
+  <!--
+  ========================================================================
+               GenClassesDex
+    Create the classes.dex file for Android applications.
+  ========================================================================
+  -->
+
+  <ItemGroup Condition="$(Platform)=='$(cAndroid32ArmPlatform)'">
+    <JavaAaptPath Include="$(SDKAaptPath)"/>
+  </ItemGroup>
+
+  <PropertyGroup Condition="$(Platform)=='$(cAndroid32ArmPlatform)'">
+    <ClassesDexFileName>classes.dex</ClassesDexFileName>
+    <OutputClassesDexDir>@(OutputFile->'%(Rootdir)%(Directory)')</OutputClassesDexDir>
+    <OutputClassesDexPath>$(OutputClassesDexDir)$(ClassesDexFileName)</OutputClassesDexPath>
+
+    <!-- Filter to set system lib config and avoid invalid configurations -->
+    <BDSSysLib Condition="('$(Config)'=='debug') Or ('$(Config)'=='release')">$(BDS)\lib\$(Platform)\$(Config)\</BDSSysLib>
+    <BDSSysLib Condition="('$(Config)'!='debug') And ('$(Config)'!='release')">$(BDS)\lib\$(Platform)\release\</BDSSysLib>
+
+    <!-- Default system lib paths (For development only) -->
+    <DefaultBDSLibConfigPathDebug>$(BDS)\lib\$(Platform)\debug\</DefaultBDSLibConfigPathDebug>
+    <DefaultBDSLibConfigPathRelease>$(BDS)\lib\$(Platform)\release\</DefaultBDSLibConfigPathRelease>
+
+    <PredexedJarSuffix>-dexed</PredexedJarSuffix>
+    <JavaD8Path>@(JavaAaptPath->'%(RootDir)%(Directory)')d8.bat</JavaD8Path>
+    <JavaDxPath>@(JavaAaptPath->'%(RootDir)%(Directory)')dx.bat</JavaDxPath>
+    <D8Cmd>PATH $(JDKPath)\bin;$(PATH) %26 "$(JavaD8Path)" --output=</D8Cmd>	
+    <DxCmd>PATH $(JDKPath)\bin;$(PATH) %26 "$(JavaDxPath)" --dex --output=</DxCmd>
+    <DxClassesDexCmd>$(DxCmd)"$(OutputClassesDexPath)"</DxClassesDexCmd>
+  </PropertyGroup>
+
+  <!-- Return all the enabled "dexed" system jar files -->
+  <Target Name="GetPredexedSysJars" Condition="('$(EnabledSysJars)'!='')">
+    <Split Text="$(EnabledSysJars)" Separator=";">
+      <Output ItemName="SysJars" TaskParameter="Output" />
+    </Split>
+
+    <ItemGroup>
+        <!-- Normal case (Lib path exists) -->
+        <_SysJarsLocations Include="$(BDSSysLib)%(SysJars.FileName)%(SysJars.Extension)" Condition="Exists('$(BDSSysLib)%(SysJars.FileName)%(SysJars.Extension)')" />
+
+        <!-- Set the library path to DEBUG if RELEASE library does not exists (For development only) -->
+        <_SysJarsLocations Include="$(DefaultBDSLibConfigPathDebug)%(SysJars.FileName)%(SysJars.Extension)"
+            Condition="(!Exists('$(BDSSysLib)%(SysJars.FileName)%(SysJars.Extension)')) And
+                Exists('$(DefaultBDSLibConfigPathDebug)%(SysJars.FileName)%(SysJars.Extension)') And
+                (!Exists('$(DefaultBDSLibConfigPathRelease)%(SysJars.FileName)%(SysJars.Extension)'))" />
+
+        <!-- Set the library path to RELEASE if DEBUG library does not exists (For development only) -->
+        <_SysJarsLocations Include="$(DefaultBDSLibConfigPathRelease)%(SysJars.FileName)%(SysJars.Extension)"
+            Condition="(!Exists('$(BDSSysLib)%(SysJars.FileName)%(SysJars.Extension)')) And
+            Exists('$(DefaultBDSLibConfigPathRelease)%(SysJars.FileName)%(SysJars.Extension)') And
+            (!Exists('$(DefaultBDSLibConfigPathDebug)%(SysJars.FileName)%(SysJars.Extension)'))" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="CreateClassesDexOutputDir" Condition="!Exists('$(OutputClassesDexDir)')">
+    <MakeDir Directories="$(OutputClassesDexDir)"/>
+  </Target>
+
+  <!-- Return all the customized jar files included on the project -->
+  <Target Name="GetProjectJars">
+    <ItemGroup>
+        <_JarsLocations Include="%(JavaReference.FullPath)" Condition="('%(JavaReference.Disabled)'!='True') And ('%(JavaReference.IsSystem)'!='True')">
+            <PredexedJar>$(OutputClassesDexDir)%(JavaReference.Filename)$(PredexedJarSuffix)%(JavaReference.Extension)</PredexedJar>
+        </_JarsLocations>
+    </ItemGroup>
+  </Target>
+
+  <!-- Generate a "dexed" version of the customized jar files if they doesn´t exists -->
+  <Target Name="BuildPredexedJar" DependsOnTargets="GetProjectJars">
+    <Exec Condition="( '@(_JarsLocations)'!='' And !Exists('%(_JarsLocations.PredexedJar)') )"
+        Command='$(D8Cmd)"%(_JarsLocations.PredexedJar)" %22%(_JarsLocations.FullPath)%22'/>
+  </Target>
+
+  <!-- Generate the classes.dex file -->
+  <Target Name="BuildClassesDex" DependsOnTargets="CreateClassesDexOutputDir;GetPredexedSysJars;BuildPredexedJar"
+    Condition="$(Platform)=='$(cAndroid32ArmPlatform)' And (('$(AppType)'=='Application') Or ('$(AppType)'=='Console'))">
+    <Exec Condition="('@(_SysJarsLocations)'!='') Or ('@(_JarsLocations)'!='')"
+        Command="$(DxClassesDexCmd) @(_SysJarsLocations->'%22%(FullPath)%22', ' ') @(_JarsLocations->'%22%(PredexedJar)%22', ' ')"/>
+  </Target>
+
+  <!--
+  ========================================================================
+               ResourceBuild
+    Resolve non-standard resource dependencies and build resources
+  ========================================================================
+  -->
+
+  <PropertyGroup>
+    <ResourceBuildDependsOn>
+      Win32ResourceDependencies;
+      BuildWin32Resources
+    </ResourceBuildDependsOn>
+  </PropertyGroup>
+
+  <Target Name="ResourceBuild" DependsOnTargets="$(ResourceBuildDependsOn)"/>
+
+  <Target Name="Win32ResourceDependencies" Condition=" '@(_RCFiles)'!='' ">
+    <GetResourceDependencies Files="@(_RCFiles)">
+      <Output TaskParameter="Dependencies" ItemName="_RCDependencies"/>
+    </GetResourceDependencies>
+  </Target>
+
+  <Target Name="BuildWin32Resources" Condition=" '@(_RCFiles)'!='' "
+    Inputs="@(_RCFiles);%(_RCDependencies.Dependencies)"
+    Outputs="@(_ResourceFiles)">
+        <BuildDelphiResources Files="@(_RCFiles)" OutputDir="$(ResourceOutput)"/>
+  </Target>
+
+  <Target Name="__ResourceItemDepCheck" DependsOnTargets="__SetProjectResourceFileName">
+    <ResourceItemDependencyCheck
+      Condition="'@(RcItem)'!=''"
+      InputFiles="@(RcItem)"
+      AdditionalInputs="@(__ProjectResourceOutputFile)"
+      OutputFile="@(__ProjectResourceFile)"
+      ProjectFileName="$(MSBuildProjectFullPath)"
+      Build="$(ForceRebuild)"
+    >
+      <Output
+        TaskParameter="OutOfDate"
+        ItemName="RcProjectCompile"
+      />
+    </ResourceItemDependencyCheck>
+  </Target>
+
+  <Target Name="BuildProjectResourceFile" DependsOnTargets="__ResourceItemDepCheck"
+    Condition="'@(RcItem)'!=''">
+    <BRCC32 Condition="'@(RcProjectCompile)'!=''"
+      Compile="%(RcProjectCompile.Identity)"
+      ForceExecute="true"
+      CompilerToUse="rc"
+      CodePage="65001"
+      ProjectFileName="$(MSBuildProjectFullPath)"
+      ResFiles="@(__ProjectResourceOutputFile)"
+      ResponseFilename="$(BRCC_ResponseFilename)"
+      Verbose="$(BRCC_Verbose)"
+      ShowStdOut="$(ShowStdOut)"
+    />
+  </Target>
+
+  <!---
+  ========================================================================
+               BuildVersionResource
+    Create and build resource used to store version information and project
+    icon.
+  ========================================================================
+  -->
+
+  <PropertyGroup Condition="'$(Platform)'=='$(cOSX32Platform)' Or '$(Platform)'=='$(cOSX64Platform)' Or '$(Platform)'=='$(ciOSSimulator32Platform)' Or '$(Platform)'=='$(ciOSDevice32Platform)' Or '$(Platform)'=='$(ciOSDevice64Platform)'">
+    <VerInfo_MajorVer Condition=" '$(VerInfo_MajorVer)'=='' ">1</VerInfo_MajorVer>
+    <VerInfo_MinorVer Condition=" '$(VerInfo_MinorVer)'=='' ">0</VerInfo_MinorVer>
+  </PropertyGroup>
+
+  <Target Name="__SetVersionResourceFileName">
+    <CreateItem Include="$(MSBuildProjectName).vrc">
+      <Output TaskParameter="Include" ItemName="__ProjectVersionFile"/>
+    </CreateItem>
+
+    <CreateItem Include="$(MSBuildProjectName).$manifest">
+      <Output TaskParameter="Include" ItemName="__ProjectRCTemporaryFiles"/>
+    </CreateItem>
+
+    <CreateItem Include="$(MSBuildProjectName).res">
+      <Output TaskParameter="Include" ItemName="__ProjectVersionOutputFile"/>
+    </CreateItem>
+  </Target>
+
+  <Target Name="__ResourceVersionResDepCheck" DependsOnTargets="__SetVersionResourceFileName">
+    <DependencyCheck
+      InputFiles="$(MSBuildProjectFullPath)"
+      OutputFile="@(__ProjectVersionOutputFile)"
+      ProjectFileName="$(MSBuildProjectFullPath)"
+      Build="$(ForceRebuild)"
+      KibitzTask="false"
+    >
+      <Output
+        TaskParameter="OutOfDate"
+        ItemName="RcVersionCompile"
+      />
+      <Output
+        TaskParameter="Skipped"
+        ItemName="SkippedPasFiles"
+      />
+    </DependencyCheck>
+  </Target>
+
+  <!--
+     AndroidManifest.xml file dependency checking
+  -->
+  <Target Name="__SetAndroidManifestFileName">
+    <CreateItem Include="$(MSBuildProjectDirectory)\$(Platform)\$(Config)\AndroidManifest.xml">
+      <Output TaskParameter="Include" ItemName="__AndroidManifestOutputFile"/>
+    </CreateItem>
+  </Target>
+
+  <Target Name="__AndroidManifestDepCheck"
+    Condition="'$(Platform)'=='$(cAndroid32ArmPlatform)'" DependsOnTargets="__SetAndroidManifestFileName">
+    <DependencyCheck
+      InputFiles="$(MSBuildProjectFullPath)"
+      OutputFile="@(__AndroidManifestOutputFile)"
+      ProjectFileName="$(MSBuildProjectFullPath)"
+      Build="$(ForceRebuild)"
+      KibitzTask="false"
+    >
+      <Output
+        TaskParameter="OutOfDate"
+        ItemName="RcAndroidManifestFile"
+      />
+      <Output
+        TaskParameter="Skipped"
+        ItemName="SkippedPasFiles"
+      />
+    </DependencyCheck>
+  </Target>
+
+  <Target Name="__BuildShouldBuildVersion"
+    DependsOnTargets="__ResourceVersionResDepCheck;__AndroidManifestDepCheck">
+    <PropertyGroup>
+        <__ShouldBuildVersion Condition="'$(__ShouldBuildVersion)'==''">false</__ShouldBuildVersion>
+        <__ShouldBuildVersion Condition="'@(RcVersionCompile)'!='' Or !Exists('@(__ProjectVersionOutputFile)')">true</__ShouldBuildVersion>
+
+        <__ShouldBuildVersion Condition="'$(Platform)'=='$(cAndroid32ArmPlatform)'
+                              And (('@(RcAndroidManifestFile)'!='') Or (!Exists('@(__AndroidManifestOutputFile)')))">true</__ShouldBuildVersion>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="__CreateVerOutputName">
+    <CreateItem Include="$(MSBuildProjectName).vrc">
+      <Output TaskParameter="Include" ItemName="VerInfo_OutputFile"/>
+    </CreateItem>
+  </Target>
+
+  <PropertyGroup>
+    <__Manifest_File Condition="Exists('$(Manifest_File)')">$(Manifest_File)</__Manifest_File>
+    <__Manifest_File Condition="!Exists('$(Manifest_File)')"></__Manifest_File>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EL_DevTeamId Condition="'$(BT_BuildType)'=='AppStore' And '$(PF_DevTeamIdAppStore)'==''">$(ENV_PF_DevTeamIdAppStore)</EL_DevTeamId>
+    <EL_DevTeamId Condition="'$(BT_BuildType)'=='AppStore' And '$(PF_DevTeamIdAppStore)'!=''">$(PF_DevTeamIdAppStore)</EL_DevTeamId>
+    <EL_DevTeamId Condition="'$(BT_BuildType)'=='Debug' And '$(PF_DevTeamIdDebug)'==''">$(ENV_PF_DevTeamIdDebug)</EL_DevTeamId>
+    <EL_DevTeamId Condition="'$(BT_BuildType)'=='Debug' And '$(PF_DevTeamIdDebug)'!=''">$(PF_DevTeamIdDebug)</EL_DevTeamId>
+    <EL_DevTeamId Condition="'$(BT_BuildType)'=='Adhoc' And '$(PF_DevTeamIdAdhoc)'==''">$(ENV_PF_DevTeamIdAdhoc)</EL_DevTeamId>
+    <EL_DevTeamId Condition="'$(BT_BuildType)'=='Adhoc' And '$(PF_DevTeamIdAdhoc)'!=''">$(PF_DevTeamIdAdhoc)</EL_DevTeamId>
+  </PropertyGroup>
+
+  <PropertyGroup>
+
+    <EL_AppIdentifier Condition="'$(BT_BuildType)'=='Debug' And '$(PF_AppIdentifierDebug)'==''">$(ENV_PF_AppIdentifierDebug)</EL_AppIdentifier>
+    <EL_AppIdentifier Condition="'$(BT_BuildType)'=='Debug' And '$(PF_AppIdentifierDebug)'!=''">$(PF_AppIdentifierDebug)</EL_AppIdentifier>
+    <EL_AppIdentifier Condition="'$(BT_BuildType)'=='Adhoc' And '$(PF_AppIdentifierAdhoc)'==''">$(ENV_PF_AppIdentifierAdhoc)</EL_AppIdentifier>
+    <EL_AppIdentifier Condition="'$(BT_BuildType)'=='Adhoc' And '$(PF_AppIdentifierAdhoc)'!=''">$(PF_AppIdentifierAdhoc)</EL_AppIdentifier>
+    <EL_AppIdentifier Condition="'$(BT_BuildType)'=='AppStore' And '$(PF_AppIdentifierAppStore)'==''">$(ENV_PF_AppIdentifierAppStore)</EL_AppIdentifier>
+    <EL_AppIdentifier Condition="'$(BT_BuildType)'=='AppStore' And '$(PF_AppIdentifierAppStore)'!=''">$(PF_AppIdentifierAppStore)</EL_AppIdentifier>
+
+    <EL_MobileProvisionPath Condition="'$(BT_BuildType)'=='Debug' And '$(PF_MobileProvisionPathDebug)'==''">$(ENV_PF_MobileProvisionPathDebug)</EL_MobileProvisionPath>
+    <EL_MobileProvisionPath Condition="'$(BT_BuildType)'=='Debug' And '$(PF_MobileProvisionPathDebug)'!=''">$(PF_MobileProvisionPathDebug)</EL_MobileProvisionPath>
+    <EL_MobileProvisionPath Condition="'$(BT_BuildType)'=='Adhoc' And '$(PF_MobileProvisionPathAdhoc)'==''">$(ENV_PF_MobileProvisionPathAdhoc)</EL_MobileProvisionPath>
+    <EL_MobileProvisionPath Condition="'$(BT_BuildType)'=='Adhoc' And '$(PF_MobileProvisionPathAdhoc)'!=''">$(PF_MobileProvisionPathAdhoc)</EL_MobileProvisionPath>
+    <EL_MobileProvisionPath Condition="'$(BT_BuildType)'=='AppStore' And '$(PF_MobileProvisionPathAppStore)'==''">$(ENV_PF_MobileProvisionPathAppStore)</EL_MobileProvisionPath>
+    <EL_MobileProvisionPath Condition="'$(BT_BuildType)'=='AppStore' And '$(PF_MobileProvisionPathAppStore)'!=''">$(PF_MobileProvisionPathAppStore)</EL_MobileProvisionPath>
+
+    <EL_MobileProvision Condition="'$(BT_BuildType)'=='Debug' And '$(PF_MobileProvisionDebug)'==''">$(ENV_PF_MobileProvisionDebug)</EL_MobileProvision>
+    <EL_MobileProvision Condition="'$(BT_BuildType)'=='Debug' And '$(PF_MobileProvisionDebug)'!=''">$(PF_MobileProvisionDebug)</EL_MobileProvision>
+    <EL_MobileProvision Condition="'$(BT_BuildType)'=='Adhoc' And '$(PF_MobileProvisionAdhoc)'==''">$(ENV_PF_MobileProvisionAdhoc)</EL_MobileProvision>
+    <EL_MobileProvision Condition="'$(BT_BuildType)'=='Adhoc' And '$(PF_MobileProvisionAdhoc)'!=''">$(PF_MobileProvisionAdhoc)</EL_MobileProvision>
+    <EL_MobileProvision Condition="'$(BT_BuildType)'=='AppStore' And '$(PF_MobileProvisionAppStore)'==''">$(ENV_PF_MobileProvisionAppStore)</EL_MobileProvision>
+    <EL_MobileProvision Condition="'$(BT_BuildType)'=='AppStore' And '$(PF_MobileProvisionAppStore)'!=''">$(PF_MobileProvisionAppStore)</EL_MobileProvision>
+
+    <EL_KeyChainAccess Condition="'$(BT_BuildType)'=='Debug' And '$(PF_KeyChainAccessDebug)'==''">$(ENV_PF_KeyChainAccessDebug)</EL_KeyChainAccess>
+    <EL_KeyChainAccess Condition="'$(BT_BuildType)'=='Debug' And '$(PF_KeyChainAccessDebug)'!=''">$(PF_KeyChainAccessDebug)</EL_KeyChainAccess>
+    <EL_KeyChainAccess Condition="'$(BT_BuildType)'=='Adhoc' And '$(PF_KeyChainAccessAdhoc)'==''">$(ENV_PF_KeyChainAccessAdhoc)</EL_KeyChainAccess>
+    <EL_KeyChainAccess Condition="'$(BT_BuildType)'=='Adhoc' And '$(PF_KeyChainAccessAdhoc)'!=''">$(PF_KeyChainAccessAdhoc)</EL_KeyChainAccess>
+    <EL_KeyChainAccess Condition="'$(BT_BuildType)'=='AppStore' And '$(PF_KeyChainAccessAppStore)'==''">$(ENV_PF_KeyChainAccessAppStore)</EL_KeyChainAccess>
+    <EL_KeyChainAccess Condition="'$(BT_BuildType)'=='AppStore' And '$(PF_KeyChainAccessAppStore)'!=''">$(PF_KeyChainAccessAppStore)</EL_KeyChainAccess>
+
+    <EL_CFBundleIdentifier Condition="'$(BT_BuildType)'=='Debug' And '$(PF_CFBundleIdentifierDebug)'==''">$(ENV_PF_CFBundleIdentifierDebug)</EL_CFBundleIdentifier>
+    <EL_CFBundleIdentifier Condition="'$(BT_BuildType)'=='Debug' And '$(PF_CFBundleIdentifierDebug)'!=''">$(PF_CFBundleIdentifierDebug)</EL_CFBundleIdentifier>
+    <EL_CFBundleIdentifier Condition="'$(BT_BuildType)'=='Adhoc' And '$(PF_CFBundleIdentifierAdhoc)'==''">$(ENV_PF_CFBundleIdentifierAdhoc)</EL_CFBundleIdentifier>
+    <EL_CFBundleIdentifier Condition="'$(BT_BuildType)'=='Adhoc' And '$(PF_CFBundleIdentifierAdhoc)'!=''">$(PF_CFBundleIdentifierAdhoc)</EL_CFBundleIdentifier>
+    <EL_CFBundleIdentifier Condition="'$(BT_BuildType)'=='AppStore' And '$(PF_CFBundleIdentifierAppStore)'==''">$(ENV_PF_CFBundleIdentifierAppStore)</EL_CFBundleIdentifier>
+    <EL_CFBundleIdentifier Condition="'$(BT_BuildType)'=='AppStore' And '$(PF_CFBundleIdentifierAppStore)'!=''">$(PF_CFBundleIdentifierAppStore)</EL_CFBundleIdentifier>
+
+    <EL_EntitlementExtraKeyValues Condition="'$(BT_BuildType)'=='Debug' And '$(PF_EntitlementExtraKeyValuesDebug)'==''">$(ENV_PF_EntitlementExtraKeyValuesDebug)</EL_EntitlementExtraKeyValues>
+    <EL_EntitlementExtraKeyValues Condition="'$(BT_BuildType)'=='Debug' And '$(PF_EntitlementExtraKeyValuesDebug)'!=''">$(PF_EntitlementExtraKeyValuesDebug)</EL_EntitlementExtraKeyValues>
+    <EL_EntitlementExtraKeyValues Condition="'$(BT_BuildType)'=='Adhoc' And '$(PF_EntitlementExtraKeyValuesAdhoc)'==''">$(ENV_PF_EntitlementExtraKeyValuesAdhoc)</EL_EntitlementExtraKeyValues>
+    <EL_EntitlementExtraKeyValues Condition="'$(BT_BuildType)'=='Adhoc' And '$(PF_EntitlementExtraKeyValuesAdhoc)'!=''">$(PF_EntitlementExtraKeyValuesAdhoc)</EL_EntitlementExtraKeyValues>
+    <EL_EntitlementExtraKeyValues Condition="'$(BT_BuildType)'=='AppStore' And '$(PF_EntitlementExtraKeyValuesAppStore)'==''">$(ENV_PF_EntitlementExtraKeyValuesAppStore)</EL_EntitlementExtraKeyValues>
+    <EL_EntitlementExtraKeyValues Condition="'$(BT_BuildType)'=='AppStore' And '$(PF_EntitlementExtraKeyValuesAppStore)'!=''">$(PF_EntitlementExtraKeyValuesAppStore)</EL_EntitlementExtraKeyValues>
+
+  </PropertyGroup>
+
+  <Target Name="_BuildRCFile">
+    <CreateRcFile
+      OutputFile="@(VerInfo_OutputFile)"
+      IncludeVerInfo="$(VerInfo_IncludeVerInfo)"
+      AutoGenVersion="$(VerInfo_AutoGenVersion)"
+      MajorVer="$(VerInfo_MajorVer)"
+      MinorVer="$(VerInfo_MinorVer)"
+      Release="$(VerInfo_Release)"
+      Build="$(VerInfo_Build)"
+      Debug="$(VerInfo_Debug)"
+      PreRelease="$(VerInfo_PreRelease)"
+      Special="$(VerInfo_Special)"
+      Private="$(VerInfo_Private)"
+      DLL="$(VerInfo_DLL)"
+      Locale="$(VerInfo_Locale)"
+      KeysString="$(VerInfo_Keys)"
+      ManifestFile="$(__Manifest_File)"
+      EnableRuntimeThemes="$(AppEnableRuntimeThemes)"
+      DPIAwarenessMode="$(AppDPIAwarenessMode)"
+      ExecutionLevel="$(AppExecutionLevel)"
+      ExecutionLevelUIAccess="$(AppExecutionLevelUIAccess)"
+      VCLCustomStyles="$(Custom_Styles)"
+      Icon="@(__Icon_MainIcon)"
+      ResourcePlatform="$(Platform)"
+      TargetedPlatforms="$(TargetedPlatforms)"
+    />
+  </Target>
+
+  <Target Name="BuildShouldBuildVersion" DependsOnTargets="__CreateVerOutputName;__BuildShouldBuildVersion"/>
+
+  <Target Name="__BuildRCFile" DependsOnTargets="__CreateVerOutputName;__BuildShouldBuildVersion">
+    <CallTarget Targets="_BuildRCFile" Condition="'$(__ShouldBuildVersion)'=='true'"/>
+  </Target>
+
+  <Target Name="BuildVersionResource" DependsOnTargets="__BuildRCFile" Condition="'$(SkipResGeneration)'!='true'">
+    <BRCC32 Condition="'$(__ShouldBuildVersion)'=='true'"
+      Compile="@(__ProjectVersionFile)"
+      ForceExecute="true"
+      CompilerToUse="rc"
+      CodePage="65001"
+      ProjectFileName="$(MSBuildProjectFullPath)"
+      ResFiles="@(__ProjectVersionOutputFile)"
+      ResponseFilename="$(BRCC_ResponseFilename)"
+      Verbose="$(BRCC_Verbose)"
+      ShowStdOut="$(ShowStdOut)"
+    />
+    <Delete Files="@(__ProjectVersionFile)" Condition="Exists('@(__ProjectVersionFile)') And ('$(SaveVRC)'!='true')"/>
+    <Delete Files="@(__ProjectRCTemporaryFiles)" Condition="Exists('@(__ProjectRCTemporaryFiles)') And ('$(SaveVRC)'!='true')"/>
+  </Target>
+
+  <Target Name="AutoIncBuildNumber"
+    Condition="'$(VerInfo_AutoIncVersion)'=='true' And ('$(Platform)'!='$(cAndroid32ArmPlatform)' Or ('$(Platform)'=='$(cAndroid32ArmPlatform)' And '$(BT_BuildType)'=='AppStore'))">
+    <IncrementBuildNumber
+      ProjectFileName="$(MSBuildProjectFullPath)"
+      Platform="$(Platform)"
+      Configuration="$(Config)"
+      KeysString="$(VerInfo_Keys)"
+    />
+  </Target>
+
+
+  <!--
+  ========================================================================
+               BuildAndroidManifestList
+    Create the Manifest file for Android applcation
+  ========================================================================
+  -->
+
+  <Target Name="__SetAndroidManifestSettings">
+    <PropertyGroup>
+        <__AndroidManifestFileName Condition="'$(OutputDir)'!=''">$(OutputDir)AndroidManifest.xml</__AndroidManifestFileName>
+        <__AndroidManifestFileName Condition="'$(OutputDir)'!='' And !HasTrailingSlash('$(OutputDir)')">$(OutputDir)\AndroidManifest.xml</__AndroidManifestFileName>
+        <__AndroidManifestFileName Condition="'$(OutputDir)'==''">$(MSBuildProjectDirectory)\AndroidManifest.xml</__AndroidManifestFileName>
+        <ShouldCreateManifestFile Condition="'$(Platform)'=='$(cAndroid32ArmPlatform)'">true</ShouldCreateManifestFile>
+        <IsDebugBuildType Condition="'$(BT_BuildType)'=='Debug'">True</IsDebugBuildType>
+        <AUP_INTERNET Condition="'$(AUP_INTERNET)'!='true' And '$(IsDebugBuildType)'=='True'">True</AUP_INTERNET>
+        <IncludeAndroid_Splash Condition="'$(IncludeAndroid_Splash)'==''">true</IncludeAndroid_Splash>
+        <_JavaReference>@(JavaReference)</_JavaReference>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="BuildAndroidManifestList" DependsOnTargets="__SetAndroidManifestSettings">
+    <CreateAndroidManifestFile Condition="'$(ShouldCreateManifestFile)'=='true'"
+        OutputFile="$(__AndroidManifestFileName)"
+        ProjectDir="$(MSBuildProjectDirectory)"
+        ProjectName="$(MSBuildProjectName)"
+        SanitizedProjectName="$(SanitizedProjectName)"
+        KeysString="$(VerInfo_Keys)"
+        IsDebugBuildType="$(IsDebugBuildType)"
+        Android_SplashTileMode="$(Android_SplashTileMode)"
+        Android_SplashGravity="$(Android_SplashGravity)"
+        IncludeAndroid_Splash="$(IncludeAndroid_Splash)"
+        AppDataDir="$(AppDataDir)"
+        JarFiles="$(_JavaReference)"
+        ACCEPT_HANDOVER="$(AUP_ACCEPT_HANDOVER)"
+        ACCESS_COARSE_LOCATION="$(AUP_ACCESS_COARSE_LOCATION)"
+        ACCESS_FINE_LOCATION="$(AUP_ACCESS_FINE_LOCATION)"
+        ACCESS_NETWORK_STATE="$(AUP_ACCESS_NETWORK_STATE)"
+        ACCESS_LOCATION_EXTRA_COMMANDS="$(AUP_ACCESS_LOCATION_EXTRA_COMMANDS)"
+        ACCESS_MOCK_LOCATION="$(AUP_ACCESS_MOCK_LOCATION)"
+        ACCESS_NOTIFICATION_POLICY="$(AUP_ACCESS_NOTIFICATION_POLICY)"
+        ACCESS_WIFI_STATE="$(AUP_ACCESS_WIFI_STATE)"
+        ADD_VOICEMAIL="$(AUP_ADD_VOICEMAIL)"
+        ADMOB="$(EL_AdMob)"
+        MAPS="$(EL_Maps)"
+        ANSWER_PHONE_CALLS="$(AUP_ANSWER_PHONE_CALLS)"
+        AUTHENTICATE_ACCOUNTS="$(AUP_AUTHENTICATE_ACCOUNTS)"
+        BATTERY_STATS="$(AUP_BATTERY_STATS)"
+        BIND_ACCESSIBILITY_SERVICE="$(AUP_BIND_ACCESSIBILITY_SERVICE)"
+        BIND_AUTOFILL_SERVICE="$(AUP_BIND_AUTOFILL_SERVICE)"
+        BIND_CARRIER_MESSAGING_SERVICE="$(AUP_BIND_CARRIER_MESSAGING_SERVICE)"
+        BIND_CARRIER_SERVICES="$(AUP_BIND_CARRIER_SERVICES)"
+        BIND_CHOOSER_TARGET_SERVICE="$(AUP_BIND_CHOOSER_TARGET_SERVICE)"
+        BIND_CONDITION_PROVIDER_SERVICE="$(AUP_BIND_CONDITION_PROVIDER_SERVICE)"
+        BIND_DEVICE_ADMIN="$(AUP_BIND_DEVICE_ADMIN)"
+        BIND_DREAM_SERVICE="$(AUP_BIND_DREAM_SERVICE)"
+        BIND_INCALL_SERVICE="$(AUP_BIND_INCALL_SERVICE)"
+        BIND_INPUT_METHOD="$(AUP_BIND_INPUT_METHOD)"
+        BIND_MIDI_DEVICE_SERVICE="$(AUP_BIND_MIDI_DEVICE_SERVICE)"
+        BIND_NFC_SERVICE="$(AUP_BIND_NFC_SERVICE)"
+        BIND_NOTIFICATION_LISTENER_SERVICE="$(AUP_BIND_NOTIFICATION_LISTENER_SERVICE)"
+        BIND_PRINT_SERVICE="$(AUP_BIND_PRINT_SERVICE)"
+        BIND_QUICK_SETTINGS_TILE="$(AUP_BIND_QUICK_SETTINGS_TILE)"
+        BIND_REMOTEVIEWS="$(AUP_BIND_REMOTEVIEWS)"
+        BIND_SCREENING_SERVICE="$(AUP_BIND_SCREENING_SERVICE)"
+        BIND_TELECOM_CONNECTION_SERVICE="$(AUP_BIND_TELECOM_CONNECTION_SERVICE)"
+        BIND_TEXT_SERVICE="$(AUP_BIND_TEXT_SERVICE)"
+        BIND_TV_INPUT="$(AUP_BIND_TV_INPUT)"
+        BIND_VISUAL_VOICEMAIL_SERVICE="$(AUP_BIND_VISUAL_VOICEMAIL_SERVICE)"
+        BIND_VOICE_INTERACTION="$(AUP_BIND_VOICE_INTERACTION)"
+        BIND_VPN_SERVICE="$(AUP_BIND_VPN_SERVICE)"
+        BIND_VR_LISTENER_SERVICE="$(AUP_BIND_VR_LISTENER_SERVICE)"
+        BIND_WALLPAPER="$(AUP_BIND_WALLPAPER)"
+        BLUETOOTH="$(AUP_BLUETOOTH)"
+        BLUETOOTH_ADMIN="$(AUP_BLUETOOTH_ADMIN)"
+        BODY_SENSORS="$(AUP_BODY_SENSORS)"
+        BROADCAST_STICKY="$(AUP_BROADCAST_STICKY)"
+        CALL_PHONE="$(AUP_CALL_PHONE)"
+        CAMERA="$(AUP_CAMERA)"
+        CHANGE_CONFIGURATION="$(AUP_CHANGE_CONFIGURATION)"
+        CHANGE_NETWORK_STATE="$(AUP_CHANGE_NETWORK_STATE)"
+        CHANGE_WIFI_STATE="$(AUP_CHANGE_WIFI_STATE)"
+        CHANGE_WIFI_MULTICAST_STATE="$(AUP_CHANGE_WIFI_MULTICAST_STATE)"
+        CLEAR_APP_CACHE="$(AUP_CLEAR_APP_CACHE)"
+        DISABLE_KEYGUARD="$(AUP_DISABLE_KEYGUARD)"
+        EXPAND_STATUS_BAR="$(AUP_EXPAND_STATUS_BAR)"
+        FLASHLIGHT="$(AUP_FLASHLIGHT)"
+        FOREGROUND_SERVICE="$(AUP_FOREGROUND_SERVICE)"
+        GET_ACCOUNTS="$(AUP_GET_ACCOUNTS)"
+        GET_PACKAGE_SIZE="$(AUP_GET_PACKAGE_SIZE)"
+        GET_TASKS="$(AUP_GET_TASKS)"
+        GLOBAL_SEARCH="$(AUP_GLOBAL_SEARCH)"
+        INSTALL_SHORTCUT="$(AUP_INSTALL_SHORTCUT)"
+        INSTANT_APP_FOREGROUND_SERVICE="$(AUP_INSTANT_APP_FOREGROUND_SERVICE)"
+        INTERNET="$(AUP_INTERNET)"
+        KILL_BACKGROUND_PROCESSES="$(AUP_KILL_BACKGROUND_PROCESSES)"
+        MANAGE_ACCOUNTS="$(AUP_MANAGE_ACCOUNTS)"
+        MANAGE_DOCUMENTS="$(AUP_MANAGE_DOCUMENTS)"
+        MANAGE_OWN_CALLS="$(AUP_MANAGE_OWN_CALLS)"
+        MODIFY_AUDIO_SETTINGS="$(AUP_MODIFY_AUDIO_SETTINGS)"
+        NFC="$(AUP_NFC)"
+        NFC_TRANSACTION_EVENT="$(AUP_NFC_TRANSACTION_EVENT)"
+        PACKAGE_USAGE_STATS="$(AUP_PACKAGE_USAGE_STATS)"
+        PROCESS_OUTGOING_CALLS="$(AUP_PROCESS_OUTGOING_CALLS)"
+        READ_CALENDAR="$(AUP_READ_CALENDAR)"
+        READ_CALL_LOG="$(AUP_READ_CALL_LOG)"
+        READ_CONTACTS="$(AUP_READ_CONTACTS)"
+        READ_EXTERNAL_STORAGE="$(AUP_READ_EXTERNAL_STORAGE)"
+        READ_GSERVICES="$(AUP_READ_GSERVICES)"
+        READ_HISTORY_BOOKMARKS="$(AUP_READ_HISTORY_BOOKMARKS)"
+        READ_PHONE_NUMBERS="$(AUP_READ_PHONE_NUMBERS)"
+        READ_PHONE_STATE="$(AUP_READ_PHONE_STATE)"
+        READ_PROFILE="$(AUP_READ_PROFILE)"
+        READ_SMS="$(AUP_READ_SMS)"
+        READ_SOCIAL_STREAM="$(AUP_READ_SOCIAL_STREAM)"
+        READ_SYNC_SETTINGS="$(AUP_READ_SYNC_SETTINGS)"
+        READ_SYNC_STATS="$(AUP_READ_SYNC_STATS)"
+        READ_USER_DICTIONARY="$(AUP_READ_USER_DICTIONARY)"
+        READ_VOICEMAIL="$(AUP_READ_VOICEMAIL)"
+        RECEIVE_BOOT_COMPLETED="$(AUP_RECEIVE_BOOT_COMPLETED)"
+        RECEIVE_MMS="$(AUP_RECEIVE_MMS)"
+        RECEIVE_SMS="$(AUP_RECEIVE_SMS)"
+        RECEIVE_WAP_PUSH="$(AUP_RECEIVE_WAP_PUSH)"
+        RECEIVE_PUSH_NOTIFICATIONS="$(EL_ApsEnvironment)"
+        RECORD_AUDIO="$(AUP_RECORD_AUDIO)"
+        REORDER_TASKS="$(AUP_REORDER_TASKS)"
+        REQUEST_COMPANION_RUN_IN_BACKGROUND="$(AUP_REQUEST_COMPANION_RUN_IN_BACKGROUND)"
+        REQUEST_COMPANION_USE_DATA_IN_BACKGROUND="$(AUP_REQUEST_COMPANION_USE_DATA_IN_BACKGROUND)"
+        REQUEST_DELETE_PACKAGES="$(AUP_REQUEST_DELETE_PACKAGES)"
+        REQUEST_IGNORE_BATTERY_OPTIMIZATIONS="$(AUP_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)"
+        REQUEST_INSTALL_PACKAGES="$(AUP_REQUEST_INSTALL_PACKAGES)"
+        SECURE_FILE_SHARING="$(EL_SecureFileSharing)"
+        SEND_SMS="$(AUP_SEND_SMS)"
+        SET_ALARM="$(AUP_SET_ALARM)"
+        SET_TIME_ZONE="$(AUP_SET_TIME_ZONE)"
+        SET_WALLPAPER="$(AUP_SET_WALLPAPER)"
+        SET_WALLPAPER_HINTS="$(AUP_SET_WALLPAPER_HINTS)"
+        SUBSCRIBED_FEEDS_READ="$(AUP_SUBSCRIBED_FEEDS_READ)"
+        SUBSCRIBED_FEEDS_WRITE="$(AUP_SUBSCRIBED_FEEDS_WRITE)"
+        SYSTEM_ALERT_WINDOW="$(AUP_SYSTEM_ALERT_WINDOW)"
+        TRANSMIT_IR="$(AUP_TRANSMIT_IR)"
+        UNINSTALL_SHORTCUT="$(AUP_UNINSTALL_SHORTCUT)"
+        USE_BIOMETRIC="$(AUP_USE_BIOMETRIC)"
+        USE_CREDENTIALS="$(AUP_USE_CREDENTIALS)"
+        USE_FINGERPRINT="$(AUP_USE_FINGERPRINT)"
+        USE_SIP="$(AUP_USE_SIP)"
+        VENDING_BILLING="$(AUP_COM_VENDING_BILLING)"
+        VIBRATE="$(AUP_VIBRATE)"
+        WAKE_LOCK="$(AUP_WAKE_LOCK)"
+        WRITE_CALENDAR="$(AUP_WRITE_CALENDAR)"
+        WRITE_CALL_LOG="$(AUP_WRITE_CALL_LOG)"
+        WRITE_CONTACTS="$(AUP_WRITE_CONTACTS)"
+        WRITE_EXTERNAL_STORAGE="$(AUP_WRITE_EXTERNAL_STORAGE)"
+        WRITE_HISTORY_BOOKMARKS="$(AUP_WRITE_HISTORY_BOOKMARKS)"
+        WRITE_PROFILE="$(AUP_WRITE_PROFILE)"
+        WRITE_SETTINGS="$(AUP_WRITE_SETTINGS)"
+        WRITE_SMS="$(AUP_WRITE_SMS)"
+        WRITE_SOCIAL_STREAM="$(AUP_WRITE_SOCIAL_STREAM)"
+        WRITE_SYNC_SETTINGS="$(AUP_WRITE_SYNC_SETTINGS)"
+        WRITE_USER_DICTIONARY="$(AUP_WRITE_USER_DICTIONARY)"
+        WRITE_VOICEMAIL="$(AUP_WRITE_VOICEMAIL)"
+    />
+  </Target>
+
+
+
+
+  <!--
+  ========================================================================
+               Clean UWP files
+  ========================================================================
+  -->
+
+  <Target Name="_ResolveUWPFileNames">
+    <PropertyGroup>
+        <UWPProjectOutputDir Condition="'$(OutputDir)'!=''">$(OutputDir)</UWPProjectOutputDir>
+        <UWPProjectOutputDir Condition="'$(OutputDir)'==''">$(FinalOutputDir)</UWPProjectOutputDir>
+        <UWPProjectOutputDir Condition="'$(UWPProjectOutputDir)'==''">$(MSBuildProjectDirectory)</UWPProjectOutputDir>
+        <UWPProjectOutputDir Condition="'$(UWPProjectOutputDir)'!='' And !HasTrailingSlash('$(UWPProjectOutputDir)')">$(UWPProjectOutputDir)\</UWPProjectOutputDir>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <UWPProjectOutputDirItem Include="$(UWPProjectOutputDir)" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <__UWPManifestFileName>$(UWPProjectOutputDir)AppxManifest.xml</__UWPManifestFileName>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="_BuildUWPOutputList" DependsOnTargets="_ResolveUWPFileNames">
+    <CreateItem Include="$(__UWPManifestFileName)" Condition="Exists('$(__UWPManifestFileName)')">
+      <Output TaskParameter="Include" ItemName="_UWPOutputs"/>
+    </CreateItem>
+  </Target>
+
+  <Target Name="CleanUWPFiles" DependsOnTargets="_BuildUWPOutputList">
+    <Delete Files="@(_UWPOutputs)"/>
+  </Target>
+
+  <!--
+  ========================================================================
+               Clean
+    Cleans intermediates and final outputs.
+  ========================================================================
+  -->
+
+  <PropertyGroup>
+    <CleanDependsOn>
+      ResolveFiles;
+      CleanOutputs;
+      CleanResources;
+      CleanUWPFiles;
+    </CleanDependsOn>
+  </PropertyGroup>
+
+  <Target Name="Clean" DependsOnTargets="$(CleanDependsOn)"/>
+
+  <Target Name="CleanReadFiles">
+    <ReadLinesFromFile File="$(ProducedFileList)">
+      <Output TaskParameter="Lines" ItemName="_DeleteFiles"/>
+    </ReadLinesFromFile>
+  </Target>
+
+  <Target Name="CleanOutputs" DependsOnTargets="CleanReadFiles">
+    <Delete Files="
+      @(_OutputFiles);
+      @(__OutputFiles);
+      @(_DeleteFiles);
+      $(ProducedFileList)
+    "/>
+  </Target>
+
+  <Target Name="CleanVersionResources" DependsOnTargets="ResolveFiles;__SetVersionResourceFileName">
+    <Delete Files="@(__ProjectVersionOutputFile)" Condition="!Exists('@(__ProjectVersionFile)')"/>
+    <Delete Files="@(__ProjectRCTemporaryFiles)" Condition="!Exists('@(__ProjectRCTemporaryFiles)')"/>
+    <Delete Files="@(__Icon_MainIcon)" Condition="'$(Platform)'=='$(cOSX32Platform)' Or '$(Platform)'=='$(cOSX64Platform)'"/>
+  </Target>
+
+  <Target Name="CleanResources" >
+    <Delete Files="
+      @(_ResourceFiles);
+      @(_LocalizedResources)
+    "/>
+  </Target>
+
+  <!--
+  ========================================================================
+               RIDL Targets
+    Dependency check and build .ridl files to .tlb
+  ========================================================================
+  -->
+  <Target Name="_RidlDepCheck">
+    <DependencyCheck
+      InputFiles="@(RidlCompile)"
+      OutputFile="$(GENTLB_OutputDir)$(GENTLB_OutputName)"
+      ProjectFileName="$(MSBuildProjectFullPath)"
+      AllOrNone="true"
+      Build="$(ForceRebuild)"
+    >
+      <Output
+        TaskParameter="OutOfDate"
+        ItemName="RidlFiles"
+      />
+      <Output
+        TaskParameter="Skipped"
+        ItemName="SkippedRidlFiles"
+      />
+    </DependencyCheck>
+    <MessageMap
+      Condition="'@(SkippedRidlFiles)'!=''"
+      FormatString="strSkipping"
+      Arg0="@(SkippedRidlFiles)"
+    />
+    <MessageMap
+      Condition="'@(RidlFiles)'!='' And '$(ForceRebuild)'!='true'"
+      FormatString="strModified"
+      Arg0="@(RidlFiles)"
+    />
+  </Target>
+
+  <Target Name="RidlCompile" DependsOnTargets="_RidlDepCheck">
+    <CallTarget Targets="_RidlCoreCompile"/>
+  </Target>
+
+  <Target Name="_RidlCoreCompile" DependsOnTargets="$(_ResolveGENTLBBindingsTarget)">
+    <GenTLB
+      Condition="'@(RidlFiles)'!=''"
+      Compile="@(RidlFiles)"
+      PlatformTarget="$(Platform)"
+      OutputDir="$(GENTLB_OutputDir)"
+      OutputName="$(GENTLB_OutputName)"
+      TlbFiles="$(GENTLB_OutputDir)$(GENTLB_OutputName)"
+      SourceFiles="@(GENTLB_Bindings)"
+      UserSuppliedOptions="$(GENTLB_UserSuppliedOptions)"
+      GenCppBindings="$(GENTLB_GenCppBindings)"
+      GenPasBindings="$(GENTLB_GenPasBindings)"
+      Gen64BitTypeLib="$(Gen64BitTypeLib)"
+    />
+  </Target>
+
+  <Target Name="_ResolveTDumpInput">
+    <CreateItem
+      Condition="'$(FileToCompile)'!=''"
+      Include="$(FileToCompile)">
+      <Output
+        TaskParameter="Include"
+        ItemName="TDumpInput"
+      />
+    </CreateItem>
+  </Target>
+
+  <Target Name="TDump" DependsOnTargets="_ResolveTDumpInput;">
+    <TDUMP
+      Filename="%(TDumpInput.Identity)"
+      PlatformTarget="$(Platform)"
+      ListFile="$(TDumpOutputFile)"
+          _8BitASCII="$(TDUMP__8BitASCII)"
+          _7BitASCII="$(TDUMP__7BitASCII)"
+          Verbose="$(TDUMP_Verbose)"
+          Raw="$(TDUMP_Raw)"
+          NoDemangling="$(TDUMP_NoDemangling)"
+          Executable="$(TDUMP_Executable)"
+          DisableExeDebugInfo="$(TDUMP_DisableExeDebugInfo)"
+          DisableExeLineNumbers="$(TDUMP_DisableExeLineNumbers)"
+          DisableExeHeader="$(TDUMP_DisableExeHeader)"
+          ListExportsOnly="$(TDUMP_ListExportsOnly)"
+          IncludeOnlyExeTableId="$(TDUMP_IncludeOnlyExeTableId)"
+          DisableExeRelocationRecords="$(TDUMP_DisableExeRelocationRecords)"
+          ListImportsOnly="$(TDUMP_ListImportsOnly)"
+          ListImportedModulesOnly="$(TDUMP_ListImportedModulesOnly)"
+          DisplayRelocationTable="$(TDUMP_DisplayRelocationTable)"
+          Object="$(TDUMP_Object)"
+          DisplayDebugInfoInObj="$(TDUMP_DisplayDebugInfoInObj)"
+          IncludeRecord="$(TDUMP_IncludeRecord)"
+          ExcludeRecord="$(TDUMP_ExcludeRecord)"
+          Library="$(TDUMP_Library)"
+          DisplayDebugInfoInLib="$(TDUMP_DisplayDebugInfoInLib)"
+          DisplayIMPDEF="$(TDUMP_DisplayIMPDEF)"
+          DisplayEXPDEF="$(TDUMP_DisplayEXPDEF)"
+          Unassemble="$(TDUMP_Unassemble)"
+    />
+  </Target>
+
+
+<!-- Internal targets used by the IDE -->
+  <PropertyGroup>
+    <_KibitzItemNames>BCC32_CmdLine;BRCC32_CmdLine;TASM32_CmdLine;BCC_CmdLine;IDEDepCheck;EvaluateProperty;EvaluateItem</_KibitzItemNames>
+    <_KibitzItemName Condition="'$(_KibitzTask)'=='BCC32_CmdLine'">CppFiles</_KibitzItemName>
+    <_KibitzItemName Condition="'$(_KibitzTask)'=='BRCC32_CmdLine'">RcFiles</_KibitzItemName>
+    <_KibitzItemName Condition="'$(_KibitzTask)'=='TASM32_CmdLine'">AsmFiles</_KibitzItemName>
+    <_KibitzItemName Condition="'$(_KibitzTask)'=='DCC_CmdLine'">PasFiles</_KibitzItemName>
+  </PropertyGroup>
+
+  <Target Name="_SetKibitzProperties">
+    <CreateItem
+      Include="$(FileToCompile)"
+      Condition="'$(FileToCompile)'!='' And '$(_KibitzTask)'!='' And '$(_KibitzItemName)'!=''">
+      <Output
+        TaskParameter="Include"
+        ItemName="$(_KibitzItemName)"
+      />
+    </CreateItem>
+    <CreateProperty
+      Value="true">
+      <Output
+        TaskParameter="Value"
+        PropertyName="ShowStdOut"
+      />
+    </CreateProperty>
+  </Target>
+
+  <Target Name="_Kibitz" DependsOnTargets="_SetKibitzProperties;_GatherPlatformSDKPaths">
+    <Error Condition="'$(_KibitzTask)'==''"
+      Text="'_KibitzTask' property not specified. Must be one of: $(_KibitzItemNames)"/>
+    <CallTarget Targets="_CppCoreCompile" Condition="'$(_KibitzTask)'=='BCC32_CmdLine'"/>
+    <CallTarget Targets="_RcCoreCompile" Condition="'$(_KibitzTask)'=='BRCC32_CmdLine'"/>
+    <CallTarget Targets="_AsmCoreCompile" Condition="'$(_KibitzTask)'=='TASM32_CmdLine'"/>
+    <CallTarget Targets="_PasKibitzCompile" Condition="'$(_KibitzTask)'=='DCC_CmdLine'"/>
+    <CallTarget Targets="_IDEDepCheck" Condition="'$(_KibitzTask)'=='IDEDepCheck'"/>
+    <CallTarget Targets="_EvaluateProperty" Condition="'$(_KibitzTask)'=='EvaluateProperty'"/>
+    <CallTarget Targets="_EvaluateItem" Condition="'$(_KibitzTask)'=='EvaluateItem'"/>
+  </Target>
+
+  <Target Name="_CreatePropHolder">
+    <CreateItem
+      Include="$(_EvaluateName)">
+      <Output
+        TaskParameter="Include"
+        ItemName="PropHolder"
+      />
+    </CreateItem>
+  </Target>
+
+  <PropertyGroup>
+    <__MetadataName Condition="'$(__MetadataName)'==''">Identity</__MetadataName>
+  </PropertyGroup>
+
+  <Target Name="_CreateItemHolder">
+    <CreateItem
+      Include="@($(_EvaluateName)->'%($(__MetadataName))')">
+      <Output
+        TaskParameter="Include"
+        ItemName="__ItemHolder"
+      />
+    </CreateItem>
+  </Target>
+
+  <Target Name="_EvaluateProperty" DependsOnTargets="$(_EvaluatePropertyDependsOnTargets);_CreatePropHolder">
+    <BDSCallback
+      ID="EvaluateProperty"
+      Result="$(%(PropHolder.Identity))"/>
+  </Target>
+
+  <Target Name="_EvaluateItem" DependsOnTargets="$(_EvaluateItemDependsOnTargets);_CreateItemHolder">
+    <BDSCallback
+      ID="EvaluateItem"
+      Result="@(__ItemHolder)"/>
+  </Target>
+
+  <Target Name="_EvaluateOutputs" DependsOnTargets="$(_EvaluateOutputsDependsOnTargets)">
+    <BDSCallback
+      ID="_EvaluateOutputs"
+      Result="@(__OutputFiles)"/>
+  </Target>
+
+  <Target Name="_EvaluateProperties">
+    <EvaluateProperties
+      PropertyNames="$(_EvaluatePropertyNames)"
+      Project="$(MSBuildProjectFullPath)"
+      Properties="Config=$(Config);Platform=$(Platform)"
+      Targets="$(_EvaluatePropertyDependsOnTargets)">
+      <Output
+        TaskParameter="PropertyValues"
+        PropertyName="_EvaluatedProperties"
+      />
+    </EvaluateProperties>
+    <BDSCallback
+      ID="_EvaluatedProperties"
+      Result="$(_EvaluatedProperties)"/>
+  </Target>
+</Project>

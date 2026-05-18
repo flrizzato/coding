@@ -1,0 +1,1 @@
+Java2OP.exe -jar classes.jar -classes com.mercadolibre.android.point_integration_sdk.nativesdk.MPManager  com.mercadolibre.android.point_integration_sdk.nativesdk.configurable.MPConfigBuilder

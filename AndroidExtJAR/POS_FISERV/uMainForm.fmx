@@ -1,0 +1,60 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  ActiveControl = butInitSmartPosHelper
+  ClientHeight = 480
+  ClientWidth = 640
+  Fill.Color = claDarkorange
+  Fill.Kind = Solid
+  SystemStatusBar.Visibility = VisibleAndOverlap
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnSafeAreaChanged = FormSafeAreaChanged
+  DesignerMasterStyle = 0
+  object butInitSmartPosHelper: TButton
+    Align = Top
+    Margins.Left = 10.000000000000000000
+    Margins.Top = 10.000000000000000000
+    Margins.Right = 10.000000000000000000
+    Margins.Bottom = 10.000000000000000000
+    Position.X = 10.000000000000000000
+    Position.Y = 10.000000000000000000
+    Size.Width = 620.000000000000000000
+    Size.Height = 41.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Text = '1- InitializeSmartPosHelper'
+    OnClick = butInitSmartPosHelperClick
+  end
+  object butPrintSampleText: TButton
+    Align = Top
+    Margins.Left = 10.000000000000000000
+    Margins.Top = 10.000000000000000000
+    Margins.Right = 10.000000000000000000
+    Margins.Bottom = 10.000000000000000000
+    Position.X = 10.000000000000000000
+    Position.Y = 132.000000000000000000
+    Size.Width = 620.000000000000000000
+    Size.Height = 41.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Text = '3- PrintSampleText'
+    OnClick = butPrintSampleTextClick
+  end
+  object butInitPrinterService: TButton
+    Align = Top
+    Margins.Left = 10.000000000000000000
+    Margins.Top = 10.000000000000000000
+    Margins.Right = 10.000000000000000000
+    Margins.Bottom = 10.000000000000000000
+    Position.X = 10.000000000000000000
+    Position.Y = 71.000000000000000000
+    Size.Width = 620.000000000000000000
+    Size.Height = 41.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = '2- InitializePrinterService'
+    OnClick = butInitPrinterServiceClick
+  end
+end
