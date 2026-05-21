@@ -20,62 +20,43 @@ uses
 
 type
   TMainForm = class(TForm)
+    ActionList1: TActionList;
+    acExecuteSQL: TAction;
+    acCancelSQL: TAction;
+    acBackupCFG: TAction;
+    acTestSQL: TAction;
     pgcMain: TPageControl;
-    tbsTrace: TTabSheet;
     tbsExecute: TTabSheet;
+    listSQL: TControlList;
+    lblSQLText: TLabel;
+    lblTitle: TLabel;
+    butExecute: TControlListButton;
+    butCancel: TControlListButton;
+    butTest: TControlListButton;
+    panOptions: TPanel;
+    butBackup: TButton;
+    tbsTrace: TTabSheet;
     panTop: TPanel;
     butEnvReport: TSpeedButton;
     butDBMSInfo: TSpeedButton;
     tgsTracing: TToggleSwitch;
     tgsMonitoring: TToggleSwitch;
+    tgsSQLOnly: TToggleSwitch;
     memLog: TMemo;
-    listSQL: TControlList;
-    Label1: TLabel;
-    Label2: TLabel;
-    butExecute: TControlListButton;
-    memSQL: TMemo;
-    panExecute: TPanel;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
-    spnInternal: TSpinEdit;
-    spiSessions: TSpinEdit;
-    tableSQL: TFDMemTable;
-    FDStanStorageJSONLink1: TFDStanStorageJSONLink;
-    tableSQLConnectionName: TStringField;
-    tableSQLExecutionInterval: TIntegerField;
-    tableSQLConcurrentSessions: TIntegerField;
-    tableSQLCommandText: TMemoField;
     BindSourceDB1: TBindSourceDB;
     BindingsList1: TBindingsList;
-    LinkControlToField1: TLinkControlToField;
     LinkPropertyToFieldCaption: TLinkPropertyToField;
-    LinkControlToField2: TLinkControlToField;
-    tableSQLcalcTitle: TStringField;
     LinkPropertyToFieldCaption2: TLinkPropertyToField;
-    BindNavigatorMain: TBindNavigator;
-    cmbConnections: TComboBox;
-    LinkFillControlToField1: TLinkFillControlToField;
-    LinkControlToField3: TLinkControlToField;
-    FDManager: TFDManager;
-    butCancel: TControlListButton;
-    tableSQLIsExecuting: TBooleanField;
-    ActionList1: TActionList;
-    acExecuteSQL: TAction;
-    acCancelSQL: TAction;
     LinkGridToDataSourceBindSourceDB1: TLinkGridToDataSource;
-    tgsSQLOnly: TToggleSwitch;
     FDMonitor: TFDMoniRemoteClientLink;
     FDTrace: TFDMoniFlatFileClientLink;
-    Panel1: TPanel;
-    Button1: TButton;
-    acBackupCFG: TAction;
-    acTestSQL: TAction;
-    butTest: TControlListButton;
-    Splitter1: TSplitter;
-    procedure tableSQLCalcFields(DataSet: TDataSet);
-    procedure FormShow(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    butNew: TButton;
+    butDelete: TButton;
+    butEdit: TButton;
+    acNewSQL: TAction;
+    acEditSQL: TAction;
+    acDeleteSQL: TAction;
+    BindNavigatorMain: TBindNavigator;
     procedure acExecuteSQLExecute(Sender: TObject);
     procedure acCancelSQLExecute(Sender: TObject);
     procedure butDBMSInfoClick(Sender: TObject);
@@ -86,10 +67,16 @@ type
       ARect: TRect; AState: TOwnerDrawState);
     procedure acBackupCFGExecute(Sender: TObject);
     procedure acTestSQLExecute(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure acNewSQLExecute(Sender: TObject);
+    procedure acEditSQLExecute(Sender: TObject);
+    procedure acDeleteSQLExecute(Sender: TObject);
   private
     { Private declarations }
     aSysJobs: TOrderedDictionary<string, TList<TThread>>;
     procedure LogThis(fMessage: string);
+    procedure DisplaySQLEditForm(bAppend: boolean);
   public
     { Public declarations }
   end;
@@ -102,7 +89,7 @@ implementation
 {$R *.dfm}
 
 uses System.IOUtils, System.UITypes,
-  uMainDM, uSQLTest;
+  uMainDM, uSQLTest, uSQLEdit, uProcDM;
 
 procedure TMainForm.acBackupCFGExecute(Sender: TObject);
 var
@@ -136,14 +123,14 @@ var
   aTaskList: TList<TThread>;
   nItemIndex: Integer;
   nConcurrentSessions: Integer;
-  sConnectionName: String;
-  sCommandText: String;
+  sConnectionName: string;
+  sCommandText: string;
   nExecutionInterval: Integer;
 begin
-  if tableSQLCommandText.AsString.Trim = '' then
+  if MainDM.tableSQLCommandText.AsString.Trim = '' then
     raise Exception.Create('Error Message: Missing the SQL Statement!');
 
-  if tableSQLCommandText.AsString.IndexOf('SELECT') = -1 then
+  if MainDM.tableSQLCommandText.AsString.IndexOf('SELECT') = -1 then
     raise Exception.Create('Error Message: The SQL is not a SELECT statement!');
 
   nItemIndex := listSQL.ItemIndex;
@@ -153,10 +140,10 @@ begin
     FDTrace.Tracing := False;
     FDMonitor.Tracing := False;
 
-    nConcurrentSessions := tableSQLConcurrentSessions.AsInteger;
-    sConnectionName := tableSQLConnectionName.AsString;
-    sCommandText := tableSQLCommandText.AsString;
-    nExecutionInterval := tableSQLExecutionInterval.AsInteger;
+    nConcurrentSessions := MainDM.tableSQLConcurrentSessions.AsInteger;
+    sConnectionName := MainDM.tableSQLConnectionName.AsString;
+    sCommandText := MainDM.tableSQLCommandText.AsString;
+    nExecutionInterval := MainDM.tableSQLExecutionInterval.AsInteger;
 
     aTaskList := TList<TThread>.Create;
 
@@ -165,12 +152,12 @@ begin
       var fThread := TThread.CreateAnonymousThread(
         procedure()
         var
-          fMainDM: TMainDM;
+          fProcDM: TProcDM;
         begin
-          fMainDM := TMainDM.Create(Self);
+          fProcDM := TProcDM.Create(Self);
           try
             try
-              fMainDM.FDCnn.ConnectionDefName := sConnectionName;
+              fProcDM.FDCnn.ConnectionDefName := sConnectionName;
 
               if tgsTracing.State = TToggleSwitchState.tssOn then
               begin
@@ -188,7 +175,7 @@ begin
 {$R+}
                   FDTrace.Tracing := tgsTracing.Enabled;
                 end;
-                fMainDM.FDCnn.Params.MonitorBy := mbFlatFile
+                fProcDM.FDCnn.Params.MonitorBy := mbFlatFile
               end
               else if tgsMonitoring.State = TToggleSwitchState.tssOn then
               begin
@@ -205,20 +192,20 @@ begin
 {$R+}
                   FDMonitor.Tracing := tgsMonitoring.Enabled;
                 end;
-                fMainDM.FDCnn.Params.MonitorBy := mbRemote
+                fProcDM.FDCnn.Params.MonitorBy := mbRemote
               end
               else
-                fMainDM.FDCnn.Params.MonitorBy := mbNone;
+                fProcDM.FDCnn.Params.MonitorBy := mbNone;
 
-              fMainDM.FDCnn.Open;
+              fProcDM.FDCnn.Open;
               while True do
               begin
-                fMainDM.FDQry.Close;
+                fProcDM.FDQry.Close;
                 if System.DebugHook > 0 then
                   LogThis(sCommandText);
                 if TThread.CurrentThread.CheckTerminated then
                   Exit;
-                fMainDM.FDQry.Open(sCommandText);
+                fProcDM.FDQry.Open(sCommandText);
                 Sleep(nExecutionInterval);
               end;
 
@@ -228,7 +215,7 @@ begin
             end;
 
           finally
-            fMainDM.Free;
+            fProcDM.Free;
           end;
         end);
       fThread.FreeOnTerminate := False;
@@ -240,20 +227,16 @@ begin
 end;
 
 procedure TMainForm.acTestSQLExecute(Sender: TObject);
-var
-  fMainDM: TMainDM;
-  fSQLTest: TSQLTest;
 begin
-  fMainDM := TMainDM.Create(Self);
-  fSQLTest := TSQLTest.Create(Self);
+  var fSQLTest := TSQLTestForm.Create(Self);
   try
     try
-      fMainDM.FDCnn.ConnectionDefName := tableSQLConnectionName.AsString;
-      fMainDM.FDQry.SQL.Text := tableSQLCommandText.AsString;
-      fMainDM.FDQry.Open;
-      fSQLTest.DataSourceMain.DataSet := fMainDM.FDQry;
+      MainDM.FDCnn.ConnectionDefName := MainDM.tableSQLConnectionName.AsString;
+      MainDM.FDQry.SQL.Text := MainDM.tableSQLCommandText.AsString;
+      MainDM.FDQry.Open;
+      fSQLTest.DataSourceMain.DataSet := MainDM.FDQry;
       fSQLTest.Caption := fSQLTest.Caption + ' (' +
-        fMainDM.FDQry.RecordCount.ToString + ' rows)';
+        MainDM.FDQry.RecordCount.ToString + ' rows)';
       fSQLTest.Height := Height - (Height * 10 div 100);
       fSQLTest.Width := Width - (Width * 10 div 100);
       fSQLTest.ShowModal;
@@ -264,7 +247,6 @@ begin
     end;
   finally
     fSQLTest.Free;
-    fMainDM.Free;
   end;
 end;
 
@@ -276,128 +258,106 @@ var
   sDBName: string;
   i, j: Integer;
 begin
-  var
-  fMainDM := TMainDM.Create(nil);
   try
-    try
-      fMainDM.FDCnn.ConnectionDefName := tableSQLConnectionName.AsString;
-      fMainDM.FDCnn.Open;
+    MainDM.FDCnn.ConnectionDefName := MainDM.tableSQLConnectionName.AsString;
+    MainDM.FDCnn.Open;
 
-      DBMSMetadata := fMainDM.FDCnn.ConnectionMetaDataIntf;
-      DBKind := DBMSMetadata.Kind;
+    DBMSMetadata := MainDM.FDCnn.ConnectionMetaDataIntf;
+    DBKind := DBMSMetadata.Kind;
 
-      case DBKind of
-        0:
-          sDBName := 'Unknown';
-        1:
-          sDBName := 'Oracle';
-        2:
-          sDBName := 'MSSQL';
-        3:
-          sDBName := 'MSAccess';
-        4:
-          sDBName := 'MySQL';
-        5:
-          sDBName := 'DB2';
-        6:
-          sDBName := 'SQLAnywhere';
-        7:
-          sDBName := 'Advantage';
-        8:
-          sDBName := 'Interbase';
-        9:
-          sDBName := 'Firebird';
-        10:
-          sDBName := 'SQLite';
-        11:
-          sDBName := 'PostgreSQL';
-        12:
-          sDBName := 'NexusDB';
-        13:
-          sDBName := 'DataSnap';
-        14:
-          sDBName := 'Informix';
-        15:
-          sDBName := 'Teradata';
-        16:
-          sDBName := 'MongoDB';
-        17:
-          sDBName := 'Other';
-      end;
-
-      memLog.Clear;
-      memLog.Lines.Add(sDBName);
-
-      memLog.Lines.Add('DBMS Server Version: ' +
-        DBMSMetadata.ServerVersion.ToString);
-      memLog.Lines.Add('DBMS Client Version: ' +
-        DBMSMetadata.ClientVersion.ToString);
-
-      memLog.Lines.Add('');
-      memLog.Lines.Add('Table metadata:');
-
-      MetaTables := DBMSMetadata.GetTables([TFDPhysObjectScope.osMy],
-        [TFDPhysTableKind.tkTable], '', '', '');
-      for i := 0 to MetaTables.Rows.Count - 1 do
-      begin
-        memLog.Lines.Add('');
-        memLog.Lines.Add('===' + MetaTables.Rows[i]
-          .GetData('TABLE_NAME') + '===');
-        MetaColumns := DBMSMetadata.GetTableFields('', '',
-          MetaTables.Rows[i].GetData('TABLE_NAME'), '');
-        for j := 0 to MetaColumns.Rows.Count - 1 do
-          memLog.Lines.Add(MetaColumns.Rows[j].GetData('COLUMN_NAME'));
-      end;
-    except
-      on E: Exception do
-        raise Exception.Create('Error Message: ' + E.Message);
+    case DBKind of
+      0:
+        sDBName := 'Unknown';
+      1:
+        sDBName := 'Oracle';
+      2:
+        sDBName := 'MSSQL';
+      3:
+        sDBName := 'MSAccess';
+      4:
+        sDBName := 'MySQL';
+      5:
+        sDBName := 'DB2';
+      6:
+        sDBName := 'SQLAnywhere';
+      7:
+        sDBName := 'Advantage';
+      8:
+        sDBName := 'Interbase';
+      9:
+        sDBName := 'Firebird';
+      10:
+        sDBName := 'SQLite';
+      11:
+        sDBName := 'PostgreSQL';
+      12:
+        sDBName := 'NexusDB';
+      13:
+        sDBName := 'DataSnap';
+      14:
+        sDBName := 'Informix';
+      15:
+        sDBName := 'Teradata';
+      16:
+        sDBName := 'MongoDB';
+      17:
+        sDBName := 'Other';
     end;
-  finally
-    fMainDM.Free;
+
+    memLog.Clear;
+    memLog.Lines.Add(sDBName);
+
+    memLog.Lines.Add('DBMS Server Version: ' +
+      DBMSMetadata.ServerVersion.ToString);
+    memLog.Lines.Add('DBMS Client Version: ' +
+      DBMSMetadata.ClientVersion.ToString);
+
+    memLog.Lines.Add('');
+    memLog.Lines.Add('Table metadata:');
+
+    MetaTables := DBMSMetadata.GetTables([TFDPhysObjectScope.osMy],
+      [TFDPhysTableKind.tkTable], '', '', '');
+    for i := 0 to MetaTables.Rows.Count - 1 do
+    begin
+      memLog.Lines.Add('');
+      memLog.Lines.Add('===' + MetaTables.Rows[i]
+        .GetData('TABLE_NAME') + '===');
+      MetaColumns := DBMSMetadata.GetTableFields('', '',
+        MetaTables.Rows[i].GetData('TABLE_NAME'), '');
+      for j := 0 to MetaColumns.Rows.Count - 1 do
+        memLog.Lines.Add(MetaColumns.Rows[j].GetData('COLUMN_NAME'));
+    end;
+  except
+    on E: Exception do
+      raise Exception.Create('Error Message: ' + E.Message);
   end;
 end;
 
 procedure TMainForm.butEnvReportClick(Sender: TObject);
 begin
-  var
-  fMainDM := TMainDM.Create(nil);
   try
-    try
-      fMainDM.FDCnn.ConnectionDefName := tableSQLConnectionName.AsString;
-      fMainDM.FDCnn.Open;
-      if fMainDM.FDCnn.Connected then
-        fMainDM.FDCnn.GetInfoReport(memLog.Lines);
-    except
-      on E: Exception do
-        raise Exception.Create('Error Message: ' + E.Message);
-    end;
-  finally
-    fMainDM.Free;
+    MainDM.FDCnn.ConnectionDefName := MainDM.tableSQLConnectionName.AsString;
+    MainDM.FDCnn.Open;
+    if MainDM.FDCnn.Connected then
+      MainDM.FDCnn.GetInfoReport(memLog.Lines);
+  except
+    on E: Exception do
+      raise Exception.Create('Error Message: ' + E.Message);
   end;
 end;
 
-procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TMainForm.FormCreate(Sender: TObject);
 begin
-  tableSQL.SaveToFile(ExtractFilePath(Application.ExeName) + PathDelim +
-    'config.json');
+  aSysJobs := TOrderedDictionary<string, TList<TThread>>.Create;
 end;
 
-procedure TMainForm.FormShow(Sender: TObject);
+procedure TMainForm.FormDestroy(Sender: TObject);
 begin
-  aSysJobs := TOrderedDictionary < string, TList < TThread > >.Create;
-
-  FDManager.GetConnectionNames(cmbConnections.Items);
-
-  var
-    fFile: string := ExtractFilePath(Application.ExeName) + PathDelim +
-      'config.json';
-
-  if FileExists(fFile) then
-    tableSQL.LoadFromFile(fFile);
+  aSysJobs.Free;
 end;
 
 procedure TMainForm.listSQLBeforeDrawItem(AIndex: Integer; ACanvas: TCanvas;
-ARect: TRect; AState: TOwnerDrawState);
+  ARect: TRect; AState: TOwnerDrawState);
 begin
   if aSysJobs.ContainsKey('job#' + AIndex.ToString) then
   begin
@@ -406,7 +366,7 @@ begin
   end
   else
   begin
-    butExecute.Font.Color := clBlack;
+    butExecute.Font.Color := butTest.Font.Color;
     butExecute.Caption := 'Execute';
   end;
 end;
@@ -418,13 +378,6 @@ begin
     begin
       memLog.Lines.Add(FormatDateTime('hh:nn:ss', Now) + '- ' + fMessage);
     end);
-end;
-
-procedure TMainForm.tableSQLCalcFields(DataSet: TDataSet);
-begin
-  tableSQLcalcTitle.AsString := 'Connection: ' + tableSQLConnectionName.AsString
-    + ' - Interval: ' + tableSQLExecutionInterval.AsString + ' - Sessions: ' +
-    tableSQLConcurrentSessions.AsString;
 end;
 
 procedure TMainForm.tgsMonitoringClick(Sender: TObject);
@@ -441,4 +394,35 @@ begin
       tgsMonitoring.State := tssOff;
 end;
 
+procedure TMainForm.acNewSQLExecute(Sender: TObject);
+begin
+  DisplaySQLEditForm(True);
+end;
+
+procedure TMainForm.acEditSQLExecute(Sender: TObject);
+begin
+  DisplaySQLEditForm(False);
+end;
+
+procedure TMainForm.DisplaySQLEditForm(bAppend: boolean);
+begin
+  var fSQLEdit := TSQLEditForm.Create(Self);
+  try
+    fSQLEdit.Height := Height - (Height * 10 div 100);
+    fSQLEdit.Width := Width - (Width * 10 div 100);
+    fSQLEdit.bAppend := bAppend;
+    fSQLEdit.ShowModal;
+  finally
+    fSQLEdit.Free;
+  end;
+end;
+
+procedure TMainForm.acDeleteSQLExecute(Sender: TObject);
+begin
+  if MessageDlg('Are you sure you want to delete this record?', TMsgDlgType.mtWarning,
+    [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes then
+    MainDM.tableSQL.Delete;
+end;
+
 end.
+

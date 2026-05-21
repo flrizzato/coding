@@ -13,20 +13,33 @@ uses
   FireDAC.Phys.MSSQL, FireDAC.Comp.UI, FireDAC.Phys.MySQLDef,
   FireDAC.Phys.FBDef, FireDAC.Phys.PGDef, FireDAC.Phys.OracleDef,
   FireDAC.Phys.DB2Def, FireDAC.Phys.DB2, FireDAC.Phys.Oracle, FireDAC.Phys.PG,
-  FireDAC.Phys.IBBase, FireDAC.Phys.FB, FireDAC.Phys.MySQL;
+  FireDAC.Phys.IBBase, FireDAC.Phys.FB, FireDAC.Phys.MySQL,
+  FireDAC.Stan.StorageBin, FireDAC.Stan.StorageJSON;
 
 type
   TMainDM = class(TDataModule)
-    FDCnn: TFDConnection;
-    ADGUIxWaitCursor1: TFDGUIxWaitCursor;
-    ADPhysMSSQLDriverLink1: TFDPhysMSSQLDriverLink;
-    FDQry: TFDQuery;
-    FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink;
-    FDPhysFBDriverLink1: TFDPhysFBDriverLink;
-    FDPhysPgDriverLink1: TFDPhysPgDriverLink;
-    FDPhysIBDriverLink1: TFDPhysIBDriverLink;
-    FDPhysOracleDriverLink1: TFDPhysOracleDriverLink;
+    tableSQL: TFDMemTable;
+    tableSQLConnectionName: TStringField;
+    tableSQLExecutionInterval: TIntegerField;
+    tableSQLConcurrentSessions: TIntegerField;
+    tableSQLCommandText: TMemoField;
+    tableSQLIsExecuting: TBooleanField;
+    tableSQLcalcTitle: TStringField;
+    FDStanStorageJSONLink1: TFDStanStorageJSONLink;
     FDPhysDB2DriverLink1: TFDPhysDB2DriverLink;
+    FDPhysOracleDriverLink1: TFDPhysOracleDriverLink;
+    FDPhysIBDriverLink1: TFDPhysIBDriverLink;
+    FDPhysPgDriverLink1: TFDPhysPgDriverLink;
+    FDPhysFBDriverLink1: TFDPhysFBDriverLink;
+    FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink;
+    FDQry: TFDQuery;
+    ADPhysMSSQLDriverLink1: TFDPhysMSSQLDriverLink;
+    ADGUIxWaitCursor1: TFDGUIxWaitCursor;
+    FDCnn: TFDConnection;
+    FDManager: TFDManager;
+    procedure tableSQLCalcFields(DataSet: TDataSet);
+    procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -41,5 +54,28 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
+
+uses system.IOUtils, VCL.Forms;
+
+procedure TMainDM.DataModuleCreate(Sender: TObject);
+var fFile: string;
+begin
+  fFile := ExtractFilePath(Application.ExeName) + PathDelim + 'config.json';
+  if FileExists(fFile) then
+    tableSQL.LoadFromFile(fFile);
+end;
+
+procedure TMainDM.DataModuleDestroy(Sender: TObject);
+begin
+  tableSQL.SaveToFile(ExtractFilePath(Application.ExeName) + PathDelim +
+    'config.json');
+end;
+
+procedure TMainDM.tableSQLCalcFields(DataSet: TDataSet);
+begin
+  tableSQLcalcTitle.AsString := 'Connection: ' + tableSQLConnectionName.AsString
+    + ' - Interval: ' + tableSQLExecutionInterval.AsString + ' - Sessions: ' +
+    tableSQLConcurrentSessions.AsString;
+end;
 
 end.

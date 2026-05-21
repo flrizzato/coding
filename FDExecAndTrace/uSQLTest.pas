@@ -9,7 +9,7 @@ uses
   Data.Bind.Components, Data.Bind.DBScope;
 
 type
-  TSQLTest = class(TForm)
+  TSQLTestForm = class(TForm)
     BindNavigatorMain: TBindNavigator;
     DBGridMain: TDBGrid;
     DataSourceMain: TDataSource;
@@ -21,7 +21,7 @@ type
   end;
 
 var
-  SQLTest: TSQLTest;
+  SQLTestForm: TSQLTestForm;
 
 implementation
 

@@ -1,57 +1,42 @@
-object SQLTest: TSQLTest
+object SQLTestForm: TSQLTestForm
   Left = 0
   Top = 0
-  Margins.Left = 4
-  Margins.Top = 4
-  Margins.Right = 4
-  Margins.Bottom = 4
   ActiveControl = DBGridMain
   BorderIcons = [biSystemMenu]
   Caption = 'Testing the SQL Statement'
-  ClientHeight = 553
-  ClientWidth = 782
+  ClientHeight = 561
+  ClientWidth = 784
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -15
+  Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poOwnerFormCenter
-  PixelsPerInch = 120
-  TextHeight = 20
+  TextHeight = 15
   object BindNavigatorMain: TBindNavigator
     AlignWithMargins = True
-    Left = 4
-    Top = 4
-    Width = 774
-    Height = 45
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 3
+    Top = 3
+    Width = 778
+    Height = 36
     DataSource = BindSourceDB1
-    VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbRefresh]
+    VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
     Align = alTop
     Flat = True
-    Orientation = orHorizontal
     TabOrder = 0
-    ExplicitLeft = -1
-    ExplicitTop = 9
+    ExplicitWidth = 776
   end
   object DBGridMain: TDBGrid
     Left = 0
-    Top = 53
-    Width = 782
-    Height = 500
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 42
+    Width = 784
+    Height = 519
     Align = alClient
     DataSource = DataSourceMain
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -15
+    Font.Height = -12
     Font.Name = 'Segoe UI'
     Font.Style = []
     Options = [dgTitles, dgIndicator, dgColumnResize, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
@@ -59,7 +44,7 @@ object SQLTest: TSQLTest
     TabOrder = 1
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
-    TitleFont.Height = -15
+    TitleFont.Height = -12
     TitleFont.Name = 'Segoe UI'
     TitleFont.Style = [fsBold]
   end
