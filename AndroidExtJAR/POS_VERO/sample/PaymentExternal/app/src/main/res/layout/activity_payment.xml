@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_dark"
+    tools:context=".gui.MainActivity">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/header" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"
+        android:background="@drawable/cartao_fundo">
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="18dp"
+            android:text="Exemplo de solicitação de pagamento. Escolha as opções de transação e clique em Solicitar Pagamento."
+            android:textColor="@color/gray"
+            android:textSize="16sp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/txtTitle"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="60dp"
+                android:paddingTop="10dp"
+                android:paddingRight="60dp"
+                android:paddingBottom="10dp">
+
+                <CheckBox
+                    android:id="@+id/checkboxAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Valor definido" />
+
+                <EditText
+                    android:id="@+id/editAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:digits="0123456789,"
+                    android:enabled="false"
+                    android:inputType="numberDecimal" />
+
+                <CheckBox
+                    android:id="@+id/checkboxPaymentType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:text="Tipo" />
+
+                <Spinner
+                    android:id="@+id/spinnerPaymentType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:padding="10dp"
+                    android:spinnerMode="dropdown" />
+
+                <CheckBox
+                    android:id="@+id/checkboxPaymentMethod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:text="Modalidade" />
+
+                <Spinner
+                    android:id="@+id/spinnerPaymentMethod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:padding="10dp"
+                    android:spinnerMode="dropdown" />
+
+                <CheckBox
+                    android:id="@+id/checkboxPrint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtTitle"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginRight="18dp"
+                    android:text="Imprimir Comprovante" />
+
+                <CheckBox
+                    android:id="@+id/checkboxWaitUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtTitle"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginRight="18dp"
+                    android:text="Aguardar confirma" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bt_transparente"
+                    android:onClick="btPay"
+                    android:text="Solicitar Pagamento" />
+
+                <Button
+                    android:id="@+id/btReprint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bt_transparente"
+                    android:enabled="false"
+                    android:onClick="btReprint"
+                    android:text="Reimprimir" />
+
+                <Button
+                    android:id="@+id/btCancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bt_transparente"
+                    android:enabled="false"
+                    android:onClick="btCancel"
+                    android:text="Estornar" />
+
+                <Button
+                    android:id="@+id/btQuery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bt_transparente"
+                    android:enabled="false"
+                    android:onClick="btQuery"
+                    android:text="Consultar" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

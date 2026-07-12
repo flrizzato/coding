@@ -1,0 +1,29 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@color/blue_dark">
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/logo_vero" />
+
+
+    <TextView
+        android:id="@+id/txtDev"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgLogo"
+        android:layout_marginBottom="3dp"
+        android:gravity="center"
+        android:text="Ambiente de desenvolvimento"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+</RelativeLayout>

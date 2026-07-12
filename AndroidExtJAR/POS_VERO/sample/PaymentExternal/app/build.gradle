@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "br.com.execucao.paymentexternal"
+        minSdkVersion 22
+        targetSdkVersion 29
+        versionCode 3
+        versionName "1.2"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        config {
+            storeFile file("../Development_3IA.jks")
+            storePassword '3IADevelopmentKeyStore'
+            keyAlias 'gpos700Enhanced'
+            keyPassword '3IA2018'
+        }
+    }
+
+    buildTypes {
+        debug {
+            jniDebuggable true
+            debuggable true
+            signingConfig signingConfigs.config
+        }
+        release {
+            signingConfig signingConfigs.config
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    android {
+        compileOptions {
+            sourceCompatibility 1.8
+            targetCompatibility 1.8
+        }
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+
+    implementation('com.sunmi:printerlibrary:1.0.22')
+
+     // Newland N950, N950K e N950S
+    implementation(name: 'bcnewland-release-279-20241009', ext: 'aar')
+}

@@ -1,0 +1,35 @@
+inherited FormPrinterActivity_LgXhdpiPh: TFormPrinterActivity_LgXhdpiPh
+  ClientHeight = 696
+  ClientWidth = 448
+  DesignerMasterStyle = 0
+  inherited ToolBar1: TToolBar
+    Size.Width = 448.000000000000000000
+    inherited btPrintLogo: TButton
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 255.000000000000000000
+      Size.Width = 85.000000000000000000
+    end
+    inherited btPrintText: TButton
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 165.000000000000000000
+      Size.Width = 85.000000000000000000
+    end
+    inherited butInitPrinter: TButton
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 75.000000000000000000
+      Size.Width = 85.000000000000000000
+    end
+    inherited checkboxEject: TCheckBox
+      StyledSettings = [Family, Style, FontColor]
+      Size.Width = 65.000000000000000000
+      TextSettings.WordWrap = True
+    end
+  end
+  inherited memLog: TMemo
+    ReadOnly = True
+    Size.Width = 438.000000000000000000
+    Size.Height = 638.000000000000000000
+    Viewport.Width = 438.000000000000000000
+    Viewport.Height = 638.000000000000000000
+  end
+end
