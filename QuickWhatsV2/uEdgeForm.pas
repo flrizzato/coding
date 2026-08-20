@@ -16,20 +16,20 @@ type
     { Private declarations }
     fIniFile: TIniFile;
     procedure OnEdgeBrowserPermissionRequested(Sender: TCustomEdgeBrowser;
-    Args: TPermissionRequestedEventArgs);
+      Args: TPermissionRequestedEventArgs);
     procedure OnEdgeBrowserCreateWebViewCompleted(Sender: TCustomEdgeBrowser;
-    AResult: HRESULT);
+      AResult: HRESULT);
     procedure OnEdgeBrowserCapturePreviewCompleted(Sender: TCustomEdgeBrowser;
-    AResult: HRESULT);
+      AResult: HRESULT);
     procedure OnEdgeBrowserNewWindowRequested(Sender: TCustomEdgeBrowser;
-    Args: TNewWindowRequestedEventArgs);
+      Args: TNewWindowRequestedEventArgs);
     procedure OnEdgeBrowserDownloadStarting(Sender: TCustomEdgeBrowser;
-    Args: TDownloadStartingEventArgs);
+      Args: TDownloadStartingEventArgs);
   public
     { Public declarations }
     EdgeBrowser: TCustomEdgeBrowser;
     constructor CreateWithCaption(Owner: TComponent; IniFile: TIniFile;
-    const sAcctName: string);
+      const sAcctName: string);
     procedure EdgeExecuteScript(const sNewNumber: string);
   end;
 
@@ -167,7 +167,7 @@ begin
     begin
       var Msg := Format
       ('Do you want to grant permission for %s to the website at %s?'#10#10,
-      [NameOfPermissionType(PermissionType), Uri]);
+        [NameOfPermissionType(PermissionType), Uri]);
 
       if LongBool(UserInitiated) then
         Msg := Msg + 'This request came from a user gesture.'
@@ -175,7 +175,7 @@ begin
         Msg := Msg + 'This request did not come from a user gesture.';
 
       var Response := Application.MessageBox(PChar(Msg), 'Permission Request',
-      MB_YESNO or MB_ICONWARNING);
+        MB_YESNO or MB_ICONWARNING);
 
       var State: COREWEBVIEW2_PERMISSION_STATE;
 
@@ -213,4 +213,5 @@ begin
 end;
 
 end.
+
 

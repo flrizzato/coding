@@ -51,7 +51,7 @@ type
     { Private declarations }
     fIniFile: TIniFile;
     stlAccounts: TStringList;
-    procedure CustomButtonsPaint(Sender: TObject; AIndex: integer;
+    procedure CustomButtonsPaint(Sender: TObject; AIndex: Integer;
       PopMenu: TPopupMenu = nil);
   public
     { Public declarations }
@@ -65,7 +65,7 @@ implementation
 
 uses System.IOUtils, System.RegularExpressions, System.UITypes, uEdgeForm, uLib;
 
-procedure TMainForm.CustomButtonsPaint(Sender: TObject; AIndex: integer;
+procedure TMainForm.CustomButtonsPaint(Sender: TObject; AIndex: Integer;
   PopMenu: TPopupMenu = nil);
 begin
   var LButton := TSystemTitlebarButton(Sender);
@@ -103,8 +103,8 @@ end;
 
 procedure TMainForm.TitleBarPanel1CustomButtons4Click(Sender: TObject);
 begin
- TSystemTitlebarButton(Sender).PopupMenu.Popup(
-  TSystemTitlebarButton(Sender).Left+25, TSystemTitlebarButton(Sender).Top+25);
+  TSystemTitlebarButton(Sender).PopupMenu.Popup(
+    TSystemTitlebarButton(Sender).Left + 25, TSystemTitlebarButton(Sender).Top + 25);
 end;
 
 procedure TMainForm.actionNewAccountExecute(Sender: TObject);
@@ -113,14 +113,14 @@ procedure TMainForm.actionNewAccountExecute(Sender: TObject);
  begin
    if sAcctName.IsEmpty or (sAcctName.Length < 4) then
      raise Exception.Create
-      ('The account name must contain three or more characters!');
+     ('The account name must contain three or more characters!');
 
    if not TRegEx.IsMatch(sAcctName, '^[A-Za-z0-9_-]+$') then
      raise Exception.Create
-      ('The account name must contain only letters and numbers!');
+     ('The account name must use only letters (A-Z, a-z) and numbers (0-9) with no spaces or special symbols!');
 
    if stlAccounts.IndexOf(sAcctName + '=' + UpperCase(sAcctName)) > -1 then
-    raise Exception.Create('The account name must be unique!');
+     raise Exception.Create('The account name must be unique!');
 
    Result := True;
  end;
@@ -128,15 +128,15 @@ procedure TMainForm.actionNewAccountExecute(Sender: TObject);
 begin
   var sAcctName: string := '';
   if InputQuery('Create a New Account', 'Account Unique Name', sAcctName) then
-  begin
-    sAcctName := sAcctName.Trim;
-    if IsValidAcctName(sAcctName) then
     begin
-      fIniFile.WriteString('Accounts', sAcctName, UpperCase(sAcctName));
-      stlAccounts.AddPair(sAcctName, UpperCase(sAcctName));
-      TEdgeForm.CreateWithCaption(Application, fIniFile, sAcctName);
-    end
-  end;
+      sAcctName := sAcctName.Trim;
+      if IsValidAcctName(sAcctName) then
+        begin
+          fIniFile.WriteString('Accounts', sAcctName, UpperCase(sAcctName));
+          stlAccounts.AddPair(sAcctName, UpperCase(sAcctName));
+          TEdgeForm.CreateWithCaption(Application, fIniFile, sAcctName);
+        end
+    end;
 end;
 
 procedure TMainForm.actionNewMessageExecute(Sender: TObject);
@@ -146,7 +146,7 @@ begin
     begin
       if not TRegEx.IsMatch(sNewNumber, '^[0-9]*$') then
         raise Exception.Create
-          ('The account name must contain only letters and numbers!');
+        ('The account name must contain only letters and numbers!');
       TEdgeForm(Self.ActiveMDIChild).EdgeExecuteScript(sNewNumber);
     end;
 end;
@@ -157,22 +157,22 @@ begin
   if MessageDlg('This account [' + sAcctName +
     '] will be removed. Confirm?', TMsgDlgType.mtConfirmation,
     [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = IDYES then
-   begin
-     TEdgeForm(Self.ActiveMDIChild).EdgeBrowser.CloseWebView;
-     TEdgeForm(Self.ActiveMDIChild).Close;
-
-     fIniFile.DeleteKey('Accounts', sAcctName);
-     stlAccounts.Delete(stlAccounts.IndexOf(sAcctName + '=' +
-        UpperCase(sAcctName)));
-
-     var fDataFolder := ExtractFilePath(Application.ExeName) + 'Accounts' +
-       PathDelim + UpperCase(sAcctName);
-     if DirectoryExists(fDataFolder) then
       begin
-        Sleep(1000);
-        TDirectory.Delete(fDataFolder, True);
+        TEdgeForm(Self.ActiveMDIChild).EdgeBrowser.CloseWebView;
+        TEdgeForm(Self.ActiveMDIChild).Close;
+
+        fIniFile.DeleteKey('Accounts', sAcctName);
+        stlAccounts.Delete(stlAccounts.IndexOf(sAcctName + '=' +
+          UpperCase(sAcctName)));
+
+        var fDataFolder := ExtractFilePath(Application.ExeName) + 'Accounts' +
+        PathDelim + UpperCase(sAcctName);
+        if DirectoryExists(fDataFolder) then
+          begin
+            Sleep(1000);
+            TDirectory.Delete(fDataFolder, True);
+          end;
       end;
-   end;
 end;
 
 procedure TMainForm.actPrintExecute(Sender: TObject);
@@ -212,3 +212,4 @@ begin
 end;
 
 end.
+

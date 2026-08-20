@@ -50,7 +50,7 @@ object MainForm: TMainForm
       item
         ButtonType = sbCustom
         Hint = 'Print Screen'
-        Width = 30
+        Width = 24
         ShowHint = True
         OnPaint = TitleBarPanel1CustomButtons3Paint
         OnClick = actPrintExecute
@@ -58,7 +58,7 @@ object MainForm: TMainForm
       item
         ButtonType = sbCustom
         Hint = 'New Message'
-        Width = 30
+        Width = 25
         ShowHint = True
         OnPaint = TitleBarPanel1CustomButtons2Paint
         OnClick = actionNewMessageExecute
@@ -66,7 +66,7 @@ object MainForm: TMainForm
       item
         ButtonType = sbCustom
         Hint = 'Remove Account'
-        Width = 30
+        Width = 24
         ShowHint = True
         OnPaint = TitleBarPanel1CustomButtons1Paint
         OnClick = actionRemAccountExecute
@@ -74,7 +74,7 @@ object MainForm: TMainForm
       item
         ButtonType = sbCustom
         Hint = 'New Account'
-        Width = 30
+        Width = 24
         ShowHint = True
         OnPaint = TitleBarPanel1CustomButtons0Paint
         OnClick = actionNewAccountExecute
@@ -82,7 +82,7 @@ object MainForm: TMainForm
       item
         ButtonType = sbCustom
         Hint = 'Organize'
-        Width = 30
+        Width = 25
         ShowHint = True
         OnPaint = TitleBarPanel1CustomButtons4Paint
         OnClick = TitleBarPanel1CustomButtons4Click

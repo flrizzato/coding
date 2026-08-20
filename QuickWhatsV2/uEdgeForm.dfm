@@ -1,16 +1,12 @@
 object EdgeForm: TEdgeForm
   Left = 0
   Top = 0
-  Margins.Left = 4
-  Margins.Top = 4
-  Margins.Right = 4
-  Margins.Bottom = 4
-  ClientHeight = 694
-  ClientWidth = 1018
+  ClientHeight = 555
+  ClientWidth = 814
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -15
+  Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIChild
@@ -18,6 +14,5 @@ object EdgeForm: TEdgeForm
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnShow = FormShow
-  PixelsPerInch = 120
-  TextHeight = 20
+  TextHeight = 15
 end

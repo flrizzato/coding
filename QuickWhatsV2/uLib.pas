@@ -25,13 +25,13 @@ begin
   Profile := TStringBuilder.Create;
   try
     for iMonitor := 0 to Screen.MonitorCount - 1 do
-    begin
-      if Profile.Length > 0 then
-        Profile.Append(':');
-      M := Screen.Monitors[iMonitor];
-      Profile.Append(Format(strMask, [M.MonitorNum, M.PixelsPerInch,
-        BoolToStr(M.Primary, True), M.Left, M.Top, M.Width, M.Height]));
-    end;
+      begin
+        if Profile.Length > 0 then
+          Profile.Append(':');
+        M := Screen.Monitors[iMonitor];
+        Profile.Append(Format(strMask, [M.MonitorNum, M.PixelsPerInch,
+          BoolToStr(M.Primary, True), M.Left, M.Top, M.Width, M.Height]));
+      end;
     Result := Profile.ToString;
   finally
     Profile.Free;
@@ -52,7 +52,7 @@ begin
   for iMonitor := 0 to Screen.MonitorCount - 1 do
     if IntersectRect(Intersection, WindowRect,
       Screen.Monitors[iMonitor].WorkareaRect) then
-      Exit(True);
+        Exit(True);
 end;
 
 function GetPrimaryWorkArea: TRect;
@@ -79,19 +79,19 @@ begin
   WorkArea := GetPrimaryWorkArea;
 
   if (WindowWidth <= 0) or (WindowHeight <= 0) then
-  begin
-    WindowWidth := 640;
-    WindowHeight := 480;
-  end;
+    begin
+      WindowWidth := 640;
+      WindowHeight := 480;
+    end;
 
   WindowWidth := Min(WindowWidth, WorkArea.Right - WorkArea.Left);
   WindowHeight := Min(WindowHeight, WorkArea.Bottom - WorkArea.Top);
 
   if not IsVisibleOnMonitor(WindowRect) then
-  begin
-    WindowRect.Left := WorkArea.Left;
-    WindowRect.Top := WorkArea.Top;
-  end;
+    begin
+      WindowRect.Left := WorkArea.Left;
+      WindowRect.Top := WorkArea.Top;
+    end;
 
   WindowRect.Right := WindowRect.Left + WindowWidth;
   WindowRect.Bottom := WindowRect.Top + WindowHeight;
@@ -150,11 +150,11 @@ begin
   WindowPlacement.rcNormalPosition.Left := fIniFile.ReadInteger(MonitorProfile,
     'Left', WindowPlacement.rcNormalPosition.Left);
   WindowPlacement.rcNormalPosition.Bottom :=
-    WindowPlacement.rcNormalPosition.Top + fIniFile.ReadInteger(MonitorProfile,
+  WindowPlacement.rcNormalPosition.Top + fIniFile.ReadInteger(MonitorProfile,
     'Height', WindowPlacement.rcNormalPosition.Bottom -
     WindowPlacement.rcNormalPosition.Top);
   WindowPlacement.rcNormalPosition.Right :=
-    WindowPlacement.rcNormalPosition.Left + fIniFile.ReadInteger(MonitorProfile,
+  WindowPlacement.rcNormalPosition.Left + fIniFile.ReadInteger(MonitorProfile,
     'Width', WindowPlacement.rcNormalPosition.Right -
     WindowPlacement.rcNormalPosition.Left);
   WindowPlacement.showCmd := fIniFile.ReadInteger(MonitorProfile, 'WindowState',
@@ -168,3 +168,4 @@ begin
 end;
 
 end.
+
