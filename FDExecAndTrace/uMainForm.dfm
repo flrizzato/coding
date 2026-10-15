@@ -30,8 +30,6 @@ object MainForm: TMainForm
     HotTrack = True
     Style = tsFlatButtons
     TabOrder = 0
-    ExplicitWidth = 772
-    ExplicitHeight = 543
     object tbsExecute: TTabSheet
       Caption = '  Execute  '
       ImageIndex = 1
@@ -58,13 +56,14 @@ object MainForm: TMainForm
         SmoothMouseWheelScrolling = True
         ShowItemHint = True
         OnBeforeDrawItem = listSQLBeforeDrawItem
-        ExplicitWidth = 758
-        ExplicitHeight = 447
+        ExplicitTop = 54
+        ExplicitWidth = 762
+        ExplicitHeight = 456
         object lblSQLText: TLabel
           AlignWithMargins = True
           Left = 10
           Top = 35
-          Width = 533
+          Width = 535
           Height = 110
           Margins.Left = 10
           Margins.Top = 5
@@ -81,7 +80,7 @@ object MainForm: TMainForm
           AlignWithMargins = True
           Left = 10
           Top = 10
-          Width = 736
+          Width = 738
           Height = 20
           Margins.Left = 10
           Margins.Top = 10
@@ -96,12 +95,10 @@ object MainForm: TMainForm
           Font.Style = [fsBold]
           ParentFont = False
           Transparent = True
-          ExplicitTop = 6
-          ExplicitWidth = 695
         end
         object butExecute: TControlListButton
           AlignWithMargins = True
-          Left = 619
+          Left = 621
           Top = 50
           Width = 65
           Height = 80
@@ -118,13 +115,11 @@ object MainForm: TMainForm
           Font.Style = [fsBold]
           ParentFont = False
           Style = clbkToolButton
-          ExplicitLeft = 625
-          ExplicitTop = 20
-          ExplicitHeight = 120
+          ExplicitLeft = 620
         end
         object butCancel: TControlListButton
           AlignWithMargins = True
-          Left = 688
+          Left = 690
           Top = 50
           Width = 66
           Height = 80
@@ -141,13 +136,10 @@ object MainForm: TMainForm
           Font.Style = [fsBold]
           ParentFont = False
           Style = clbkToolButton
-          ExplicitLeft = 694
-          ExplicitTop = 20
-          ExplicitHeight = 120
         end
         object butTest: TControlListButton
           AlignWithMargins = True
-          Left = 550
+          Left = 552
           Top = 50
           Width = 65
           Height = 80
@@ -164,9 +156,7 @@ object MainForm: TMainForm
           Font.Style = [fsBold]
           ParentFont = False
           Style = clbkToolButton
-          ExplicitLeft = 555
-          ExplicitTop = 20
-          ExplicitHeight = 120
+          ExplicitLeft = 550
         end
       end
       object panOptions: TPanel
@@ -177,7 +167,7 @@ object MainForm: TMainForm
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitWidth = 764
+        ExplicitWidth = 768
         object butBackup: TButton
           AlignWithMargins = True
           Left = 664
@@ -192,7 +182,7 @@ object MainForm: TMainForm
           Align = alRight
           TabOrder = 0
           WordWrap = True
-          ExplicitLeft = 662
+          ExplicitLeft = 666
         end
         object butNew: TButton
           AlignWithMargins = True
@@ -207,7 +197,7 @@ object MainForm: TMainForm
           Action = acNewSQL
           Align = alRight
           TabOrder = 1
-          ExplicitLeft = 350
+          ExplicitLeft = 351
         end
         object butDelete: TButton
           AlignWithMargins = True
@@ -222,7 +212,7 @@ object MainForm: TMainForm
           Action = acDeleteSQL
           Align = alRight
           TabOrder = 2
-          ExplicitLeft = 558
+          ExplicitLeft = 561
         end
         object butEdit: TButton
           AlignWithMargins = True
@@ -237,7 +227,6 @@ object MainForm: TMainForm
           Action = acEditSQL
           Align = alRight
           TabOrder = 3
-          ExplicitLeft = 454
         end
         object BindNavigatorMain: TBindNavigator
           AlignWithMargins = True
@@ -250,7 +239,7 @@ object MainForm: TMainForm
           Align = alClient
           Flat = True
           TabOrder = 4
-          ExplicitWidth = 342
+          ExplicitWidth = 343
         end
       end
     end
@@ -292,7 +281,6 @@ object MainForm: TMainForm
           Font.Style = [fsBold]
           ParentFont = False
           OnClick = butEnvReportClick
-          ExplicitLeft = 450
         end
         object butDBMSInfo: TSpeedButton
           Tag = 1
@@ -316,7 +304,6 @@ object MainForm: TMainForm
           Font.Style = [fsBold]
           ParentFont = False
           OnClick = butDBMSInfoClick
-          ExplicitLeft = 575
         end
         object tgsTracing: TToggleSwitch
           AlignWithMargins = True
@@ -339,7 +326,6 @@ object MainForm: TMainForm
           StateCaptions.CaptionOff = 'Tracing Off'
           TabOrder = 0
           OnClick = tgsTracingClick
-          ExplicitHeight = 20
         end
         object tgsMonitoring: TToggleSwitch
           AlignWithMargins = True
@@ -362,7 +348,6 @@ object MainForm: TMainForm
           StateCaptions.CaptionOff = 'Monitoring Off'
           TabOrder = 1
           OnClick = tgsMonitoringClick
-          ExplicitHeight = 20
         end
         object tgsSQLOnly: TToggleSwitch
           AlignWithMargins = True
@@ -384,7 +369,6 @@ object MainForm: TMainForm
           StateCaptions.CaptionOn = 'SQL Only On'
           StateCaptions.CaptionOff = 'SQL Only Off'
           TabOrder = 2
-          ExplicitHeight = 20
         end
       end
       object memLog: TMemo

@@ -1,30 +1,29 @@
 object ProcDM: TProcDM
-  Height = 750
-  Width = 1000
-  PixelsPerInch = 120
+  Height = 600
+  Width = 800
   object FDPhysDB2DriverLink1: TFDPhysDB2DriverLink
-    Left = 584
-    Top = 112
+    Left = 459
+    Top = 90
   end
   object FDPhysOracleDriverLink1: TFDPhysOracleDriverLink
-    Left = 568
-    Top = 104
+    Left = 446
+    Top = 83
   end
   object FDPhysIBDriverLink1: TFDPhysIBDriverLink
-    Left = 560
-    Top = 88
+    Left = 440
+    Top = 70
   end
   object FDPhysPgDriverLink1: TFDPhysPgDriverLink
-    Left = 552
-    Top = 80
+    Left = 434
+    Top = 64
   end
   object FDPhysFBDriverLink1: TFDPhysFBDriverLink
-    Left = 544
-    Top = 72
+    Left = 427
+    Top = 58
   end
   object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink
-    Left = 528
-    Top = 64
+    Left = 414
+    Top = 51
   end
   object FDQry: TFDQuery
     Connection = FDCnn
@@ -41,17 +40,17 @@ object ProcDM: TProcDM
     UpdateOptions.AutoIncFields = 'CUSTOMERID'
     SQL.Strings = (
       'SELECT * FROM EMPLOYEE ORDER BY EMP_NO DESC')
-    Left = 88
-    Top = 120
+    Left = 62
+    Top = 96
   end
   object ADPhysMSSQLDriverLink1: TFDPhysMSSQLDriverLink
-    Left = 520
-    Top = 48
+    Left = 408
+    Top = 38
   end
   object ADGUIxWaitCursor1: TFDGUIxWaitCursor
     Provider = 'Forms'
-    Left = 208
-    Top = 40
+    Left = 158
+    Top = 32
   end
   object FDCnn: TFDConnection
     ConnectionName = 'UniversalCnn'
@@ -79,7 +78,7 @@ object ProcDM: TProcDM
     ResourceOptions.AssignedValues = [rvAutoReconnect]
     ResourceOptions.AutoReconnect = True
     LoginPrompt = False
-    Left = 88
-    Top = 40
+    Left = 62
+    Top = 32
   end
 end

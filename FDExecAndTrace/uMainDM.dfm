@@ -1,9 +1,8 @@
 object MainDM: TMainDM
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
-  Height = 614
-  Width = 785
-  PixelsPerInch = 120
+  Height = 491
+  Width = 628
   object tableSQL: TFDMemTable
     OnCalcFields = tableSQLCalcFields
     FieldDefs = <>
@@ -16,10 +15,11 @@ object MainDM: TMainDM
     ResourceOptions.Persistent = True
     ResourceOptions.SilentMode = True
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 280
-    Top = 184
+    Left = 224
+    Top = 147
     object tableSQLConnectionName: TStringField
       FieldName = 'ConnectionName'
       Size = 50
@@ -45,32 +45,32 @@ object MainDM: TMainDM
     end
   end
   object FDStanStorageJSONLink1: TFDStanStorageJSONLink
-    Left = 280
-    Top = 256
+    Left = 224
+    Top = 205
   end
   object FDPhysDB2DriverLink1: TFDPhysDB2DriverLink
-    Left = 504
-    Top = 96
+    Left = 403
+    Top = 77
   end
   object FDPhysOracleDriverLink1: TFDPhysOracleDriverLink
-    Left = 488
-    Top = 88
+    Left = 390
+    Top = 70
   end
   object FDPhysIBDriverLink1: TFDPhysIBDriverLink
-    Left = 480
-    Top = 72
+    Left = 384
+    Top = 58
   end
   object FDPhysPgDriverLink1: TFDPhysPgDriverLink
-    Left = 472
-    Top = 64
+    Left = 378
+    Top = 51
   end
   object FDPhysFBDriverLink1: TFDPhysFBDriverLink
-    Left = 464
-    Top = 56
+    Left = 371
+    Top = 45
   end
   object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink
-    Left = 448
-    Top = 48
+    Left = 358
+    Top = 38
   end
   object FDQry: TFDQuery
     Connection = FDCnn
@@ -87,17 +87,17 @@ object MainDM: TMainDM
     UpdateOptions.AutoIncFields = 'CUSTOMERID'
     SQL.Strings = (
       'SELECT * FROM EMPLOYEE ORDER BY EMP_NO DESC')
-    Left = 120
-    Top = 120
+    Left = 96
+    Top = 96
   end
   object ADPhysMSSQLDriverLink1: TFDPhysMSSQLDriverLink
-    Left = 440
-    Top = 32
+    Left = 352
+    Top = 26
   end
   object ADGUIxWaitCursor1: TFDGUIxWaitCursor
     Provider = 'Forms'
-    Left = 232
-    Top = 40
+    Left = 186
+    Top = 32
   end
   object FDCnn: TFDConnection
     ConnectionName = 'UniversalCnn'
@@ -125,15 +125,15 @@ object MainDM: TMainDM
     ResourceOptions.AssignedValues = [rvAutoReconnect]
     ResourceOptions.AutoReconnect = True
     LoginPrompt = False
-    Left = 120
-    Top = 40
+    Left = 96
+    Top = 32
   end
   object FDManager: TFDManager
     FormatOptions.AssignedValues = [fvMapRules]
     FormatOptions.OwnMapRules = True
     FormatOptions.MapRules = <>
     Active = True
-    Left = 40
-    Top = 40
+    Left = 32
+    Top = 32
   end
 end

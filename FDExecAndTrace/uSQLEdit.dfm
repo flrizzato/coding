@@ -28,7 +28,6 @@ object SQLEditForm: TSQLEditForm
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 772
     object Label3: TLabel
       Left = 232
       Top = 8
@@ -93,7 +92,7 @@ object SQLEditForm: TSQLEditForm
       Left = 3
       Top = 30
       Width = 210
-      Height = 23
+      Height = 28
       TabOrder = 0
     end
     object butSave: TButton
@@ -112,13 +111,14 @@ object SQLEditForm: TSQLEditForm
       ModalResult = 1
       TabOrder = 3
       OnClick = butSaveClick
-      ExplicitLeft = 692
+      ExplicitLeft = 695
+      ExplicitHeight = 53
     end
     object butDiscard: TButton
       AlignWithMargins = True
-      Left = 609
+      Left = 608
       Top = 5
-      Width = 75
+      Width = 76
       Height = 52
       Margins.Left = 5
       Margins.Top = 5
@@ -129,7 +129,8 @@ object SQLEditForm: TSQLEditForm
       ModalResult = 2
       TabOrder = 4
       OnClick = butDiscardClick
-      ExplicitLeft = 607
+      ExplicitLeft = 610
+      ExplicitHeight = 53
     end
   end
   object memSQL: TMemo
@@ -145,8 +146,6 @@ object SQLEditForm: TSQLEditForm
     Align = alClient
     ScrollBars = ssBoth
     TabOrder = 1
-    ExplicitWidth = 772
-    ExplicitHeight = 471
   end
   object BindSourceDB1: TBindSourceDB
     DataSet = MainDM.tableSQL

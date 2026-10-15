@@ -25,7 +25,6 @@ object SQLTestForm: TSQLTestForm
     Align = alTop
     Flat = True
     TabOrder = 0
-    ExplicitWidth = 776
   end
   object DBGridMain: TDBGrid
     Left = 0

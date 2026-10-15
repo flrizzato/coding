@@ -76,7 +76,7 @@ type
     { Private declarations }
     aSysJobs: TOrderedDictionary<string, TList<TThread>>;
     procedure LogThis(fMessage: string);
-    procedure DisplaySQLEditForm(bAppend: boolean);
+    procedure DisplaySQLEditForm(bAppend: Boolean);
   public
     { Public declarations }
   end;
@@ -110,12 +110,12 @@ var
 begin
   nItemIndex := listSQL.ItemIndex;
   if aSysJobs.ContainsKey('job#' + nItemIndex.ToString) then
-  begin
-    aTaskList := aSysJobs.ExtractPair('job#' + nItemIndex.ToString).Value;
-    for fThread in aTaskList do
-      if not fThread.Finished then
-        fThread.Terminate;
-  end;
+    begin
+      aTaskList := aSysJobs.ExtractPair('job#' + nItemIndex.ToString).Value;
+      for fThread in aTaskList do
+        if not fThread.Finished then
+          fThread.Terminate;
+    end;
 end;
 
 procedure TMainForm.acExecuteSQLExecute(Sender: TObject);
@@ -136,94 +136,94 @@ begin
   nItemIndex := listSQL.ItemIndex;
 
   if not aSysJobs.ContainsKey('job#' + nItemIndex.ToString) then
-  begin
-    FDTrace.Tracing := False;
-    FDMonitor.Tracing := False;
-
-    nConcurrentSessions := MainDM.tableSQLConcurrentSessions.AsInteger;
-    sConnectionName := MainDM.tableSQLConnectionName.AsString;
-    sCommandText := MainDM.tableSQLCommandText.AsString;
-    nExecutionInterval := MainDM.tableSQLExecutionInterval.AsInteger;
-
-    aTaskList := TList<TThread>.Create;
-
-    for var i := 1 to nConcurrentSessions do
     begin
-      var fThread := TThread.CreateAnonymousThread(
-        procedure()
-        var
-          fProcDM: TProcDM;
+      FDTrace.Tracing := False;
+      FDMonitor.Tracing := False;
+
+      nConcurrentSessions := MainDM.tableSQLConcurrentSessions.AsInteger;
+      sConnectionName := MainDM.tableSQLConnectionName.AsString;
+      sCommandText := MainDM.tableSQLCommandText.AsString;
+      nExecutionInterval := MainDM.tableSQLExecutionInterval.AsInteger;
+
+      aTaskList := TList<TThread>.Create;
+
+      for var i := 1 to nConcurrentSessions do
         begin
-          fProcDM := TProcDM.Create(Self);
-          try
-            try
-              fProcDM.FDCnn.ConnectionDefName := sConnectionName;
+          var fThread := TThread.CreateAnonymousThread(
+            procedure()
+            var
+              fProcDM: TProcDM;
+            begin
+              fProcDM := TProcDM.Create(Self);
+              try
+                try
+                  fProcDM.FDCnn.ConnectionDefName := sConnectionName;
 
-              if tgsTracing.State = TToggleSwitchState.tssOn then
-              begin
-                if not FDTrace.Tracing then
-                begin
-                  FDTrace.FileName := ExtractFilePath(Application.ExeName) +
-                    PathDelim + 'trace_' + FormatDateTime('yyyymmdd',
-                    Now) + '.log';
-{$R-}
-                  if tgsSQLOnly.State = TToggleSwitchState.tssOn then
-                    FDTrace.EventKinds := [ekSQL, ekSQLVarIn, ekSQLVarOut]
+                  if tgsTracing.State = TToggleSwitchState.tssOn then
+                    begin
+                      if not FDTrace.Tracing then
+                        begin
+                          FDTrace.FileName := ExtractFilePath(Application.ExeName) +
+                          PathDelim + 'trace_' + FormatDateTime('yyyymmdd',
+                            Now) + '.log';
+        {$R-}
+                          if tgsSQLOnly.State = TToggleSwitchState.tssOn then
+                            FDTrace.EventKinds := [ekSQL, ekSQLVarIn, ekSQLVarOut]
+                          else
+                            FDTrace.EventKinds := FDTrace.EventKinds + [ekSQL,
+                              ekSQLVarIn, ekSQLVarOut];
+        {$R+}
+                          FDTrace.Tracing := tgsTracing.Enabled;
+                        end;
+                      fProcDM.FDCnn.Params.MonitorBy := mbFlatFile
+                    end
+                  else if tgsMonitoring.State = TToggleSwitchState.tssOn then
+                    begin
+                      if not FDMonitor.Tracing then
+                        begin
+                          FDMonitor.Host := '127.0.0.1';
+                          FDMonitor.Port := 8050;
+        {$R-}
+                          if tgsSQLOnly.State = TToggleSwitchState.tssOn then
+                            FDMonitor.EventKinds := [ekSQL, ekSQLVarIn, ekSQLVarOut]
+                          else
+                            FDMonitor.EventKinds := FDMonitor.EventKinds + [ekSQL,
+                              ekSQLVarIn, ekSQLVarOut];
+        {$R+}
+                          FDMonitor.Tracing := tgsMonitoring.Enabled;
+                        end;
+                      fProcDM.FDCnn.Params.MonitorBy := mbRemote
+                    end
                   else
-                    FDTrace.EventKinds := FDTrace.EventKinds + [ekSQL,
-                      ekSQLVarIn, ekSQLVarOut];
-{$R+}
-                  FDTrace.Tracing := tgsTracing.Enabled;
-                end;
-                fProcDM.FDCnn.Params.MonitorBy := mbFlatFile
-              end
-              else if tgsMonitoring.State = TToggleSwitchState.tssOn then
-              begin
-                if not FDMonitor.Tracing then
-                begin
-                  FDMonitor.Host := '127.0.0.1';
-                  FDMonitor.Port := 8050;
-{$R-}
-                  if tgsSQLOnly.State = TToggleSwitchState.tssOn then
-                    FDMonitor.EventKinds := [ekSQL, ekSQLVarIn, ekSQLVarOut]
-                  else
-                    FDMonitor.EventKinds := FDMonitor.EventKinds + [ekSQL,
-                      ekSQLVarIn, ekSQLVarOut];
-{$R+}
-                  FDMonitor.Tracing := tgsMonitoring.Enabled;
-                end;
-                fProcDM.FDCnn.Params.MonitorBy := mbRemote
-              end
-              else
-                fProcDM.FDCnn.Params.MonitorBy := mbNone;
+                    fProcDM.FDCnn.Params.MonitorBy := mbNone;
 
-              fProcDM.FDCnn.Open;
-              while True do
-              begin
-                fProcDM.FDQry.Close;
-                if System.DebugHook > 0 then
-                  LogThis(sCommandText);
-                if TThread.CurrentThread.CheckTerminated then
-                  Exit;
-                fProcDM.FDQry.Open(sCommandText);
-                Sleep(nExecutionInterval);
+                  fProcDM.FDCnn.Open;
+                  while True do
+                    begin
+                      fProcDM.FDQry.Close;
+                      if System.DebugHook > 0 then
+                        LogThis(sCommandText);
+                      if TThread.CurrentThread.CheckTerminated then
+                        Exit;
+                      fProcDM.FDQry.Open(sCommandText);
+                      Sleep(nExecutionInterval);
+                    end;
+
+                except
+                  on E: Exception do
+                    LogThis(E.Message);
+                end;
+
+              finally
+                fProcDM.Free;
               end;
-
-            except
-              on E: Exception do
-                LogThis(E.Message);
-            end;
-
-          finally
-            fProcDM.Free;
-          end;
-        end);
-      fThread.FreeOnTerminate := False;
-      fThread.Start;
-      aTaskList.Add(fThread);
+            end);
+          fThread.FreeOnTerminate := False;
+          fThread.Start;
+          aTaskList.Add(fThread);
+        end;
+      aSysJobs.Add('job#' + nItemIndex.ToString, aTaskList);
     end;
-    aSysJobs.Add('job#' + nItemIndex.ToString, aTaskList);
-  end;
 end;
 
 procedure TMainForm.acTestSQLExecute(Sender: TObject);
@@ -243,7 +243,7 @@ begin
     except
       on E: Exception do
         raise Exception.Create
-          ('Error Message: Error when trying to execute the SQL command!');
+        ('Error Message: Error when trying to execute the SQL command!');
     end;
   finally
     fSQLTest.Free;
@@ -318,15 +318,15 @@ begin
     MetaTables := DBMSMetadata.GetTables([TFDPhysObjectScope.osMy],
       [TFDPhysTableKind.tkTable], '', '', '');
     for i := 0 to MetaTables.Rows.Count - 1 do
-    begin
-      memLog.Lines.Add('');
-      memLog.Lines.Add('===' + MetaTables.Rows[i]
-        .GetData('TABLE_NAME') + '===');
-      MetaColumns := DBMSMetadata.GetTableFields('', '',
-        MetaTables.Rows[i].GetData('TABLE_NAME'), '');
-      for j := 0 to MetaColumns.Rows.Count - 1 do
-        memLog.Lines.Add(MetaColumns.Rows[j].GetData('COLUMN_NAME'));
-    end;
+      begin
+        memLog.Lines.Add('');
+        memLog.Lines.Add('===' + MetaTables.Rows[i]
+          .GetData('TABLE_NAME') + '===');
+        MetaColumns := DBMSMetadata.GetTableFields('', '',
+          MetaTables.Rows[i].GetData('TABLE_NAME'), '');
+        for j := 0 to MetaColumns.Rows.Count - 1 do
+          memLog.Lines.Add(MetaColumns.Rows[j].GetData('COLUMN_NAME'));
+      end;
   except
     on E: Exception do
       raise Exception.Create('Error Message: ' + E.Message);
@@ -360,15 +360,15 @@ procedure TMainForm.listSQLBeforeDrawItem(AIndex: Integer; ACanvas: TCanvas;
   ARect: TRect; AState: TOwnerDrawState);
 begin
   if aSysJobs.ContainsKey('job#' + AIndex.ToString) then
-  begin
-    butExecute.Font.Color := clRed;
-    butExecute.Caption := 'Executing...'
-  end
+    begin
+      butExecute.Font.Color := clRed;
+      butExecute.Caption := 'Executing...'
+    end
   else
-  begin
-    butExecute.Font.Color := butTest.Font.Color;
-    butExecute.Caption := 'Execute';
-  end;
+    begin
+      butExecute.Font.Color := butTest.Font.Color;
+      butExecute.Caption := 'Execute';
+    end;
 end;
 
 procedure TMainForm.LogThis(fMessage: string);
@@ -404,7 +404,7 @@ begin
   DisplaySQLEditForm(False);
 end;
 
-procedure TMainForm.DisplaySQLEditForm(bAppend: boolean);
+procedure TMainForm.DisplaySQLEditForm(bAppend: Boolean);
 begin
   var fSQLEdit := TSQLEditForm.Create(Self);
   try
