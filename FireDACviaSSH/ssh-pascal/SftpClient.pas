@@ -13,7 +13,7 @@ unit SftpClient;
 
 interface
 
-Uses
+uses
   WinApi.Windows,
   System.SysUtils,
   System.Classes,
@@ -38,8 +38,8 @@ type
     UID: UInt;
     GID: UInt;
     Permissions: TFilePermissions;
-    LastAccessTime: TDateTime;          // UTC
-    LastModificationTime: TDateTime;    // UTC
+    LastAccessTime: TDateTime; // UTC
+    LastModificationTime: TDateTime; // UTC
     Hidden: Boolean;
   end;
 
@@ -51,7 +51,7 @@ type
     procedure SetTransferProgressCallback(Callback: TTransferProgressCallback);
     procedure Cancel;
     property BufferSize: Int64 write SetBufferSize;
-    procedure RaiseLastSFTPError(Const Op: string);
+    procedure RaiseLastSFTPError(const Op: string);
     function SftpType(Name: string; FollowLink: Boolean = True): TSFTPItemType;
     function GetPathDelimiter: AnsiChar;
     function GetWindowsHost: Boolean;
@@ -68,14 +68,14 @@ type
     // Files
     function FileExists(const FileName: string; FollowLink: Boolean = True): Boolean;
     function DeleteFile(const FileName: string): Boolean;
-    function Rename(const OldName, NewName: string): Boolean;  // also works with directories
+    function Rename(const OldName, NewName: string): Boolean; // also works with directories
     function ExtractFilePath(const FileName: string): string;
     // Symbolic Links
     function RealPath(Name: string): string;
     function CreateSymLink(const Link, Target: string): Boolean;
     //Send and Receive
     procedure Receive(const RemoteFile: string; Stream: TStream); overload;
-    procedure Receive(const RemoteFile, LocalFile: string; Overwrite:Boolean = True); overload;
+    procedure Receive(const RemoteFile, LocalFile: string; Overwrite: Boolean = True); overload;
     procedure Send(Stream: TStream; const RemoteFile: string;
       Overwrite: Boolean = True; Permissions: TFilePermissions = FPDefault); overload;
     procedure Send(const LocalFile, RemoteFile: string;
@@ -97,7 +97,7 @@ type
 function CreateSftpClient(Session: ISshSession): ISftpClient;
 
 implementation
-Uses
+uses
   System.SysConst,
   System.Types,
   System.DateUtils,
@@ -105,7 +105,7 @@ Uses
   System.Masks,
   System.Generics.Defaults;
 
-{$region Support stuff}
+{$REGION Support stuff}
 resourcestring
   Err_SftpInit = 'Could not initialize Sftp';
   Err_Sftp = 'Sftp error: %s (%d), on API "%s"';
@@ -191,13 +191,13 @@ var
   ErrMsg: string;
 begin
   if ReturnCode < 0 then
-  begin
-    // LIBSSH2_ERROR_EAGAIN indicates no result in non-blocking mode
-    if ReturnCode = LIBSSH2_ERROR_EAGAIN then Exit;
-    ErrMsg := SftpErrorMsg(ReturnCode);
-    raise ESftpErr.CreateResFmt(@Err_Sftp,
-      [ErrMsg, ReturnCode, Op])
-  end;
+    begin
+      // LIBSSH2_ERROR_EAGAIN indicates no result in non-blocking mode
+      if ReturnCode = LIBSSH2_ERROR_EAGAIN then Exit;
+      ErrMsg := SftpErrorMsg(ReturnCode);
+      raise ESftpErr.CreateResFmt(@Err_Sftp,
+        [ErrMsg, ReturnCode, Op])
+    end;
 end;
 
 function TestBit(const ABits, AVal: Cardinal): Boolean; inline;
@@ -207,32 +207,32 @@ end;
 function AttrsToFileType(const Attributes: LIBSSH2_SFTP_ATTRIBUTES): TSFTPItemType;
 begin
   if TestBit(Attributes.Flags, LIBSSH2_SFTP_ATTR_PERMISSIONS) then
-  begin
-    case Attributes.Permissions and LIBSSH2_SFTP_S_IFMT of
-      LIBSSH2_SFTP_S_IFDIR:
-        Result := sitDirectory;
-      LIBSSH2_SFTP_S_IFBLK:
-        Result := sitBlockDev;
-      LIBSSH2_SFTP_S_IFIFO:
-        Result := sitFIFO;
-      LIBSSH2_SFTP_S_IFCHR:
-        Result := sitCharDev;
-      LIBSSH2_SFTP_S_IFSOCK:
-        Result := sitSocket;
-      LIBSSH2_SFTP_S_IFLNK:
-        Result := sitSymbolicLink;
-      LIBSSH2_SFTP_S_IFREG:
-        Result := sitFile;
-      else
-        Result := sitUnknown;
-    end;
-  end
+    begin
+      case Attributes.Permissions and LIBSSH2_SFTP_S_IFMT of
+        LIBSSH2_SFTP_S_IFDIR:
+          Result := sitDirectory;
+        LIBSSH2_SFTP_S_IFBLK:
+          Result := sitBlockDev;
+        LIBSSH2_SFTP_S_IFIFO:
+          Result := sitFIFO;
+        LIBSSH2_SFTP_S_IFCHR:
+          Result := sitCharDev;
+        LIBSSH2_SFTP_S_IFSOCK:
+          Result := sitSocket;
+        LIBSSH2_SFTP_S_IFLNK:
+          Result := sitSymbolicLink;
+        LIBSSH2_SFTP_S_IFREG:
+          Result := sitFile;
+        else
+          Result := sitUnknown;
+      end;
+    end
   else
     Result := sitUnknown;
 end;
-{$endregion}
+{$ENDREGION}
 
-{$region TSFtpClient}
+{$REGION TSFtpClient}
 type
 
   TSFtpClient = class(TInterfacedObject, ISftpClient)
@@ -246,7 +246,7 @@ type
     FTransferCallback: TTransferProgressCallback;
     procedure SetBufferSize(Size: Int64);
     procedure SetTransferProgressCallback(Callback: TTransferProgressCallback);
-    procedure RaiseLastSFTPError(Const Op: string);
+    procedure RaiseLastSFTPError(const Op: string);
     procedure Cancel;
     function SftpType(Name: string; FollowLink: Boolean = True): TSFTPItemType;
     function GetPathDelimiter: AnsiChar;
@@ -265,7 +265,7 @@ type
     // Files
     function FileExists(const FileName: string; FollowLink: Boolean = True): Boolean;
     function DeleteFile(const FileName: string): Boolean;
-    function Rename(const OldName, NewName: string): Boolean;  // also works with directories
+    function Rename(const OldName, NewName: string): Boolean; // also works with directories
     function ExtractFilePath(const FileName: string): string;
     // Symbolic Links
     function RealPath(Name: string): string;
@@ -298,7 +298,7 @@ end;
 
 procedure TSFtpClient.CopyFromHost(const Source, Dest: string; Recursive,
   Overwrite: Boolean);
-Var
+var
   Mask: string;
   FilePath: string;
   IsFile: Boolean;
@@ -308,54 +308,54 @@ Var
   Item: TSftpItem;
 begin
   Mask := ExtractFileName(Source);
-  HasMask := Mask.IndexOfAny(['?','*']) >= 0;
+  HasMask := Mask.IndexOfAny(['?', '*']) >= 0;
   if HasMask then
-  begin
-    IsFile := False;
-    FilePath := ExtractFilePath(Source);
-    IsPath := DirectoryExists(FilePath);
-  end
-  else
-  begin
-    IsFile := FileExists(FilePath, False);
-    if IsFile then
-      IsPath := False
-    else
     begin
-      IsPath := DirectoryExists(Source, False);
-      FilePath := IncludeTrailingPathDelimiter(Source);
+      IsFile := False;
+      FilePath := ExtractFilePath(Source);
+      IsPath := DirectoryExists(FilePath);
+    end
+  else
+    begin
+      IsFile := FileExists(FilePath, False);
+      if IsFile then
+        IsPath := False
+      else
+        begin
+          IsPath := DirectoryExists(Source, False);
+          FilePath := IncludeTrailingPathDelimiter(Source);
+        end;
     end;
-  end;
-  if not (IsFile or IsPath) then
+  if not(IsFile or IsPath) then
     raise ESftpErr.CreateRes(@Err_InvalideSource);
 
   if IsFile then
     Receive(Source, Dest, Overwrite)
   else // IsPath
-  begin
-    // Dest needs to be a directory - Create if needed
-    if not System.SysUtils.ForceDirectories(Dest) then
-      raise ESftpErr.CreateRes(@Err_InvalideDest);
-    Items := DirContent(FilePath);
-    for Item in Items do
-    case Item.ItemType of
-      sitDirectory:
-        if Recursive and (Item.FileName <> '.') and (Item.FileName <> '..') then
-          CopyFromHost(FilePath + Item.FileName,
-            IncludeTrailingPathDelimiter(Dest) + Item.FileName,
-            True, Overwrite);
-      sitFile:
-        if not HasMask or MatchesMask(Item.FileName, Mask) then
-          Receive(FilePath + Item.FileName,
-            System.SysUtils.IncludeTrailingPathDelimiter(Dest) + Item.FileName,
-            Overwrite);
+    begin
+      // Dest needs to be a directory - Create if needed
+      if not System.SysUtils.ForceDirectories(Dest) then
+        raise ESftpErr.CreateRes(@Err_InvalideDest);
+      Items := DirContent(FilePath);
+      for Item in Items do
+        case Item.ItemType of
+          sitDirectory:
+            if Recursive and (Item.FileName <> '.') and (Item.FileName <> '..') then
+              CopyFromHost(FilePath + Item.FileName,
+                IncludeTrailingPathDelimiter(Dest) + Item.FileName,
+                True, Overwrite);
+          sitFile:
+            if not HasMask or MatchesMask(Item.FileName, Mask) then
+              Receive(FilePath + Item.FileName,
+                System.SysUtils.IncludeTrailingPathDelimiter(Dest) + Item.FileName,
+                Overwrite);
+        end;
     end;
-  end;
 end;
 
 procedure TSFtpClient.CopyToHost(const Source, Dest: string; Recursive,
   Overwrite: Boolean; Permissions: TFilePermissions);
-Var
+var
   Mask: string;
   FilePath: string;
   IsFile: Boolean;
@@ -367,49 +367,49 @@ Var
   Dir: string;
 begin
   Mask := System.SysUtils.ExtractFileName(Source);
-  HasMask := Mask.IndexOfAny(['?','*']) >= 0;
+  HasMask := Mask.IndexOfAny(['?', '*']) >= 0;
   if HasMask then
-  begin
-    IsFile := False;
-    FilePath := System.SysUtils.ExtractFilePath(Source);
-    IsPath := System.SysUtils.DirectoryExists(FilePath, False);
-  end
-  else
-  begin
-    IsFile := System.SysUtils.FileExists(FilePath, False);
-    if IsFile then
-      IsPath := False
-    else
     begin
-      IsPath := System.SysUtils.DirectoryExists(Source);
-      FilePath := System.SysUtils.IncludeTrailingPathDelimiter(Source);
+      IsFile := False;
+      FilePath := System.SysUtils.ExtractFilePath(Source);
+      IsPath := System.SysUtils.DirectoryExists(FilePath, False);
+    end
+  else
+    begin
+      IsFile := System.SysUtils.FileExists(FilePath, False);
+      if IsFile then
+        IsPath := False
+      else
+        begin
+          IsPath := System.SysUtils.DirectoryExists(Source);
+          FilePath := System.SysUtils.IncludeTrailingPathDelimiter(Source);
+        end;
     end;
-  end;
-  if not (IsFile or IsPath) then
+  if not(IsFile or IsPath) then
     raise ESftpErr.CreateRes(@Err_InvalideSource);
 
   if IsFile then
     Send(Source, Dest, Overwrite, Permissions)
   else // IsPath
-  begin
-    // Dest needs to be a directory - Create if needed
-    if not ForceDirectories(Dest) then
-      raise ESftpErr.CreateRes(@Err_InvalideDest);
-    Files := TDirectory.GetFiles(FilePath);
-    for FName in Files do
     begin
-      if not HasMask or MatchesMask(System.SysUtils.ExtractFileName(FName), Mask) then
-        Send(FName, IncludeTrailingPathDelimiter(Dest) +
-          System.SysUtils.ExtractFileName(FName), Overwrite, Permissions)
+      // Dest needs to be a directory - Create if needed
+      if not ForceDirectories(Dest) then
+        raise ESftpErr.CreateRes(@Err_InvalideDest);
+      Files := TDirectory.GetFiles(FilePath);
+      for FName in Files do
+        begin
+          if not HasMask or MatchesMask(System.SysUtils.ExtractFileName(FName), Mask) then
+            Send(FName, IncludeTrailingPathDelimiter(Dest) +
+              System.SysUtils.ExtractFileName(FName), Overwrite, Permissions)
+        end;
+      if Recursive then
+        begin
+          Dirs := TDirectory.GetDirectories(FilePath);
+          for Dir in Dirs do
+            CopyToHost(Dir, IncludeTrailingPathDelimiter(Dest) + System.SysUtils.ExtractFileName(Dir),
+              True, Overwrite, Permissions);
+        end;
     end;
-    if Recursive then
-    begin
-      Dirs := TDirectory.GetDirectories(FilePath);
-      for Dir in Dirs do
-        CopyToHost(Dir, IncludeTrailingPathDelimiter(Dest) + System.SysUtils.ExtractFileName(Dir),
-          True, Overwrite, Permissions);
-    end;
-  end;
 end;
 
 constructor TSFtpClient.Create(Session: ISshSession);
@@ -431,7 +431,7 @@ begin
 end;
 
 function TSFtpClient.CreateDir(const Dir: string; Permissions: TFilePermissions): Boolean;
-Var
+var
   M: TMarshaller;
 begin
   Result := libssh2_sftp_mkdir(FSFtp,
@@ -439,10 +439,10 @@ begin
 end;
 
 function TSFtpClient.DeleteFile(const FileName: string): Boolean;
-Var
+var
   M: TMarshaller;
 begin
-  Result := libssh2_sftp_unlink(FSFtp,  M.AsAnsi(ExpandTilde(FileName), FSession.CodePage).ToPointer) = 0;
+  Result := libssh2_sftp_unlink(FSFtp, M.AsAnsi(ExpandTilde(FileName), FSession.CodePage).ToPointer) = 0;
 end;
 
 destructor TSFtpClient.Destroy;
@@ -465,15 +465,15 @@ begin
   if TestBit(Attribs.Flags, LIBSSH2_SFTP_ATTR_SIZE) then
     Result.FileSize := Attribs.FileSize;
   if TestBit(Attribs.Flags, LIBSSH2_SFTP_ATTR_UIDGID) then
-  begin
-    Result.UID := Attribs.UID;
-    Result.GID := Attribs.GID;
-  end;
- if TestBit(Attribs.Flags, LIBSSH2_SFTP_ATTR_ACMODTIME) then
-  begin
-    Result.LastAccessTime := UnixToDateTime(Attribs.ATime);
-    Result.LastModificationTime := UnixToDateTime(Attribs.MTime);
-  end
+    begin
+      Result.UID := Attribs.UID;
+      Result.GID := Attribs.GID;
+    end;
+  if TestBit(Attribs.Flags, LIBSSH2_SFTP_ATTR_ACMODTIME) then
+    begin
+      Result.LastAccessTime := UnixToDateTime(Attribs.ATime);
+      Result.LastModificationTime := UnixToDateTime(Attribs.MTime);
+    end
 end;
 
 function TSFtpClient.DirContent(const Dir: string): TSftpItems;
@@ -492,7 +492,6 @@ begin
     FSession.CodePage).ToPointer);
   if DirHandle = nil then
     RaiseLastSFTPError('libssh2_sftp_opendir');
-
   List := TList<TSFTPItem>.Create(TDelegatedComparer<TSFTPItem>.Create(
     function(const Left, Right: TSFTPItem): Integer
     begin
@@ -528,7 +527,7 @@ function TSFtpClient.ExcludeTrailingPathDelimiter(const S: string): string;
 begin
   Result := S;
   if Result[High(Result)] = Char(FPathDelim) then
-    SetLength(Result, Length(Result)-1);
+    SetLength(Result, Length(Result) - 1);
 end;
 
 function TSFtpClient.ExpandTilde(const S: string): string;
@@ -542,13 +541,13 @@ end;
 function TSFtpClient.ExtractFileName(const FileName: string): string;
 var
   I: Integer;
-  Delims: TSysCharSet;
+  Delims: string;
 begin
-  Delims := [FPathDelim];
+  Delims := string(FPathDelim);
   if FWindowsHost then
-    Delims := Delims +  [DriveDelim];
+    Delims := Delims + DriveDelim;
 
-  I := FileName.LastDelimiter(Delims);
+  I := LastDelimiter(Delims, FileName);
   if I >= 0 then
     Result := Copy(FileName, I + 2)
   else
@@ -558,14 +557,14 @@ end;
 function TSFtpClient.ExtractFilePath(const FileName: string): string;
 var
   I: Integer;
-  Delims: TSysCharSet;
+  Delims: string;
 begin
-  Delims := [FPathDelim];
+  Delims := string(FPathDelim);
   if FWindowsHost then
-    Delims := Delims +  [DriveDelim];
+    Delims := Delims + DriveDelim;
 
-  I := FileName.LastDelimiter(Delims);
-  Result := Copy(FileName, 1, I + 1);
+  I := LastDelimiter(Delims, FileName);
+  Result := Copy(FileName, 1, I);
 end;
 
 function TSFtpClient.FileExists(const FileName: string;
@@ -589,10 +588,10 @@ begin
     Exit;
 
   if FWindowsHost then
-  begin
-   if ((Length(Dir) < 3) or (ExtractFilePath(Dir) = Dir)) then
-     Exit(CreateDir(Dir))
-  end
+    begin
+      if ((Length(Dir) < 3) or (ExtractFilePath(Dir) = Dir)) then
+        Exit(CreateDir(Dir))
+    end
   else
     Dir := ExpandTilde(Dir);
   Result := ForceDirectories(ExtractFilePath(Dir)) and CreateDir(Dir);
@@ -606,19 +605,18 @@ var
   Buf: PAnsiChar;
 begin
   Result := '';
-
   DirHandle := libssh2_sftp_opendir(FSFtp, '.');
   if DirHandle <> nil then
-  begin
-    GetMem(Buf, BUF_LEN);
-    try
-      libssh2_sftp_realpath(FSFtp, nil, Buf, BUF_LEN);
-      libssh2_sftp_close(DirHandle);
-      Result := AnsiToUnicode(Buf, FSession.CodePage);
-    finally
-      FreeMem(Buf);
-    end;
-  end
+    begin
+      GetMem(Buf, BUF_LEN);
+      try
+        libssh2_sftp_realpath(FSFtp, nil, Buf, BUF_LEN);
+        libssh2_sftp_close(DirHandle);
+        Result := AnsiToUnicode(Buf, FSession.CodePage);
+      finally
+        FreeMem(Buf);
+      end;
+    end
   else
     RaiseLastSftpError('libssh2_sftp_opendir');
 end;
@@ -641,12 +639,12 @@ begin
 end;
 
 function TSFtpClient.CreateSymLink(const Link, Target: string): Boolean;
-Var
+var
   M: TMarshaller;
 begin
   Result :=
     libssh2_sftp_symlink(FSFtp, M.AsAnsi(RealPath(Target), FSession.CodePage).ToPointer,
-    M.AsAnsi(ExpandTilde(Link), FSession.CodePage).ToPointer) = 0;
+      M.AsAnsi(ExpandTilde(Link), FSession.CodePage).ToPointer) = 0;
 end;
 
 procedure TSFtpClient.Receive(const RemoteFile: string; Stream: TStream);
@@ -682,13 +680,13 @@ begin
     repeat
       R := libssh2_sftp_read(FHandle, Buf, FBufferSize);
       if R > 0 then
-      begin
-        N := Stream.Write(Buf^, R);
-        Assert(N = R);
-        Inc(Transfered, N);
-        if Assigned(FTransferCallback) then
-          FTransferCallback(RemoteFile, Transfered, Total);
-      end
+        begin
+          N := Stream.Write(Buf^, R);
+          Assert(N = R);
+          Inc(Transfered, N);
+          if Assigned(FTransferCallback) then
+            FTransferCallback(RemoteFile, Transfered, Total);
+        end
       else if R < 0 then
         CheckSftpResult(R, 'libssh2_sftp_read');
     until (R = 0) or FCancelled;
@@ -716,10 +714,10 @@ begin
   Result := AnsiToUnicode(PAnsiChar(@Target), FSession.CodePage);
 end;
 
-procedure TSFtpClient.Receive(const RemoteFile, LocalFile: string; Overwrite:Boolean);
-Var
+procedure TSFtpClient.Receive(const RemoteFile, LocalFile: string; Overwrite: Boolean);
+var
   FileStream: TFileStream;
-   Mode: Word;
+  Mode: Word;
 begin
   if Overwrite then
     Mode := fmCreate or fmOpenWrite
@@ -734,7 +732,7 @@ begin
 end;
 
 function TSFtpClient.RemoveDir(const Dir: string): Boolean;
-Var
+var
   M: TMarshaller;
 begin
   Result := libssh2_sftp_rmdir(FSFtp, M.AsAnsi(ExpandTilde(Dir), FSession.CodePage).ToPointer) = 0;
@@ -779,20 +777,20 @@ begin
     repeat
       N := Stream.Read(Buf^, FBufferSize);
       if N > 0 then
-      begin
-        K := N;
-        repeat
-          R := libssh2_sftp_write(FHandle, Buf, K);
-          if R < 0 then
-            CheckSftpResult(R, 'libssh2_sftp_read');
-          Inc(Transfered, R);
-          Inc(Buf, R);
-          Dec(K, R);
-          if Assigned(FTransferCallback) then
-            FTransferCallback(RemoteFile, Transfered, Total);
-        until (K <= 0) or FCancelled;
-        Buf := StartBuf;
-      end;
+        begin
+          K := N;
+          repeat
+            R := libssh2_sftp_write(FHandle, Buf, K);
+            if R < 0 then
+              CheckSftpResult(R, 'libssh2_sftp_read');
+            Inc(Transfered, R);
+            Inc(Buf, R);
+            Dec(K, R);
+            if Assigned(FTransferCallback) then
+              FTransferCallback(RemoteFile, Transfered, Total);
+          until (K <= 0) or FCancelled;
+          Buf := StartBuf;
+        end;
     until (N <= 0) or FCancelled;
   finally
     FreeMem(StartBuf);
@@ -802,7 +800,7 @@ end;
 
 procedure TSFtpClient.Send(const LocalFile, RemoteFile: string;
   Overwrite: Boolean; Permissions: TFilePermissions);
-Var
+var
   FileStream: TFileStream;
 begin
   FileStream := TFileStream.Create(LocalFile, fmOpenRead);
@@ -826,7 +824,7 @@ end;
 
 function TSFtpClient.SftpType(Name: string; FollowLink: Boolean): TSFTPItemType;
 var
-  ReturnCode: integer;
+  ReturnCode: Integer;
   Attribs: LIBSSH2_SFTP_ATTRIBUTES;
   M: TMarshaller;
 begin
@@ -839,13 +837,13 @@ begin
   CheckSftpResult(ReturnCode, 'SftpType');
   Result := AttrsToFileType(Attribs);
 end;
-{$endregion}
+{$ENDREGION}
 
-{$region 'Factory Methods'}
+{$REGION 'Factory Methods'}
 function CreateSftpClient(Session: ISshSession): ISftpClient;
 begin
   Result := TSFtpClient.Create(Session);
 end;
-{$endregion}
+{$ENDREGION}
 
 end.
